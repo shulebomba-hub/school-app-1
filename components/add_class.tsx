@@ -5,6 +5,7 @@ import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 const App = () => {
   const [darasa, setDarasa]=useState("");
   const [savedDarasa, setSaveddarasa]=useState([])
+  const [selectedDarasaIdx, setSelectedDarasaIdx] = useState(null)
   const addedClasses=()=>{
     if (!darasa) return;
     if(selectedDarasaIdx!==null){
