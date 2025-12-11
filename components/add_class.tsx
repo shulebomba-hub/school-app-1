@@ -7,14 +7,64 @@ const App = () => {
   const [savedDarasa, setSaveddarasa]=useState([])
   const addedClasses=()=>{
     if (!darasa) return;
+    if(selectedDarasaIdx!==null){
+      const newDarasa=[...savedDarasa];
+      newDarasa[selectedDarasaIdx]=darasa;
+      setSaveddarasa(newDarasa)
+      
+    }else{
     setSaveddarasa([...savedDarasa, darasa]);
+    }
+    
     setDarasa("");
-  
-   
-  
-
   };
-  const styles = StyleSheet.create({
+  
+  return (
+    <SafeAreaProvider>
+    <SafeAreaView style={styles.container} edges={['top']}>
+      <ScrollView style={styles.scrollView}>
+      <View style={styles.title}>
+        <Text> Add Classes </Text>
+      </View>
+        <View style={styles.text}>
+        <Text>Class name   : 
+          <TextInput 
+            value={darasa}
+            onChangeText={setDarasa}
+            placeholder='  eg. form three' 
+          />
+        </Text>
+        <Button onPress={addedClasses}
+            title={selectedDarasaIdx!==null? 'Update': 'Add'}
+
+        />
+        </View>
+        {savedDarasa.flatMap((item, index) => (
+        <Pressable style={{backgroundColor: index===selectedDarasaIdx? 'grey': 'white'}} onPress={()=>{
+        if(selectedDarasaIdx===index){
+setSelectedDarasaIdx(null);
+setDarasa('')
+        }else{
+          setSelectedDarasaIdx(index);
+          setDarasa(item);
+        
+        }
+          
+          
+          }} key={index}><Text style={{ marginTop: 10 }}>
+         {index+1} {item}
+        </Text></Pressable>
+      ))}
+        
+      
+      </ScrollView>
+    </SafeAreaView>
+  </SafeAreaProvider>
+);
+
+
+};
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     
@@ -32,39 +82,6 @@ const App = () => {
     padding:20,
     backgroundColor:'#E9F3F3'
   }
-});
-  return (
-    <SafeAreaProvider>
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <ScrollView style={styles.scrollView}>
-      <View style={styles.title}>
-        <Text> Add Classes </Text>
-      </View>
-        <View style={styles.text}>
-        <Text>Class name   : 
-          <TextInput 
-            value={darasa}
-            onChangeText={setDarasa}
-            placeholder='  eg. form three' 
-          />
-        </Text>
-        <Button onPress={addedClasses}
-           title='Add'
-        />
-        </View>
-        {savedDarasa.flatMap((item, index) => (
-        <Text key={index} style={{ marginTop: 10 }}>
-          {item}
-        </Text>
-      ))}
-        
-      
-      </ScrollView>
-    </SafeAreaView>
-  </SafeAreaProvider>
-);
-
-
-};
+})
 
 export default App;
