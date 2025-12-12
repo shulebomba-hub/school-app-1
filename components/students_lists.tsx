@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react';
-import {Alert,View, Text, Image, ScrollView, TextInput, StyleSheet,Button, Pressable} from 'react-native';
+import {Alert,View, Text, Image, ScrollView, TextInput, StyleSheet,Button, Pressable, TouchableOpacity} from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 
 const App = () => {
@@ -111,4 +111,5 @@ setNewstudent('')
 });
 
 export default App;
+
 
