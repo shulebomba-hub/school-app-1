@@ -1,84 +1,74 @@
 
 import React,{useState, useEffect} from 'react';
-import {Alert,View, Text, Image, ScrollView, TextInput, StyleSheet,Button, Pressable, TouchableOpacity} from 'react-native';
+import {Alert,View, Text, Image, ScrollView, TextInput, StyleSheet,Button,Pressable, TouchableOpacity} from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 
 const App: React.FC = () => {
-  const [newStudent, setNewstudent]=useState<string>("");
-  const [savedStudents, setSavedstudents]=useState<string[]>([]);
-  const [selectedStudentIdx, setSelectedStudentIdx] = useState<number | null>(null)
-  
-
-  const addedStudents = () => {
-    if (!newStudent) return;
-    if(selectedStudentIdx!==null){
-      const studentUpdates=[...savedStudents];
-      studentUpdates[selectedStudentIdx]=newStudent;
-      setSavedstudents(studentUpdates);
+  const [darasa, setDarasa]=useState<string>("");
+  const [savedDarasa, setSaveddarasa]=useState<string[]>([])
+  const [selectedDarasaIdx, setSelectedDarasaIdx] = useState<number | null>(null)
+  const addedClasses=()=>{
+    if (!darasa) return;
+    if(selectedDarasaIdx!==null){
+      const newDarasa=[...savedDarasa];
+      newDarasa[selectedDarasaIdx]=darasa;
+      setSaveddarasa(newDarasa)
       
     }else{
-    setSavedstudents([...savedStudents, newStudent]);
+    setSaveddarasa([...savedDarasa, darasa]);
     }
     
-    setNewstudent("");
+    setDarasa("");
   };
-  const deleteStudent = (index: number) => {
-    const newList = savedStudents.filter((item: string, i: number) => i !== index);
-    setSavedstudents(newList);
+  const deleteClass = (index: number) => {
+    const newList = savedDarasa.filter((darasa: string, i: number) => i !== index);
+    setSaveddarasa(newList);
   };
 
+  
   return (
     <SafeAreaProvider>
     <SafeAreaView style={styles.container} edges={['top']}>
       <ScrollView style={styles.scrollView}>
       <View style={styles.title}>
-        <Text> Add student </Text>
+        <Text> Add Classes </Text>
       </View>
-      <View style={styles.text}>
-        <Text>Full name   : </Text>
-        <TextInput
-        style={{
-          borderBottomWidth: 1,
-          borderBottomColor: "#000",
-          paddingVertical: 2,
-        }} 
-          value={newStudent}
-          onChangeText={setNewstudent}
-          placeholder='  student full name' 
-        />
-      </View>
+        <View style={styles.text}>
+        <Text>Class name   : 
+          <TextInput 
+            value={darasa}
+            onChangeText={setDarasa}
+            placeholder='  eg. form three' 
+          />
+        </Text>
+        <Button onPress={addedClasses}
+            title={selectedDarasaIdx!==null? 'Update': 'Add'}
 
-      
-        <View style={styles.add}>
-        <Button onPress={addedStudents}
-           title={selectedStudentIdx!==null? 'Update': 'Add'}
-           color='green'
-          
         />
         </View>
-        
-      {savedStudents.map((item: string, index: number) => (
+        {savedDarasa.map((item: string, index: number) => (
         <Pressable
           key={index}
-          style={{backgroundColor: index===selectedStudentIdx? 'grey': 'white'}}
+          style={{backgroundColor: index===selectedDarasaIdx? 'grey': 'white'}}
           onPress={() => {
-            if (selectedStudentIdx === index) {
-              setSelectedStudentIdx(null);
-              setNewstudent('');
+            if (selectedDarasaIdx === index) {
+              setSelectedDarasaIdx(null);
+              setDarasa('');
             } else {
-              setSelectedStudentIdx(index);
-              setNewstudent(item);
+              setSelectedDarasaIdx(index);
+              setDarasa(item);
             }
           }}
         >
           <View style={styles.list}>
             <Text>{index+1} {item}</Text>
-            <TouchableOpacity onPress={() => deleteStudent(index)}>
+            <TouchableOpacity onPress={() => deleteClass(index)}>
               <Text style={{ color: "red", alignItems: "flex-end" }}>X</Text>
             </TouchableOpacity>
           </View>
         </Pressable>
       ))}
+        
       
       </ScrollView>
     </SafeAreaView>
@@ -87,7 +77,7 @@ const App: React.FC = () => {
 
 
 };
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     
@@ -97,29 +87,20 @@ const App: React.FC = () => {
   },
   text: {
     fontSize: 42,
-    padding: 2,
-    marginHorizontal: 10,
-    flexDirection:'row'
+    padding: 20,
   },
   title:{
     justifyContent:'center',
     alignItems:'center',
-    padding:10,
+    padding:20,
     backgroundColor:'#E9F3F3'
   },
-  add:{
-    marginHorizontal: 10,
-    alignItems: "flex-end",
-  },
   list:{
-      flexDirection: "row",
-      
-      justifyContent: "space-between",
-      marginTop: 10
+    flexDirection: "row",
+    justifyContent: "space-between",
+     marginTop: 10
 
   }
-  
-  
-});
+})
 
 export default App;
