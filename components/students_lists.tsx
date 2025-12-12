@@ -6,11 +6,13 @@ const App = () => {
   const [newStudent, setNewstudent]=useState("");
   const [savedStudents, setSavedstudents]=useState([]);
   const [selectedStudentIdx, setSelectedStudentIdx] = useState(null)
-  const addedClasses=()=>{
+  
+
+  const addedStudents=()=>{
     if (!newStudent) return;
     if(selectedStudentIdx!==null){
       const studentUpdates=[...savedStudents];
-      studentUpdates[selectedStudentIdx]=darasa;
+      studentUpdates[selectedStudentIdx]=newStudent;
       setSavedstudents(newStudent)
       
     }else{
@@ -23,6 +25,7 @@ const App = () => {
     const newList = savedStudents.filter((student, i) => i !== index);
     setSavedstudents(newList);
   };
+
   return (
     <SafeAreaProvider>
     <SafeAreaView style={styles.container} edges={['top']}>
@@ -46,12 +49,13 @@ const App = () => {
 
       
         <View style={styles.add}>
-        <Button onPress={addedClasses}
+        <Button onPress={addedStudents}
            title={selectedStudentIdx!==null? 'Update': 'Add'}
            color='green'
           
         />
         </View>
+        
       {savedStudents.flatMap((item, index) => (
         <Pressable style={{backgroundColor: index===selectedStudentIdx? 'grey': 'white'}} onPress={()=>{
         if(selectedStudentIdx===index){
@@ -61,13 +65,17 @@ setNewstudent('')
           setSelectedStudentIdx(index);
           setNewstudent(item);
         }
-          }} key={index}><View style={styles.list}></View><Text style={{ marginTop: 10 }}>
+          }} key={index}><View style={styles.list}><Text >
          {index+1} {item}</Text>
-          <TouchableOpacity onPress={() => deleteStudent(index)}>
+         <TouchableOpacity onPress={() => deleteStudent(index)}>
             <Text style={{ color: "red" , alignItems:"flex-end"}}>X</Text>
           </TouchableOpacity>
+        </View>
+        
         </Pressable>
+        
       ))}
+      
       </ScrollView>
     </SafeAreaView>
   </SafeAreaProvider>
@@ -98,18 +106,16 @@ setNewstudent('')
   add:{
     marginHorizontal: 10,
     alignItems: "flex-end",
-  
   },
   list:{
-    flexDirection: "row",
+      flexDirection: "row",
       
-    justifyContent: "space-between",
-     marginTop: 10
+      justifyContent: "space-between",
+      marginTop: 10
 
   }
+  
   
 });
 
 export default App;
-
-
