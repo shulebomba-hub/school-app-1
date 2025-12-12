@@ -1,5 +1,6 @@
+
 import React,{useState, useEffect} from 'react';
-import {Alert,View, Text, Image, ScrollView, TextInput, StyleSheet,Button} from 'react-native';
+import {Alert,View, Text, Image, ScrollView, TextInput, StyleSheet,Button,Pressable, TouchableOpacity} from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 
 const App = () => {
@@ -19,6 +20,11 @@ const App = () => {
     
     setDarasa("");
   };
+  const deleteClass = (index) => {
+    const newList = savedDarasa.filter((darasa, i) => i !== index);
+    setSaveddarasa(newList);
+  };
+
   
   return (
     <SafeAreaProvider>
@@ -50,11 +56,14 @@ setDarasa('')
           setDarasa(item);
         
         }
-          
-          
-          }} key={index}><Text style={{ marginTop: 10 }}>
-         {index+1} {item}
-        </Text></Pressable>
+          }} key={index}><View style={styles.list}><Text >
+         {index+1} {item}</Text>
+         <TouchableOpacity onPress={() => deleteClass(index)}>
+            <Text style={{ color: "red" , alignItems:"flex-end"}}>X</Text>
+          </TouchableOpacity>
+        </View>
+        
+        </Pressable>
       ))}
         
       
@@ -82,6 +91,12 @@ const styles = StyleSheet.create({
     alignItems:'center',
     padding:20,
     backgroundColor:'#E9F3F3'
+  },
+  list:{
+    flexDirection: "row",
+    justifyContent: "space-between",
+     marginTop: 10
+
   }
 })
 
