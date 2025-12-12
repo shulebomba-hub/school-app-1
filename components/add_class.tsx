@@ -36,13 +36,21 @@ const App: React.FC = () => {
         <View style={styles.text}>
         <Text>Class name   : 
           <TextInput 
+            style={{
+          borderBottomWidth: 1,
+          borderBottomColor: "#000",
+          paddingVertical: 2,
+        }} 
             value={darasa}
             onChangeText={setDarasa}
             placeholder='  eg. form three' 
           />
         </Text>
+        </View>
+        <View style={styles.add}>
         <Button onPress={addedClasses}
             title={selectedDarasaIdx!==null? 'Update': 'Add'}
+            color='green'
 
         />
         </View>
@@ -94,6 +102,11 @@ const styles = StyleSheet.create({
     alignItems:'center',
     padding:20,
     backgroundColor:'#E9F3F3'
+  },
+  add:{
+    marginHorizontal: 10,
+    alignItems: "flex-end",
+  
   },
   list:{
     flexDirection: "row",
