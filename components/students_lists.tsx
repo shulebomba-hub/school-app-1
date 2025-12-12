@@ -19,6 +19,10 @@ const App = () => {
     
     setNewstudent("");
   };
+  const deleteStudent = (index) => {
+    const newList = savedStudents.filter((student, i) => i !== index);
+    setSavedstudents(newList);
+  };
   return (
     <SafeAreaProvider>
     <SafeAreaView style={styles.container} edges={['top']}>
@@ -57,9 +61,12 @@ setNewstudent('')
           setSelectedStudentIdx(index);
           setNewstudent(item);
         }
-          }} key={index}><Text style={{ marginTop: 10 }}>
-         {index+1} {item}
-        </Text></Pressable>
+          }} key={index}><View style={styles.list}></View><Text style={{ marginTop: 10 }}>
+         {index+1} {item}</Text>
+          <TouchableOpacity onPress={() => deleteStudent(index)}>
+            <Text style={{ color: "red" , alignItems:"flex-end"}}>X</Text>
+          </TouchableOpacity>
+        </Pressable>
       ))}
       </ScrollView>
     </SafeAreaView>
@@ -92,8 +99,16 @@ setNewstudent('')
     marginHorizontal: 10,
     alignItems: "flex-end",
   
+  },
+  list:{
+    flexDirection: "row",
+      
+    justifyContent: "space-between",
+     marginTop: 10
+
   }
   
 });
 
 export default App;
+
