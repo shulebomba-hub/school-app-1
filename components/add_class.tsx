@@ -1,71 +1,84 @@
 
 import React,{useState, useEffect} from 'react';
-import {Alert,View, Text, Image, ScrollView, TextInput, StyleSheet,Button,Pressable, TouchableOpacity} from 'react-native';
+import {Alert,View, Text, Image, ScrollView, TextInput, StyleSheet,Button, Pressable, TouchableOpacity} from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 
-const App = () => {
-  const [darasa, setDarasa]=useState("");
-  const [savedDarasa, setSaveddarasa]=useState([])
-  const [selectedDarasaIdx, setSelectedDarasaIdx] = useState(null)
-  const addedClasses=()=>{
-    if (!darasa) return;
-    if(selectedDarasaIdx!==null){
-      const newDarasa=[...savedDarasa];
-      newDarasa[selectedDarasaIdx]=darasa;
-      setSaveddarasa(newDarasa)
+const App: React.FC = () => {
+  const [newStudent, setNewstudent]=useState<string>("");
+  const [savedStudents, setSavedstudents]=useState<string[]>([]);
+  const [selectedStudentIdx, setSelectedStudentIdx] = useState<number | null>(null)
+  
+
+  const addedStudents = () => {
+    if (!newStudent) return;
+    if(selectedStudentIdx!==null){
+      const studentUpdates=[...savedStudents];
+      studentUpdates[selectedStudentIdx]=newStudent;
+      setSavedstudents(studentUpdates);
       
     }else{
-    setSaveddarasa([...savedDarasa, darasa]);
+    setSavedstudents([...savedStudents, newStudent]);
     }
     
-    setDarasa("");
+    setNewstudent("");
   };
-  const deleteClass = (index) => {
-    const newList = savedDarasa.filter((darasa, i) => i !== index);
-    setSaveddarasa(newList);
+  const deleteStudent = (index: number) => {
+    const newList = savedStudents.filter((item: string, i: number) => i !== index);
+    setSavedstudents(newList);
   };
 
-  
   return (
     <SafeAreaProvider>
     <SafeAreaView style={styles.container} edges={['top']}>
       <ScrollView style={styles.scrollView}>
       <View style={styles.title}>
-        <Text> Add Classes </Text>
+        <Text> Add student </Text>
       </View>
-        <View style={styles.text}>
-        <Text>Class name   : 
-          <TextInput 
-            value={darasa}
-            onChangeText={setDarasa}
-            placeholder='  eg. form three' 
-          />
-        </Text>
-        <Button onPress={addedClasses}
-            title={selectedDarasaIdx!==null? 'Update': 'Add'}
+      <View style={styles.text}>
+        <Text>Full name   : </Text>
+        <TextInput
+        style={{
+          borderBottomWidth: 1,
+          borderBottomColor: "#000",
+          paddingVertical: 2,
+        }} 
+          value={newStudent}
+          onChangeText={setNewstudent}
+          placeholder='  student full name' 
+        />
+      </View>
 
+      
+        <View style={styles.add}>
+        <Button onPress={addedStudents}
+           title={selectedStudentIdx!==null? 'Update': 'Add'}
+           color='green'
+          
         />
         </View>
-        {savedDarasa.flatMap((item, index) => (
-        <Pressable style={{backgroundColor: index===selectedDarasaIdx? 'grey': 'white'}} onPress={()=>{
-        if(selectedDarasaIdx===index){
-setSelectedDarasaIdx(null);
-setDarasa('')
-        }else{
-          setSelectedDarasaIdx(index);
-          setDarasa(item);
         
-        }
-          }} key={index}><View style={styles.list}><Text >
-         {index+1} {item}</Text>
-         <TouchableOpacity onPress={() => deleteClass(index)}>
-            <Text style={{ color: "red" , alignItems:"flex-end"}}>X</Text>
-          </TouchableOpacity>
-        </View>
-        
+      {savedStudents.map((item: string, index: number) => (
+        <Pressable
+          key={index}
+          style={{backgroundColor: index===selectedStudentIdx? 'grey': 'white'}}
+          onPress={() => {
+            if (selectedStudentIdx === index) {
+              setSelectedStudentIdx(null);
+              setNewstudent('');
+            } else {
+              setSelectedStudentIdx(index);
+              setNewstudent(item);
+            }
+          }}
+        >
+          <View style={styles.list}>
+            <Text>{index+1} {item}</Text>
+            <TouchableOpacity onPress={() => deleteStudent(index)}>
+              <Text style={{ color: "red", alignItems: "flex-end" }}>X</Text>
+            </TouchableOpacity>
+          </View>
         </Pressable>
       ))}
-        
       
       </ScrollView>
     </SafeAreaView>
@@ -74,7 +87,7 @@ setDarasa('')
 
 
 };
-const styles = StyleSheet.create({
+  const styles = StyleSheet.create({
   container: {
     flex: 1,
     
@@ -84,20 +97,29 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 42,
-    padding: 20,
+    padding: 2,
+    marginHorizontal: 10,
+    flexDirection:'row'
   },
   title:{
     justifyContent:'center',
     alignItems:'center',
-    padding:20,
+    padding:10,
     backgroundColor:'#E9F3F3'
   },
+  add:{
+    marginHorizontal: 10,
+    alignItems: "flex-end",
+  },
   list:{
-    flexDirection: "row",
-    justifyContent: "space-between",
-     marginTop: 10
+      flexDirection: "row",
+      
+      justifyContent: "space-between",
+      marginTop: 10
 
   }
-})
+  
+  
+});
 
 export default App;
