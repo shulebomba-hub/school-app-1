@@ -1,19 +1,20 @@
+
 import React,{useState, useEffect} from 'react';
 import {Alert,View, Text, Image, ScrollView, TextInput, StyleSheet,Button, Pressable, TouchableOpacity} from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 
-const App = () => {
-  const [newStudent, setNewstudent]=useState("");
-  const [savedStudents, setSavedstudents]=useState([]);
-  const [selectedStudentIdx, setSelectedStudentIdx] = useState(null)
+const App: React.FC = () => {
+  const [newStudent, setNewstudent]=useState<string>("");
+  const [savedStudents, setSavedstudents]=useState<string[]>([]);
+  const [selectedStudentIdx, setSelectedStudentIdx] = useState<number | null>(null)
   
 
-  const addedStudents=()=>{
+  const addedStudents = () => {
     if (!newStudent) return;
     if(selectedStudentIdx!==null){
       const studentUpdates=[...savedStudents];
       studentUpdates[selectedStudentIdx]=newStudent;
-      setSavedstudents(newStudent)
+      setSavedstudents(studentUpdates);
       
     }else{
     setSavedstudents([...savedStudents, newStudent]);
@@ -21,8 +22,8 @@ const App = () => {
     
     setNewstudent("");
   };
-  const deleteStudent = (index) => {
-    const newList = savedStudents.filter((student, i) => i !== index);
+  const deleteStudent = (index: number) => {
+    const newList = savedStudents.filter((item: string, i: number) => i !== index);
     setSavedstudents(newList);
   };
 
@@ -56,24 +57,27 @@ const App = () => {
         />
         </View>
         
-      {savedStudents.flatMap((item, index) => (
-        <Pressable style={{backgroundColor: index===selectedStudentIdx? 'grey': 'white'}} onPress={()=>{
-        if(selectedStudentIdx===index){
-setSelectedStudentIdx(null);
-setNewstudent('')
-        }else{
-          setSelectedStudentIdx(index);
-          setNewstudent(item);
-        }
-          }} key={index}><View style={styles.list}><Text >
-         {index+1} {item}</Text>
-         <TouchableOpacity onPress={() => deleteStudent(index)}>
-            <Text style={{ color: "red" , alignItems:"flex-end"}}>X</Text>
-          </TouchableOpacity>
-        </View>
-        
+      {savedStudents.map((item: string, index: number) => (
+        <Pressable
+          key={index}
+          style={{backgroundColor: index===selectedStudentIdx? 'grey': 'white'}}
+          onPress={() => {
+            if (selectedStudentIdx === index) {
+              setSelectedStudentIdx(null);
+              setNewstudent('');
+            } else {
+              setSelectedStudentIdx(index);
+              setNewstudent(item);
+            }
+          }}
+        >
+          <View style={styles.list}>
+            <Text>{index+1} {item}</Text>
+            <TouchableOpacity onPress={() => deleteStudent(index)}>
+              <Text style={{ color: "red", alignItems: "flex-end" }}>X</Text>
+            </TouchableOpacity>
+          </View>
         </Pressable>
-        
       ))}
       
       </ScrollView>
