@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
-import { Text, ActivityIndicator } from 'react-native-paper';
+import { Text, ActivityIndicator ,Checkbox} from 'react-native-paper';
 import {getItem, setItem, removeItem} from './storage/localstorage';
+import { Appbar } from 'react-native-paper';
+import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Rollcall = () => {
   const [studentView, setStudentView] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [checked, setChecked]=useState<{ [key: number]: boolean }>({});
 
   const loadInitialState = async () => {
     try {
@@ -31,7 +34,13 @@ const Rollcall = () => {
 
   useEffect(()=>{
     loadInitialState();
-  },[])
+  },[]);
+  const toggleCheck = (index: number) => {
+    setChecked(prev => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
   if (loading) {
     return (
       <View style={styles.center}>
@@ -42,6 +51,12 @@ const Rollcall = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+    <Appbar.Header>
+       <Appbar.Content title="Attendance"  />
+        <Appbar.Action icon="school" subtitle={'hello'} onPress={() => {}} />
+        <Appbar.Action icon='card' onPress={() => {}} />
+        <Appbar.Action icon='comment' onPress={() => {}} />
+    </Appbar.Header>
       {studentView.length === 0 ? (
         <Text>No saved data</Text>
       ) : (
@@ -51,6 +66,10 @@ const Rollcall = () => {
             <View style={styles.list} key={index}>
               <Text style={styles.index}>{index + 1}.</Text>
               <Text style={styles.itemText}>{display}</Text>
+              <Checkbox
+              status={checked[index] ? 'checked' : 'unchecked'}
+              onPress={() => toggleCheck(index)}
+            />
             </View>
           );
         })
@@ -78,4 +97,3 @@ const styles = StyleSheet.create({
 });
 
 export default Rollcall;
-
