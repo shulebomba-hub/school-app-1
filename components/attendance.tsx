@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import { Text, ActivityIndicator ,Checkbox} from 'react-native-paper';
 import {getItem, setItem, removeItem} from './storage/localstorage';
-import { Appbar } from 'react-native-paper';
+import { Appbar, Button } from 'react-native-paper';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -74,6 +74,10 @@ const Rollcall = () => {
           );
         })
       )}
+      <Button icon="clock" mode="
+      " onPress={() => console.log('Pressed')}>
+      Save
+    </Button>
     </ScrollView>
   );
 };
