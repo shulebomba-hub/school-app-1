@@ -11,6 +11,7 @@ const Rollcall = () => {
   const [studentView, setStudentView] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   
+
   const loadInitialState = async () => {
     try {
       const _savedDarasa = await getItem('savedDarasa');
@@ -35,7 +36,7 @@ const Rollcall = () => {
   useEffect(()=>{
     loadInitialState();
   },[]);
-
+  
   if (loading) {
     return (
       <View style={styles.center}>
