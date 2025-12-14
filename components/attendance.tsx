@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import { Text, ActivityIndicator ,Checkbox} from 'react-native-paper';
 import {getItem, setItem, removeItem} from './storage/localstorage';
-import { Appbar, Button } from 'react-native-paper';
+import { Appbar } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Rollcall = () => {
   const [studentView, setStudentView] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [checked, setChecked]=useState<{ [key: number]: boolean }>({});
-
+  
   const loadInitialState = async () => {
     try {
       const _savedDarasa = await getItem('savedDarasa');
@@ -35,12 +35,7 @@ const Rollcall = () => {
   useEffect(()=>{
     loadInitialState();
   },[]);
-  const toggleCheck = (index: number) => {
-    setChecked(prev => ({
-      ...prev,
-      [index]: !prev[index],
-    }));
-  };
+
   if (loading) {
     return (
       <View style={styles.center}>
@@ -66,16 +61,14 @@ const Rollcall = () => {
             <View style={styles.list} key={index}>
               <Text style={styles.index}>{index + 1}.</Text>
               <Text style={styles.itemText}>{display}</Text>
-              <Checkbox
-              status={checked[index] ? 'checked' : 'unchecked'}
-              onPress={() => toggleCheck(index)}
-            />
+              <Button onPress={()=>{}}>P</Button>
+            <Button onPress={()=>{}}>A
+            </Button>
             </View>
           );
         })
       )}
-      <Button icon="clock" mode="
-      " onPress={() => console.log('Pressed')}>
+      <Button icon="clock" mode="" onPress={() => console.log('Pressed')}>
       Save
     </Button>
     </ScrollView>
