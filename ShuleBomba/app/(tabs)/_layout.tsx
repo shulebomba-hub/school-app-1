@@ -5,7 +5,7 @@ import { HapticTab } from "@/components/haptic-tab";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import { Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
-import { Settings2, Settings2Icon } from "lucide-react-native";
+import { HomeIcon, Settings2, Settings2Icon } from "lucide-react-native";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -22,9 +22,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "ShuleBomba",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <HomeIcon />,
         }}
       />
       <Tabs.Screen
