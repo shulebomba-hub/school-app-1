@@ -32,6 +32,9 @@ export default function HomeScreen() {
     loadInitialState();
   }, []);
   const router = useRouter();
+  const onClassView = () => {
+    router.push("/(classes)/classview");
+  };
   return (
     <View style={{ flex: 1 }}>
       <Card>
@@ -39,7 +42,7 @@ export default function HomeScreen() {
           <Text>IYUNGA TECHNICAL SCHOOL</Text>
         </Card.Content>
       </Card>
-      <Card>
+      <Card onPress={onClassView}>
         <Card.Content>
           <Text>Card title</Text>
           <Text>Card content</Text>
@@ -51,17 +54,18 @@ export default function HomeScreen() {
       </Card>
       {savedDarasa.map((item: string, index: number) => (
         <Card>
-          <Pressable key={`${item}-${index}`}>
-            <View>
-              <Text>
-                {index + 1}. {item}
-              </Text>
-              <TouchableOpacity onPress={() => {}}></TouchableOpacity>
-            </View>
-          </Pressable>
+          <Card.Content>
+            <TouchableOpacity onPress={() => {}}>
+              <View key={`${item}-${index}`}>
+                <Text>
+                  {index + 1}. {item}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </Card.Content>
         </Card>
       ))}
-      ;{/* Content */}
+      {/* Content */}
       <TouchableOpacity
         style={styles.add}
         onPress={() => router.push("/(tabs)/addclass")}
