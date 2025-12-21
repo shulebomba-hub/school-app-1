@@ -1,14 +1,73 @@
 import { Image } from "expo-image";
-import { Platform, StyleSheet, View, Text } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Pressable,
+} from "react-native";
 import { HelloWave } from "@/components/hello-wave";
+import { Card, Button, FAB } from "react-native-paper";
+import { DeleteIcon, PenLine } from "lucide-react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { Router, useRouter } from "expo-router";
+import { getItem } from "./storage/localStorage";
+import { useEffect, useState } from "react";
 
 export default function HomeScreen() {
+  const [savedDarasa, setSavedDarasa] = useState<string[]>([]);
+  const loadInitialState = async () => {
+    try {
+      const raw = await getItem("savedDarasa");
+      if (raw != null) {
+        setSavedDarasa(JSON.parse(raw));
+      }
+    } catch (err) {
+      console.warn("loadInitialState error", err);
+    }
+  };
+
+  useEffect(() => {
+    loadInitialState();
+  }, []);
+  const router = useRouter();
   return (
-    <View>
-      <View>
-        <Text>IYUNGA TECHNICAL SCHOOL</Text>
-      </View>
-      <Text>Here List of All Classes belongs to Teacher Will Appear.</Text>
+    <View style={{ flex: 1 }}>
+      <Card>
+        <Card.Content>
+          <Text>IYUNGA TECHNICAL SCHOOL</Text>
+        </Card.Content>
+      </Card>
+      <Card>
+        <Card.Content>
+          <Text>Card title</Text>
+          <Text>Card content</Text>
+        </Card.Content>
+        <Card.Actions>
+          <PenLine />
+          <DeleteIcon />
+        </Card.Actions>
+      </Card>
+      {savedDarasa.map((item: string, index: number) => (
+        <Card>
+          <Pressable key={`${item}-${index}`}>
+            <View>
+              <Text>
+                {index + 1}. {item}
+              </Text>
+              <TouchableOpacity onPress={() => {}}></TouchableOpacity>
+            </View>
+          </Pressable>
+        </Card>
+      ))}
+      ;{/* Content */}
+      <TouchableOpacity
+        style={styles.add}
+        onPress={() => router.push("/(tabs)/addclass")}
+      >
+        <Ionicons name="add" size={28} color="#fff" />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -19,15 +78,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
   },
+
   stepContainer: {
     gap: 8,
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
+  add: {
     position: "absolute",
+    bottom: 20,
+    right: 20,
+    backgroundColor: "green",
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 5,
   },
 });

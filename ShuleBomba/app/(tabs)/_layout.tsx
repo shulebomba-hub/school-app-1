@@ -22,13 +22,21 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "ShuleBomba",
-          tabBarIcon: ({ color }) => <HomeIcon />,
+          tabBarIcon: ({ color }) => <HomeIcon color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="settings"
         options={{
           title: "Settings",
+          tabBarIcon: ({ color }) => <Settings2Icon color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="addclass"
+        options={{
+          title: "Add / Edit Class Name",
+          href: null,
           tabBarIcon: ({ color }) => <Settings2Icon color={color} />,
         }}
       />
