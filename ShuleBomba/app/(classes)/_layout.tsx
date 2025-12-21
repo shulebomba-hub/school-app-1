@@ -9,7 +9,7 @@ export default function DrawerLayout() {
       }}
     >
       <Drawer.Screen
-        name="index"
+        name="classview"
         options={{
           title: "Home",
           drawerIcon: ({ color, size }) => (
@@ -19,9 +19,9 @@ export default function DrawerLayout() {
       />
 
       <Drawer.Screen
-        name="students"
+        name="attendance"
         options={{
-          title: "Students",
+          title: "Attendance",
           drawerIcon: ({ color, size }) => (
             <Ionicons name="people-outline" size={size} color={color} />
           ),
@@ -29,11 +29,11 @@ export default function DrawerLayout() {
       />
 
       <Drawer.Screen
-        name="settings"
+        name="saved-rolcall"
         options={{
-          title: "Settings",
+          title: "Saved Rolcall",
           drawerIcon: ({ color, size }) => (
-            <Ionicons name="settings-outline" size={size} color={color} />
+            <Ionicons name="save-outline" size={size} color={color} />
           ),
         }}
       />

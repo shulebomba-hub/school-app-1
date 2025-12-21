@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Home Screen</Text>
+      <Text>Here Lists of Students of Selected Class will appear......</Text>
 
       <TouchableOpacity
         style={styles.add}
