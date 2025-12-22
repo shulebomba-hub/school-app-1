@@ -11,7 +11,7 @@ export default function DrawerLayout() {
       <Drawer.Screen
         name="classview"
         options={{
-          title: "Home",
+          title: "Form one",
           drawerIcon: ({ color, size }) => (
             <Ionicons name="home-outline" size={size} color={color} />
           ),

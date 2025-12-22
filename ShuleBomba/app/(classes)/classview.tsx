@@ -14,7 +14,7 @@ export default function Home() {
         style={styles.add}
         onPress={() => router.push("/(tabs)/addclass")}
       >
-        <Ionicons name="add" size={28} color="#fff" />
+        <Ionicons name="add" size={28} color="#ffff" />
       </TouchableOpacity>
     </View>
   );

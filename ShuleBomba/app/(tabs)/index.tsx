@@ -44,8 +44,8 @@ export default function HomeScreen() {
       </Card>
       <Card onPress={onClassView}>
         <Card.Content>
-          <Text>Card title</Text>
-          <Text>Card content</Text>
+          <Text>Form one</Text>
+          <Text>Class content</Text>
         </Card.Content>
         <Card.Actions>
           <PenLine />
