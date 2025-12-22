@@ -33,10 +33,10 @@ const DarasaModel = types.model({
       })
       self.students.push(student) 
     },
-  removeStudent(student){
-    self.students = self.students.filter(s=>s.id!==student.identifier)
+  removeStudent(student:any){
+    self.students = self.students.filter(s=>s.id!==student.id)
   },
-  setName(value){
+  setName(value:string){
     self.name=value;
   }
 
@@ -65,7 +65,7 @@ const RootStoreModel = types.model({
 
 export const rootStore = RootStoreModel.create({
   authUser: null,
-  darasa: [],
+  darasas: [],
   attendances: [],
   selectedDarasa: null
 })

@@ -13,7 +13,7 @@ import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { getItem, setItem } from "./storage/localStorage";
 import { Provider as PaperProvider, TextInput } from "react-native-paper";
 
-const App: React.FC = () => {
+const DarasaScreen: React.FC = () => {
   const [darasa, setDarasa] = useState<string>("");
   const [savedDarasa, setSaveddarasa] = useState<string[]>([]);
   const [selectedDarasaIdx, setSelectedDarasaIdx] = useState<number | null>(
@@ -142,4 +142,4 @@ const styles = StyleSheet.create({
   delete: { color: "red", paddingHorizontal: 8 },
 });
 
-export default App;
+export default DarasaScreen;
