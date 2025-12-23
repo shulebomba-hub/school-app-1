@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   Button,
   StyleSheet,
   ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { getItem, setItem } from "./(tabs)/storage/localStorage";
+import { PaperProvider, TextInput } from "react-native-paper";
 
 export default function Login() {
   const router = useRouter();
@@ -19,7 +19,7 @@ export default function Login() {
 
   useEffect(() => {
     (async () => {
-      const hasLoggedIn = await getItem("hasLoggedIn");
+      const hasLoggedIn = await getItem("hasLoggedIni");
       if (hasLoggedIn) {
         router.replace("/(tabs)");
         return;
@@ -57,27 +57,29 @@ export default function Login() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome to ShuleBomba</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      {error ? <Text style={styles.error}>{error}</Text> : null}
-      <View style={styles.button}>
-        <Button title="Login" onPress={handleLogin} />
+    <PaperProvider>
+      <View style={styles.container}>
+        <Text style={styles.title}>Welcome to ShuleBomba</Text>
+        <TextInput
+          label="Username"
+          mode="outlined"
+          value={username}
+          onChangeText={setUsername}
+          autoCapitalize="none"
+        />
+        <TextInput
+          label="Password"
+          value={password}
+          mode="outlined"
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+        {error ? <Text style={styles.error}>{error}</Text> : null}
+        <View style={styles.button}>
+          <Button title="Login" onPress={handleLogin} />
+        </View>
       </View>
-    </View>
+    </PaperProvider>
   );
 }
 
@@ -89,13 +91,7 @@ const styles = StyleSheet.create({
   },
   center: { flex: 1, justifyContent: "center", alignItems: "center" },
   title: { fontSize: 24, marginBottom: 20, textAlign: "center" },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 6,
-    padding: 10,
-    marginBottom: 12,
-  },
+
   button: { marginTop: 8 },
   error: { color: "red", marginBottom: 8 },
 });
