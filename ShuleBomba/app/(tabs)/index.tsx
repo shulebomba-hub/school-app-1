@@ -11,7 +11,7 @@ import { HelloWave } from "@/components/hello-wave";
 import { Card, Button, FAB } from "react-native-paper";
 import { DeleteIcon, PenLine } from "lucide-react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Router, useRouter } from "expo-router";
+import { Router, Tabs, useRouter } from "expo-router";
 import { getItem } from "./storage/localStorage";
 import { useEffect, useState } from "react";
 
@@ -36,6 +36,7 @@ export default function HomeScreen() {
     router.push("/(classes)/classview");
   };
   return (
+    
     <View style={{ flex: 1 }}>
       <Card>
         <Card.Content>

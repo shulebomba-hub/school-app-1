@@ -40,7 +40,7 @@ export default function Login() {
       // Placeholder authentication: accept any non-empty credentials.
       // Replace this with real auth logic as needed.
       await setItem("hasLoggedIn", true);
-      await setItem("user", { username });
+      await setItem("user", JSON.stringify(username));
       router.replace("/(tabs)");
     } catch (e) {
       setError("Login failed. Try again.");

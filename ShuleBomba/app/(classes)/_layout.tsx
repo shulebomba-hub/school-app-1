@@ -31,9 +31,18 @@ export default function DrawerLayout() {
       <Drawer.Screen
         name="saved-rolcall"
         options={{
-          title: "Saved Rolcall",
+          title: "Saved Roll-call",
           drawerIcon: ({ color, size }) => (
             <Ionicons name="save-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="delete-class"
+        options={{
+          title: "Delete this class",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="trash" size={size} color={color} />
           ),
         }}
       />
