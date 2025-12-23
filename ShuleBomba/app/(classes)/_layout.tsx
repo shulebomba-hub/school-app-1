@@ -42,7 +42,16 @@ export default function DrawerLayout() {
         options={{
           title: "Delete this class",
           drawerIcon: ({ color, size }) => (
-            <Ionicons name="trash" size={size} color={color} />
+            <Ionicons name="trash" size={size} color="red" />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="addStudent"
+        options={{
+          title: "Add Student",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="trash" size={size} color="red" />
           ),
         }}
       />

@@ -1,69 +1,38 @@
-import { Image } from "expo-image";
-import {
-  Platform,
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Pressable,
-} from "react-native";
-import { HelloWave } from "@/components/hello-wave";
-import { Card, Button, FAB } from "react-native-paper";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { Card } from "react-native-paper";
 import { DeleteIcon, PenLine } from "lucide-react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Router, Tabs, useRouter } from "expo-router";
-import { getItem } from "./storage/localStorage";
-import { useEffect, useState } from "react";
+import { useRouter } from "expo-router";
+import { rootStore } from "@/components/models";
 
 export default function HomeScreen() {
-  const [savedDarasa, setSavedDarasa] = useState<string[]>([]);
-  const loadInitialState = async () => {
-    try {
-      const raw = await getItem("savedDarasa");
-      if (raw != null) {
-        setSavedDarasa(JSON.parse(raw));
-      }
-    } catch (err) {
-      console.warn("loadInitialState error", err);
-    }
-  };
+  const { darasas, addDarasa, selectedDarasa, setSelectedDarasa, authUser } =
+    rootStore;
 
-  useEffect(() => {
-    loadInitialState();
-  }, []);
   const router = useRouter();
-  const onClassView = () => {
+  const onClassView = (_darasa) => {
+    setSelectedDarasa(_darasa.id);
     router.push("/(classes)/classview");
   };
+
   return (
-    
     <View style={{ flex: 1 }}>
       <Card>
         <Card.Content>
-          <Text>IYUNGA TECHNICAL SCHOOL</Text>
+          <Text>{authUser?.full_name}</Text>
         </Card.Content>
       </Card>
-      <Card onPress={onClassView}>
-        <Card.Content>
-          <Text>Form one</Text>
-          <Text>Class content</Text>
-        </Card.Content>
-        <Card.Actions>
-          <PenLine />
-          <DeleteIcon />
-        </Card.Actions>
-      </Card>
-      {savedDarasa.map((item: string, index: number) => (
-        <Card>
+
+      {darasas.map((item, index: number) => (
+        <Card key={index} onPress={() => onClassView(item)}>
           <Card.Content>
-            <TouchableOpacity onPress={() => {}}>
-              <View key={`${item}-${index}`}>
-                <Text>
-                  {index + 1}. {item}
-                </Text>
-              </View>
-            </TouchableOpacity>
+            <Text>{item.name}</Text>
+            <Text>Class content</Text>
           </Card.Content>
+          <Card.Actions>
+            <PenLine />
+            <DeleteIcon />
+          </Card.Actions>
         </Card>
       ))}
       {/* Content */}

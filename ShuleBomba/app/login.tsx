@@ -9,9 +9,11 @@ import {
 import { useRouter } from "expo-router";
 import { getItem, setItem } from "./(tabs)/storage/localStorage";
 import { PaperProvider, TextInput } from "react-native-paper";
+import { rootStore } from "@/components/models";
 
 export default function Login() {
   const router = useRouter();
+  const { setAuthUser, authUser } = rootStore;
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -37,10 +39,13 @@ export default function Login() {
 
     setLoading(true);
     try {
-      // Placeholder authentication: accept any non-empty credentials.
-      // Replace this with real auth logic as needed.
-      await setItem("hasLoggedIn", true);
-      await setItem("user", JSON.stringify(username));
+      setAuthUser({
+        username,
+        full_name,
+        school_name,
+        phone,
+        password,
+      });
       router.replace("/(tabs)");
     } catch (e) {
       setError("Login failed. Try again.");
