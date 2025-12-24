@@ -33,6 +33,7 @@
     "expo-web-browser": "~15.0.10",
     "lucide-react-native": "^0.562.0",
     "mobx": "^6.15.0",
+    "mobx-react": "^9.2.1",
     "mobx-react-lite": "^4.1.1",
     "mobx-state-tree": "^7.0.2",
     "react": "19.1.0",

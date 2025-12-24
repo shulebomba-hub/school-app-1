@@ -1,20 +1,11 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, Alert } from "react-native";
+import { View, TextInput, Button, Alert, Text } from "react-native";
 import { rootStore } from "@/components/models";
+import { observer } from "mobx-react";
 
-const AddStudentScreen = () => {
+const AddStudentScreen = observer(({ rootStore }) => {
   const [name, setName] = useState("");
-  const { selectedDarasa } = rootStore;
-
-  const handleAdd = () => {
-    if (name.trim() === "") {
-      Alert.alert("Error", "Please enter a student name");
-      return;
-    }
-    selectedDarasa.addStudent(name.trim());
-    setName("");
-    // go back to Attendance screen
-  };
+  const { selectedDarasa, attendances } = rootStore;
 
   return (
     <View style={{ padding: 20 }}>
@@ -30,9 +21,22 @@ const AddStudentScreen = () => {
           marginBottom: 10,
         }}
       />
-      <Button title="Add Student" onPress={handleAdd} />
+      <Button
+        title="Add Student"
+        onPress={() => rootStore.selectedDarasa?.addStudent(name)}
+      />
+
+      <View>
+        {selectedDarasa?.students.map((student: any, idx: any) => {
+          return (
+            <View key={idx}>
+              <Text>{student.full_name}</Text>
+            </View>
+          );
+        })}
+      </View>
     </View>
   );
-};
+});
 
 export default AddStudentScreen;

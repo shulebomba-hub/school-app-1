@@ -54,6 +54,7 @@ const RootStoreModel = types
   .model({
     authUser: types.maybeNull(AuthUserModel),
     darasas: types.array(DarasaModel),
+    students: types.array(DarasaModel),
     attendances: types.array(Attendance),
     selectedDarasa: types.maybeNull(types.reference(DarasaModel)),
   })
@@ -65,11 +66,11 @@ const RootStoreModel = types
       self.authUser = user;
     },
     addDarasa(darasa: any) {
-      data.id = new Date().toString();
+      darasa.id = new Date().toString();
       self.darasas.push(darasa);
       self.selectedDarasa = darasa.id;
     },
-    removeDara(darasaId: string) {
+    removeDarasa(darasaId: string) {
       self.darasas = self.darasas.filter((d) => d.id !== darasaId);
     },
   }));
