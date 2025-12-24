@@ -78,6 +78,7 @@ const RootStoreModel = types
 export const rootStore = RootStoreModel.create({
   authUser: null,
   darasas: [],
+  students: [],
   attendances: [],
   selectedDarasa: null,
 });

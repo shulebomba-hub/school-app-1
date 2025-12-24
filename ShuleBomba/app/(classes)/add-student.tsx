@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { View, TextInput, Button, Alert, Text } from "react-native";
 import { rootStore } from "@/components/models";
-import { observer } from "mobx-react";
 
-const AddStudentScreen = observer(({ rootStore }) => {
+const AddStudentScreen = () => {
   const [name, setName] = useState("");
-  const { selectedDarasa, attendances } = rootStore;
+  const { selectedDarasa } = rootStore;
+  const onaddStudent = () => {
+    rootStore.selectedDarasa?.addStudent(name);
+    setName("");
+  };
 
   return (
     <View style={{ padding: 20 }}>
@@ -21,10 +24,7 @@ const AddStudentScreen = observer(({ rootStore }) => {
           marginBottom: 10,
         }}
       />
-      <Button
-        title="Add Student"
-        onPress={() => rootStore.selectedDarasa?.addStudent(name)}
-      />
+      <Button title="Add Student" onPress={onaddStudent} />
 
       <View>
         {selectedDarasa?.students.map((student: any, idx: any) => {
@@ -37,6 +37,6 @@ const AddStudentScreen = observer(({ rootStore }) => {
       </View>
     </View>
   );
-});
+};
 
 export default AddStudentScreen;
