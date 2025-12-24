@@ -6,19 +6,21 @@ import { rootStore } from "@/components/models";
 
 export default function Home() {
   const router = useRouter();
-  const {selectedDarasa} = rootStore;
+  const { selectedDarasa } = rootStore;
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Here Lists of Students of Selected Class will appear......</Text>
-      {selectedDarasa?.students.map((student, idx)=>{
-        return <View key={idx}>
-          <Text>{student.full_name}</Text>
+      {selectedDarasa?.students.map((student, idx) => {
+        return (
+          <View key={idx}>
+            <Text>{student.full_name}</Text>
           </View>
+        );
       })}
       <TouchableOpacity
         style={styles.add}
-        onPress={() => router.push("/addStudent")}
+        onPress={() => router.push("/add-student")}
       >
         <Ionicons name="add" size={28} color="#ffff" />
       </TouchableOpacity>

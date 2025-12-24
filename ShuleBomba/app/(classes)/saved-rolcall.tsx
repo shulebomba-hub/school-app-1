@@ -23,7 +23,7 @@ const AttendanceSummaryScreen = observer(() => {
         <Text>Sick: {rootStore.attendance.sickCount}</Text>
       </View> */}
 
-      {/* List */}
+      {/* List 
       <FlatList
         data={students}
         keyExtractor={(item) => item.id}
@@ -36,8 +36,8 @@ const AttendanceSummaryScreen = observer(() => {
               borderBottomWidth: 0.5,
             }}
           >
-            <Text>{item.name}</Text>
-            <Text
+            <Text>{item.name}</Text> */}
+      {/*<Text
               style={{
                 color:
                   item.status === "present"
@@ -51,7 +51,7 @@ const AttendanceSummaryScreen = observer(() => {
             </Text>
           </View>
         )}
-      />
+      />*/}
     </View>
   );
 });
