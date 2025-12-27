@@ -51,11 +51,20 @@ const DrawerLayout = observer(() => {
           ),
         }}
       />
+      <Drawer.Screen
+        name="saved-rolcall"
+        options={{
+          title: "Saved Data",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="document-text" size={size} color={color} />
+          ),
+        }}
+      />
 
       <Drawer.Screen
         name="delete-class"
         options={{
-          title: "Delete this class",
+          title: "Delete Class",
           drawerIcon: ({ size }) => (
             <Ionicons name="trash-outline" size={size} color="red" />
           ),

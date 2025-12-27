@@ -10,7 +10,7 @@ const HomeScreen = observer(() => {
   const { darasas, setSelectedDarasa, authUser } = rootStore
   const router = useRouter()
 
-  const onClassView = (darasa) => {
+  const onClassView = (darasa:any) => {
     setSelectedDarasa(darasa.id)
     router.push("/(classes)/classview")
   }
@@ -27,7 +27,8 @@ const HomeScreen = observer(() => {
         <Card key={darasa.id} onPress={() => onClassView(darasa)}>
           <Card.Content>
             <Text>{darasa.name}</Text>
-            <Text>Class content</Text>
+            <Text>Class conten
+              </Text>
           </Card.Content>
 
           <Card.Actions>
@@ -46,6 +47,27 @@ const HomeScreen = observer(() => {
     </View>
   )
 });
-const styles = StyleSheet.create({ titleContainer: { flexDirection: "row", alignItems: "center", gap: 8, }, stepContainer: { gap: 8, marginBottom: 8, }, add: { position: "absolute", bottom: 20, right: 20, backgroundColor: "green", width: 56, height: 56, borderRadius: 28, justifyContent: "center", alignItems: "center", elevation: 5, }, });
+const styles = StyleSheet.create({
+   titleContainer: {
+     flexDirection: "row", 
+     alignItems: "center",
+      gap: 8,
+    }, 
+    stepContainer: {
+       gap: 8,
+        marginBottom: 8,
+    }, 
+    add: {
+       position: "absolute", 
+       bottom: 20, 
+       right: 20, 
+       backgroundColor: "green", 
+       width: 56, height: 56, 
+       borderRadius: 28, 
+       justifyContent: "center", 
+       alignItems: "center",
+        elevation: 5,
+    }, 
+});
 
 export default HomeScreen
