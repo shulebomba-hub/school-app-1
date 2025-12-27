@@ -3,7 +3,7 @@
   can manage more than one class with students belongs to that class.
   This app provide a security to teachers details and Students deatails, also its highly
   secured by ShuleBomba Team , Data cannot hacked in any means once Rollcall taken, 
-  The Attendanve sheet is locked for a that day and cannot be edited....
+  The Attendance sheet is locked and cannot be edited, Unless by using security code (Your password) within one day.
 
 
 
