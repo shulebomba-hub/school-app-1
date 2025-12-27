@@ -1,7 +1,11 @@
-import { Drawer } from "expo-router/drawer";
-import { Ionicons } from "@expo/vector-icons";
+import { Drawer } from "expo-router/drawer"
+import { Ionicons } from "@expo/vector-icons"
+import { observer } from "mobx-react-lite"
+import { rootStore } from "@/components/models"
 
-export default function DrawerLayout() {
+const DrawerLayout = observer(() => {
+  const { selectedDarasa } = rootStore
+
   return (
     <Drawer
       screenOptions={{
@@ -11,7 +15,7 @@ export default function DrawerLayout() {
       <Drawer.Screen
         name="classview"
         options={{
-          title: "Form one",
+          title: selectedDarasa?.name ?? "Class",
           drawerIcon: ({ color, size }) => (
             <Ionicons name="home-outline" size={size} color={color} />
           ),
@@ -29,7 +33,7 @@ export default function DrawerLayout() {
       />
 
       <Drawer.Screen
-        name="saved-rolcall"
+        name="saved-rollcall"
         options={{
           title: "Saved Roll-call",
           drawerIcon: ({ color, size }) => (
@@ -37,24 +41,28 @@ export default function DrawerLayout() {
           ),
         }}
       />
-      <Drawer.Screen
-        name="delete-class"
-        options={{
-          title: "Delete this class",
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="trash" size={size} color="red" />
-          ),
-        }}
-      />
+
       <Drawer.Screen
         name="add-student"
         options={{
           title: "Add Student",
           drawerIcon: ({ color, size }) => (
-            <Ionicons name="trash" size={size} color="red" />
+            <Ionicons name="person-add-outline" size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Drawer.Screen
+        name="delete-class"
+        options={{
+          title: "Delete this class",
+          drawerIcon: ({ size }) => (
+            <Ionicons name="trash-outline" size={size} color="red" />
           ),
         }}
       />
     </Drawer>
-  );
-}
+  )
+})
+
+export default DrawerLayout

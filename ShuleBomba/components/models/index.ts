@@ -65,10 +65,9 @@ const RootStoreModel = types
     setAuthUser(user: any) {
       self.authUser = user;
     },
-    addDarasa(darasa: any) {
-      darasa.id = new Date().toString();
-      self.darasas.push(darasa);
-      self.selectedDarasa = darasa.id;
+    addDarasa(id: any,name:any) {
+      self.darasas.push({id,name,created_by:'steve',students:[]});
+      self.selectedDarasa = name.id;
     },
     removeDarasa(darasaId: string) {
       self.darasas = self.darasas.filter((d) => d.id !== darasaId);

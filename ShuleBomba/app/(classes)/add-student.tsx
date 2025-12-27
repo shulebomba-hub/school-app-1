@@ -1,14 +1,21 @@
-import React, { useState } from "react";
-import { View, TextInput, Button, Alert, Text } from "react-native";
-import { rootStore } from "@/components/models";
+import React, { useState } from "react"
+import { View, TextInput, Button, Text } from "react-native"
+import { observer } from "mobx-react-lite"
+import { rootStore } from "@/components/models"
 
-const AddStudentScreen = () => {
-  const [name, setName] = useState("");
-  const { selectedDarasa } = rootStore;
-  const onaddStudent = () => {
-    rootStore.selectedDarasa?.addStudent(name);
-    setName("");
-  };
+const AddStudentScreen = observer(() => {
+  const [name, setName] = useState("")
+  const { selectedDarasa } = rootStore
+
+  const onAddStudent = () => {
+    if (!name.trim()) return
+    selectedDarasa?.addStudent(name.trim())
+    setName("")
+  }
+
+  if (!selectedDarasa) {
+    return <Text>No class selected</Text>
+  }
 
   return (
     <View style={{ padding: 20 }}>
@@ -24,19 +31,18 @@ const AddStudentScreen = () => {
           marginBottom: 10,
         }}
       />
-      <Button title="Add Student" onPress={onaddStudent} />
 
-      <View>
-        {selectedDarasa?.students.map((student: any, idx: any) => {
-          return (
-            <View key={idx}>
-              <Text>{student.full_name}</Text>
-            </View>
-          );
-        })}
+      <Button title="Add Student" onPress={onAddStudent} />
+
+      <View style={{ marginTop: 20 }}>
+        {selectedDarasa.students.map(student => (
+          <View key={student.id}>
+            <Text>{student.full_name}</Text>
+          </View>
+        ))}
       </View>
     </View>
-  );
-};
+  )
+})
 
-export default AddStudentScreen;
+export default AddStudentScreen
