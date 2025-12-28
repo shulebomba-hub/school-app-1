@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "ShuleBomba",
+    "owner": "gbrain",
     "slug": "ShuleBomba",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,7 +10,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.stevengiki201.ShuleBomba"
     },
     "android": {
       "adaptiveIcon": {
@@ -19,7 +21,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.stevengiki201.ShuleBomba"
     },
     "web": {
       "output": "static",
@@ -43,6 +46,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "d95e7f50-91ff-47f9-9aad-f3bcde650970"
+      }
     }
   }
 }

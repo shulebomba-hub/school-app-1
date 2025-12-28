@@ -19,7 +19,7 @@ const HomeScreen = observer(() => {
     <View style={{ flex: 1 }}>
       <Card>
         <Card.Content>
-          <Text>{authUser?.full_name}</Text>
+          <Text>{authUser?.school_name}</Text>
         </Card.Content>
       </Card>
 
@@ -27,8 +27,7 @@ const HomeScreen = observer(() => {
         <Card key={darasa.id} onPress={() => onClassView(darasa)}>
           <Card.Content>
             <Text>{darasa.name}</Text>
-            <Text>Class conten
-              </Text>
+            <Text>Class content</Text>
           </Card.Content>
 
           <Card.Actions>

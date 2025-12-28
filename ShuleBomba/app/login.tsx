@@ -7,24 +7,27 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { getItem, setItem } from "./(tabs)/storage/localStorage";
+import { getItem } from "./(tabs)/storage/localStorage";
 import { PaperProvider, TextInput } from "react-native-paper";
 import { rootStore } from "@/components/models";
 
 export default function Login() {
   const router = useRouter();
-  const { setAuthUser, authUser } = rootStore;
+  const { setAuthUser } = rootStore;
+
   const [loading, setLoading] = useState(true);
-  const [username, setUsername] = useState("");
-  const [phone, setPhone] = useState("");
-  const { darasas, addDarasa, selectedDarasa, setSelectedDarasa } = rootStore;
-  const [school_name, setSchool_name] = useState("");
-  const [password, setPassword] = useState("");
+  const [step, setStep] = useState(1);
   const [error, setError] = useState("");
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [schoolName, setSchoolName] = useState("");
+  const [className, setClassName] = useState("");
 
   useEffect(() => {
     (async () => {
-      const hasLoggedIn = await getItem("hasLoggedIni");
+      const hasLoggedIn = await getItem("hasLoggedIn");
       if (hasLoggedIn) {
         router.replace("/(tabs)");
         return;
@@ -33,26 +36,31 @@ export default function Login() {
     })();
   }, []);
 
-  const handleLogin = async () => {
+  const nextStep = () => {
     setError("");
-    if (!username.trim() || !password) {
-      setError("Please enter username and password");
+    setStep((prev) => prev + 1);
+  };
+
+  const prevStep = () => setStep((prev) => prev - 1);
+
+  const handleLogin = async () => {
+    if (!username || !password || !phone || !schoolName || !className) {
+      setError("Please complete all steps");
       return;
     }
 
-    setLoading(true);
     try {
       setAuthUser({
         username,
-
-        school_name,
-        phone,
         password,
+        phone,
+        school_name: schoolName,
+        class_name: className,
       });
+
       router.replace("/(tabs)");
-    } catch (e) {
+    } catch {
       setError("Login failed. Try again.");
-      setLoading(false);
     }
   };
 
@@ -67,52 +75,103 @@ export default function Login() {
   return (
     <PaperProvider>
       <View style={styles.container}>
-        <Text style={styles.title}>Welcome to ShuleBomba</Text>
-        <TextInput
-          label="Username"
-          mode="outlined"
-          value={username}
-          onChangeText={setUsername}
-          autoCapitalize="none"
-        />
-        <TextInput
-          label="Password"
-          value={password}
-          mode="outlined"
-          onChangeText={setPassword}
-          secureTextEntry
-        />
-        <TextInput
-          label="Phone number"
-          value={phone}
-          mode="outlined"
-          onChangeText={setPhone}
-        />
-        <TextInput
-          label="School name"
-          value={school_name}
-          mode="outlined"
-          onChangeText={setSchool_name}
-        />
+        <Text style={styles.title}>Step {step} of 3</Text>
+
+        {/* STEP 1 */}
+        {step === 1 && (
+          <>
+            <TextInput
+              label="Username"
+              mode="outlined"
+              value={username}
+              onChangeText={setUsername}
+            />
+            <TextInput
+              label="Password"
+              mode="outlined"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
+            <Button title="Next" onPress={nextStep} />
+          </>
+        )}
+
+        {/* STEP 2 */}
+        {step === 2 && (
+          <>
+            <TextInput
+              label="Phone Number"
+              mode="outlined"
+              value={phone}
+              onChangeText={setPhone}
+            />
+            <View style={styles.row}>
+              <Button title="Back" onPress={prevStep} />
+              <Button title="Next" onPress={nextStep} />
+              
+            </View>
+          </>
+        )}
+
+        {/* STEP 3 */}
+        {step === 3 && (
+          <>
+            <TextInput
+              label="School Name"
+              mode="outlined"
+              value={schoolName}
+              onChangeText={setSchoolName}
+            />
+            <TextInput
+              label="Class Name"
+              mode="outlined"
+              value={className}
+              onChangeText={setClassName}
+            />
+            <View style={styles.row}>
+              <Button title="Back" onPress={prevStep} />
+              <Button title="Finish & Login" onPress={handleLogin} />
+            </View>
+          </>
+        )}
 
         {error ? <Text style={styles.error}>{error}</Text> : null}
-        <View style={styles.button}>
-          <Button title="Login" onPress={handleLogin} />
-        </View>
+        
       </View>
     </PaperProvider>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     padding: 20,
+    backgroundColor: "#fff",
   },
-  center: { flex: 1, justifyContent: "center", alignItems: "center" },
-  title: { fontSize: 24, marginBottom: 20, textAlign: "center" },
 
-  button: { marginTop: 8 },
-  error: { color: "red", marginBottom: 8 },
+  center: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  title: {
+    fontSize: 22,
+    fontWeight: "600",
+    textAlign: "center",
+    marginBottom: 20,
+  },
+
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 16,
+  },
+
+  error: {
+    color: "red",
+    marginTop: 12,
+    textAlign: "center",
+  },
 });

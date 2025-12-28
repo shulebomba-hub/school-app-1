@@ -2,10 +2,10 @@ import { types } from "mobx-state-tree"; // alternatively: import { t } from "mo
 
 const AuthUserModel = types.model({
   username: types.identifier,
-  full_name: types.string,
   phone: types.string,
   password: types.string,
   school_name: types.string,
+  class_name: types.string,
 });
 
 const StudentModel = types
