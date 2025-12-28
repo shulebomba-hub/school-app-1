@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons"
 import { useRouter } from "expo-router"
 import { observer } from "mobx-react-lite"
 import { rootStore } from "@/components/models"
+import React from "react"
 
 const HomeScreen = observer(() => {
   const { darasas, setSelectedDarasa, authUser } = rootStore
@@ -19,7 +20,7 @@ const HomeScreen = observer(() => {
     <View style={{ flex: 1 }}>
       <Card>
         <Card.Content>
-          <Text>{authUser?.school_name}</Text>
+          <Text>{authUser?.school_name.toUpperCase()}</Text>
         </Card.Content>
       </Card>
 
@@ -27,7 +28,7 @@ const HomeScreen = observer(() => {
         <Card key={darasa.id} onPress={() => onClassView(darasa)}>
           <Card.Content>
             <Text>{darasa.name}</Text>
-            <Text>Class content</Text>
+            <Text>{darasa.students.length} Students</Text>
           </Card.Content>
 
           <Card.Actions>

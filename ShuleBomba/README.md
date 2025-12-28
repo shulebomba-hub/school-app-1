@@ -9,5 +9,4 @@
 
 ## Join the community
 
-Join our community of developers creating universal apps.
-
+  Join our community of developers in creating the universal applications.
