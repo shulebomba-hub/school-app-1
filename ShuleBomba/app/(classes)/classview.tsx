@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons"
 import { observer } from "mobx-react-lite"
 import { rootStore } from "@/components/models"
 import { Divider } from "react-native-paper"
+import React from "react"
 
 const ClassHomeScreen = observer(() => {
   const router = useRouter()

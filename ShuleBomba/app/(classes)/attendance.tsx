@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { observer } from "mobx-react-lite";
 import { rootStore } from "@/components/models";
 import { Button } from "react-native-paper";
+import React from "react";
 
 const AttendanceScreen = observer(() => {
  
