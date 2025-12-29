@@ -2,7 +2,32 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { observer } from "mobx-react-lite";
 import { rootStore } from "@/components/models";
 import { Button } from "react-native-paper";
-import React from "react";
+import React, { useState } from "react";
+import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+const [date, setDate] = useState(new Date(1598051730000));
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    DateTimePickerAndroid.open({
+      value: date,
+      onChange,
+      mode: currentMode,
+      is24Hour: true,
+    });
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
 
 const AttendanceScreen = observer(() => {
  
@@ -15,8 +40,14 @@ const AttendanceScreen = observer(() => {
   return (
     <View style={{ flex: 1, padding: 20 }}>
       <Text style={{ fontWeight: "bold", marginBottom: 10 }}>
+
         Students in {selectedDarasa.name}
       </Text>
+      <View>
+        <Button onPress={showDatepicker} title="Show date picker!" />
+      <Button onPress={showTimepicker} title="Show time picker!" />
+      <Text>selected: {date.toLocaleString()}</Text>
+      </View>
 
       {selectedDarasa.students.map(student => (
         <View key={student.id} style={styles.row}>
