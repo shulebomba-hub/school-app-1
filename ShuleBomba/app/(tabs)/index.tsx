@@ -33,7 +33,6 @@ const HomeScreen = observer(() => {
 
           <Card.Actions>
             <PenLine size={18} />
-            <DeleteIcon size={18} />
           </Card.Actions>
         </Card>
       ))}

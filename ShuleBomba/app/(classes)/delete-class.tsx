@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Alert, View } from "react-native";
 import { Platform } from "react-native";
 import { Router, useRouter } from "expo-router";
-import { Button } from "react-native-paper";
+import { Button ,Text} from "react-native-paper";
 export default function DeleteNotification() {
   const router = useRouter();
   const Delete = () => {
@@ -32,10 +32,11 @@ export default function DeleteNotification() {
   };
   return (
     <View>
+      <Text>
       <Button onPress={Delete} mode="outlined">
         delete
       </Button>
-      ;
+      </Text>
     </View>
   );
 }
