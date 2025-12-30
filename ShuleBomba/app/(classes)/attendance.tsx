@@ -55,6 +55,7 @@ const AttendanceScreen = observer(() => {
           <DataTable.Cell numeric>
             <RadioButton
               value="present"
+              color="green"
               status={ student.status === 'present' ? 'checked' : 'unchecked' }
               onPress={() => student.setAttendanceStatus('present', selectedDate!)}
             />
@@ -62,6 +63,7 @@ const AttendanceScreen = observer(() => {
           <DataTable.Cell numeric>
              <RadioButton
               value="absent"
+              color="red"
               status={ student.status === 'absent' ? 'checked' : 'unchecked' }
               onPress={() => student.setAttendanceStatus('absent', selectedDate!)}
             />
@@ -69,6 +71,7 @@ const AttendanceScreen = observer(() => {
           <DataTable.Cell numeric> 
             <RadioButton
               value="sick"
+              color="yellow"
               status={ student.status === 'sick' ? 'checked' : 'unchecked' }
               onPress={() => student.setAttendanceStatus('sick', selectedDate!)}
             />

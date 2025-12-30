@@ -33,7 +33,7 @@ const AttendanceScreen = observer(() => {
   return (
     <View style={{ flex: 1, padding: 20 }}>
         <Button onPress={() => setOpen(true)} uppercase={false} mode="outlined">
-          {!selectedDate?"Pick a date": `Selected date: ${selectedDate}`}
+          {!selectedDate?"Pick a date": `Selected Date: ${selectedDate}`}
         </Button>
         <DatePickerModal
           locale="en"
@@ -54,23 +54,25 @@ const AttendanceScreen = observer(() => {
           <DataTable.Cell>{student.full_name}</DataTable.Cell>
           <DataTable.Cell numeric>
             <RadioButton
+              color="blue"
               value="present"
               status={ student.status === 'present' ? 'checked' : 'unchecked' }
-              onPress={() => student.setAttendanceStatus('present', selectedDate!)}
+
             />
           </DataTable.Cell>
           <DataTable.Cell numeric>
              <RadioButton
               value="absent"
+              color="red"
               status={ student.status === 'absent' ? 'checked' : 'unchecked' }
-              onPress={() => student.setAttendanceStatus('absent', selectedDate!)}
+
             />
           </DataTable.Cell>
           <DataTable.Cell numeric> 
             <RadioButton
+              color="yellow"
               value="sick"
               status={ student.status === 'sick' ? 'checked' : 'unchecked' }
-              onPress={() => student.setAttendanceStatus('sick', selectedDate!)}
             />
             </DataTable.Cell>
         </DataTable.Row>))}

@@ -3,6 +3,7 @@ import { Ionicons } from "@expo/vector-icons"
 import { observer } from "mobx-react-lite"
 import { rootStore } from "@/components/models"
 import React from "react"
+import DeleteNotification from "./delete-class"
 
 const DrawerLayout = observer(() => {
   const { selectedDarasa } = rootStore

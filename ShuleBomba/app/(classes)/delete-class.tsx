@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { Alert, View } from "react-native";
 import { Platform } from "react-native";
 import { Router, useRouter } from "expo-router";
-import { Button ,Text} from "react-native-paper";
 export default function DeleteNotification() {
   const router = useRouter();
   const Delete = () => {
@@ -30,13 +29,9 @@ export default function DeleteNotification() {
       );
     }
   };
-  return (
-    <View>
-      <Text>
-      <Button onPress={Delete} mode="outlined">
-        delete
-      </Button>
-      </Text>
-    </View>
-  );
+  React.useEffect(() => 
+    { Delete();
+
+     }, []);
+      return null; // nothing to render, only alert }
 }
