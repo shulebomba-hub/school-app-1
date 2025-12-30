@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { getItem } from "./(tabs)/storage/localStorage";
+
 import { PaperProvider, TextInput } from "react-native-paper";
 import { rootStore } from "@/components/models";
 
@@ -175,3 +175,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
+function getItem(arg0: string) {
+  throw new Error("Function not implemented.");
+}
+
