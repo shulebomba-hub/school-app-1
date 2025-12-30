@@ -1,16 +1,113 @@
-import React from "react";
-import { View, Text, FlatList } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import { observer } from "mobx-react-lite";
 import { rootStore } from "@/components/models";
+import { Button, DataTable, RadioButton } from "react-native-paper";
+import { DatePickerModal } from 'react-native-paper-dates';
+import dayjs from "dayjs";
 
-const AttendanceSummaryScreen = observer(() => {
-  const date = new Date();
-  const students = rootStore;
+
+const AttendanceScreen = observer(() => {
+  const {selectedDate, setSelectedDate, attendances} = rootStore;
+  const [open, setOpen] = React.useState(false);
+
+  const onDismissSingle = React.useCallback(() => {
+    setOpen(false);
+  }, [setOpen]);
+
+  const onConfirmSingle = React.useCallback(
+    (params) => {
+      setOpen(false);
+      setSelectedDate(dayjs(params.date).format("DD-MM-YYYY"));
+    },
+    [setOpen]
+  );
+  const { selectedDarasa } = rootStore;
+
+ 
+  
+  if (!selectedDarasa) {
+    return <Text>No class selected</Text>;
+  }
+
   return (
-    <View>
-      <Text>saved data</Text>
+    <View style={{ flex: 1, padding: 20 }}>
+        <Button onPress={() => setOpen(true)} uppercase={false} mode="outlined">
+          {!selectedDate?"Pick a date": `Selected date: ${selectedDate}`}
+        </Button>
+        <DatePickerModal
+          locale="en"
+          mode="single"
+          visible={open}
+          onDismiss={onDismissSingle}
+          date={new Date()}
+          onConfirm={onConfirmSingle}
+        />
+      <DataTable.Header>
+        <DataTable.Title>Full name</DataTable.Title>
+        <DataTable.Title numeric>Present</DataTable.Title>
+        <DataTable.Title numeric>Absent</DataTable.Title>
+        <DataTable.Title numeric>Sick</DataTable.Title>
+      </DataTable.Header>
+      {selectedDarasa.students.map((student) => (
+       <DataTable.Row key={`${student.id}`}>
+          <DataTable.Cell>{student.full_name}</DataTable.Cell>
+          <DataTable.Cell numeric>
+            <RadioButton
+              value="present"
+              status={ student.status === 'present' ? 'checked' : 'unchecked' }
+              onPress={() => student.setAttendanceStatus('present', selectedDate!)}
+            />
+          </DataTable.Cell>
+          <DataTable.Cell numeric>
+             <RadioButton
+              value="absent"
+              status={ student.status === 'absent' ? 'checked' : 'unchecked' }
+              onPress={() => student.setAttendanceStatus('absent', selectedDate!)}
+            />
+          </DataTable.Cell>
+          <DataTable.Cell numeric> 
+            <RadioButton
+              value="sick"
+              status={ student.status === 'sick' ? 'checked' : 'unchecked' }
+              onPress={() => student.setAttendanceStatus('sick', selectedDate!)}
+            />
+            </DataTable.Cell>
+        </DataTable.Row>))}
     </View>
   );
 });
 
-export default AttendanceSummaryScreen;
+const styles = StyleSheet.create({
+ studentRow: {
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  backgroundColor: "#f9f9f9",
+  paddingVertical: 12,
+  paddingHorizontal: 10,
+  marginVertical: 6,
+  borderRadius: 12,
+  elevation: 2,
+},
+
+name: {
+  flex: 1,
+  fontSize: 16,
+},
+
+buttons: {
+  flexDirection: "row",
+  gap: 10,
+  width:150
+},
+
+  pickers:{
+    flexDirection: "row",
+     justifyContent: "space-between",
+     marginBottom: 20,
+
+  },
+});
+
+export default AttendanceScreen;
