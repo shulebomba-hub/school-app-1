@@ -21,7 +21,7 @@ const ClassHomeScreen = observer(() => {
       </Text>
 
       {selectedDarasa.students.map(student => (
-        <View key={student.id}>
+        <View key={student.id} style={styles.studentRow}>
           <Text>{student.full_name}</Text>
           <Divider/>
         </View>
@@ -36,6 +36,18 @@ const ClassHomeScreen = observer(() => {
     </View>
   )
 });
-const styles = StyleSheet.create({ add: { position: "absolute", bottom: 20, right: 20, backgroundColor: "green", width: 56, height: 56, borderRadius: 28, justifyContent: "center", alignItems: "center", elevation: 5, }, });
+const styles = StyleSheet.create({
+   add: { position: "absolute", bottom: 20, right: 20, backgroundColor: "green", width: 56, height: 56, borderRadius: 28, justifyContent: "center", alignItems: "center", elevation: 5, },
+studentRow: {
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+
+  paddingVertical: 12,
+  paddingHorizontal: 10,
+  marginVertical: 6,
+  borderRadius: 12,
+  elevation: 2,
+}, });
 
 export default ClassHomeScreen

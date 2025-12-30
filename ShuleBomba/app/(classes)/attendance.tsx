@@ -36,12 +36,11 @@ const AttendanceScreen = observer(() => {
 
   return (
     <View style={{ flex: 1, padding: 20 }}>
-      <Text style={{ fontWeight: "bold", marginBottom: 10 }}>
-        Students in {selectedDarasa.name}
-      </Text>
-
-      <Button onPress={showDatepicker}>Show date picker</Button>
-      <Button onPress={showTimepicker}>Show time picker</Button>
+      
+      <View style={styles.pickers}>
+      <Button onPress={showDatepicker} mode="outlined" >Pick a Date</Button>
+      <Button onPress={showTimepicker} mode="outlined" >Pick a Time</Button>
+      </View>
 
       <Text>Selected: {date.toLocaleString()}</Text>
 
@@ -55,30 +54,56 @@ const AttendanceScreen = observer(() => {
       )}
 
 
-      {selectedDarasa.students.map((student) => (
-        <View key={student.id} style={styles.row}>
-          <Text>{student.full_name}</Text>
+     {selectedDarasa.students.map((student) => (
+  <View key={student.id} style={styles.studentRow}>
+    
+    {/* Student name */}
+    <Text style={styles.name}>{student.full_name}</Text>
 
-          <Button mode="outlined">Present</Button>
-          <Button mode="outlined">Absent</Button>
-          <Button mode="outlined">Sick</Button>
-        </View>
-      ))}
+    {/* Attendance buttons */}
+    <View style={styles.buttons}>
+      <Button mode="outlined" compact>P</Button>
+      <Button mode="outlined" compact>A</Button>
+      <Button mode="outlined" compact>S</Button>
+    </View>
+
+  </View>
+))}
+
     </View>
   );
 });
 
 const styles = StyleSheet.create({
-  row: {
+ studentRow: {
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  backgroundColor: "#f9f9f9",
+  paddingVertical: 12,
+  paddingHorizontal: 10,
+  marginVertical: 6,
+  borderRadius: 12,
+  elevation: 2,
+},
+
+name: {
+  flex: 1,
+  fontSize: 16,
+},
+
+buttons: {
+  flexDirection: "row",
+  gap: 10,
+  width: 150,
+  justifyContent: "space-between",
+},
+
+  pickers:{
     flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    backgroundColor: "#fff",
-    marginVertical: 6,
-    borderRadius: 12,
-    elevation: 2,
+     justifyContent: "space-between",
+     marginBottom: 20,
+
   },
 });
 

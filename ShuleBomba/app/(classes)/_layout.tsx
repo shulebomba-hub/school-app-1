@@ -2,6 +2,7 @@ import { Drawer } from "expo-router/drawer"
 import { Ionicons } from "@expo/vector-icons"
 import { observer } from "mobx-react-lite"
 import { rootStore } from "@/components/models"
+import React from "react"
 
 const DrawerLayout = observer(() => {
   const { selectedDarasa } = rootStore
