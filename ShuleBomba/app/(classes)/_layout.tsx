@@ -35,16 +35,6 @@ const DrawerLayout = observer(() => {
       />
 
       <Drawer.Screen
-        name="saved-rolcall"
-        options={{
-          title: "Saved Roll-call",
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="save-outline" size={size} color={color} />
-          ),
-        }}
-      />
-
-      <Drawer.Screen
         name="add-student"
         options={{
           title: "Add Student",
