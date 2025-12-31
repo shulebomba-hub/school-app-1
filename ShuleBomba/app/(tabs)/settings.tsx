@@ -1,16 +1,15 @@
 import { Image } from "expo-image";
-import { Platform, StyleSheet, Text } from "react-native";
+import { Platform, StyleSheet,  } from "react-native";
 
 import { Collapsible } from "@/components/ui/collapsible";
 import { ExternalLink } from "@/components/external-link";
 import ParallaxScrollView from "@/components/parallax-scroll-view";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { IconSymbol } from "@/components/ui/icon-symbol";
 import { Fonts } from "@/constants/theme";
-import { getItem, setItem } from "./storage/localStorage";
 import { LucideSettings2 } from "lucide-react-native";
 import { useState, useEffect } from "react";
+import React from "react";
 
 export default function TabTwoScreen() {
   const [username, setUsername] = useState("");
