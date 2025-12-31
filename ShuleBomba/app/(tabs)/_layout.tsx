@@ -2,12 +2,10 @@ import { Tabs } from "expo-router";
 import React from "react";
 
 import { HapticTab } from "@/components/haptic-tab";
-import { IconSymbol } from "@/components/ui/icon-symbol";
 import { Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { HomeIcon, Settings2, Settings2Icon } from "lucide-react-native";
-import { rootStore } from "@/components/models";
-import { Provider } from "mobx-react";
+
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
