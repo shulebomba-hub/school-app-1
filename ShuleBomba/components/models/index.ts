@@ -1,5 +1,6 @@
 import { set } from "mobx";
-import { getRoot, types } from "mobx-state-tree"; // alternatively: import { t } from "mobx-state-tree"
+import { getRoot, onSnapshot, types } from "mobx-state-tree"; // alternatively: import { t } from "mobx-state-tree"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AuthUserModel = types.model({
   username: types.identifier,
@@ -17,6 +18,10 @@ const StudentModel = types
     get status() {
         const {selectedDate, attendances} = getRoot(self);
       return attendances.find(att => att.student.id === self.id && att.date === selectedDate)?.status;
+    },
+      get isSaved() {
+        const {selectedDate, attendances} = getRoot(self);
+      return attendances.find(att => att.student.id === self.id && att.date === selectedDate)?.isSaved;
     }
   }
   ))
@@ -31,7 +36,8 @@ const StudentModel = types
     setAttendanceStatus(status: string, date: string){
       const {addAttendance} = getRoot(self);
       addAttendance(self.id, date, status);
-    }
+    },
+
   }));
 
 const DarasaModel = types
@@ -62,10 +68,14 @@ const Attendance = types.model({
   student: types.reference(StudentModel),
   date: types.string,
   status: types.string,
+  isSaved: types.optional(types.boolean, false),
 })  .actions((self) => ({
     setStatus(value: string) {
       self.status = value;
     },
+    setIsSaved(value: boolean) {
+      self.isSaved = value;
+    }
   }));
 
 // Define a store just like a model
@@ -109,6 +119,18 @@ const RootStoreModel = types
           status,
         });
       }
+    },
+    saveAttendance() {
+      const {selectedDate, selectedDarasa, attendances} = self;
+      if(!selectedDarasa || !selectedDate) return;
+      selectedDarasa.students.forEach((student) => {
+        const attendance = attendances.find(
+          (att) => att.student.id === student.id && att.date === selectedDate
+        );
+        if(attendance){
+          attendance.setIsSaved(true);
+        }
+      });
     }
   }));
 
@@ -118,4 +140,8 @@ export const rootStore = RootStoreModel.create({
   students: [],
   attendances: [],
   selectedDarasa: null,
+});
+
+onSnapshot(rootStore, (snapshot) => {
+  AsyncStorage.setItem("rootStore", JSON.stringify(snapshot));
 });

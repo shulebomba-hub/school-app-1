@@ -123,12 +123,6 @@ export default function Login() {
               value={schoolName}
               onChangeText={setSchoolName}
             />
-            <TextInput
-              label="Class Name"
-              mode="outlined"
-              value={className}
-              onChangeText={setClassName}
-            />
             <View style={styles.row}>
               <Button title="Back" onPress={prevStep} />
               <Button title="Finish & Login" onPress={handleLogin} />

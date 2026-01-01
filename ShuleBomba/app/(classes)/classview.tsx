@@ -37,12 +37,21 @@ const ClassHomeScreen = observer(() => {
   )
 });
 const styles = StyleSheet.create({
-   add: { position: "absolute", bottom: 20, right: 20, backgroundColor: "green", width: 56, height: 56, borderRadius: 28, justifyContent: "center", alignItems: "center", elevation: 5, },
+   add: { 
+     position: "absolute", 
+     bottom: 20, 
+     right: 20,
+     backgroundColor: "green", 
+     width: 56, 
+     height: 56, 
+     borderRadius: 28,
+     justifyContent: "center", 
+     alignItems: "center", 
+     elevation: 5, },
 studentRow: {
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "space-between",
-
   paddingVertical: 12,
   paddingHorizontal: 10,
   marginVertical: 6,

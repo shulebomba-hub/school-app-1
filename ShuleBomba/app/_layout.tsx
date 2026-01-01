@@ -10,7 +10,9 @@ import { useColorScheme } from "@/hooks/use-color-scheme";
 import { CircleUserRound } from "lucide-react-native";
 import { rootStore } from "@/components/models";
 import { Provider } from "mobx-react";
-import React from "react";
+import React, { useCallback, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { applySnapshot } from "mobx-state-tree";
 
 export const unstable_settings = {
   anchor: "(tabs)",
@@ -19,7 +21,16 @@ export const unstable_settings = {
 export default function RootLayout() {
   const colorScheme = useColorScheme(); // 'light' | 'dark'
   const router = useRouter();
-
+  const loadinitialData = useCallback(async () => {
+    const storedData = await AsyncStorage.getItem("rootStore");
+    if (storedData) {
+      const rootStoreData = JSON.parse(storedData);
+      applySnapshot(rootStore, rootStoreData);
+    }
+  }, []);
+  useEffect(() => {
+    loadinitialData();
+  }, []);
   const isDark = colorScheme === "dark";
 
   const onUserAccount = () => {
