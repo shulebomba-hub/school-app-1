@@ -1,19 +1,36 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { BookOpen, ChevronRight, Info, ListChecksIcon, SlidersHorizontalIcon, User2Icon } from "lucide-react-native"; 
+import { BookOpen, ChevronRight, Info, ListChecksIcon, SlidersHorizontalIcon, Trash2Icon, User2Icon } from "lucide-react-native"; 
 import { View, Text } from "react-native";
 import { rootStore } from "@/components/models";
-import { Divider } from "react-native-paper";
-
+import { Card, Divider } from "react-native-paper";
+import { Avatar } from "react-native-paper";
 
 export default function Account() {
   const { authUser } = rootStore;
   return (
     <View style={styles.screen}>
-    <TouchableOpacity style={styles.item}>
-  <View style={[styles.iconWrapper, { backgroundColor: "#E0F2FE" }]}>
-    <User2Icon size={20} color="#0284C7" />   
+      <Card style={{ marginBottom: 20, padding: 16, borderRadius: 16, elevation: 3 }}>      
+      <TouchableOpacity style={styles.item}>
+      <View>
+      <Avatar.Text
+        size={70}
+        label={authUser?.username?.charAt(0)?.toUpperCase() ?? "SB"}
+        style={{ backgroundColor: "#c4d4f5ff" }}
+      />
+    </View>
+  <View style={styles.user}>
+    <Text style={styles.title}>{authUser?.username ?? "Username"}</Text>
+    <Text style={styles.subtitle}>{authUser?.school_name ?? "School Name"}</Text>
   </View>
+  <ChevronRight size={20} color="#9CA3AF" />  
+  </TouchableOpacity>
+  </Card>
+      <Card style={styles.section}>
+    <TouchableOpacity style={styles.item}>
+    <View style={[styles.iconWrapper, { backgroundColor: "#E0F2FE" }]}>
+    <User2Icon size={20} color="#0284C7" />   
+    </View>
 
   <View style={styles.textWrapper}>
     <Text style={styles.title}>My Profile</Text>
@@ -66,7 +83,7 @@ export default function Account() {
 <Divider style={styles.divider} />
 
 <TouchableOpacity style={styles.item}>
-  <View style={[styles.iconWrapper, { backgroundColor: "#E8F5E9" }]}>
+  <View style={[styles.iconWrapper, { backgroundColor: "#ECFEFF" }]}>
     <Info size={20} color="#0891B2" />
   </View>
 
@@ -79,9 +96,22 @@ export default function Account() {
 </TouchableOpacity>
 <Divider style={styles.divider} />
 
+<TouchableOpacity style={styles.item}>
+  <View style={[styles.iconWrapper, { backgroundColor: "#FFE4E6" }]}>
+    <Trash2Icon size={20} color="#EF4444" />
+  </View>
+
+  <View style={styles.textWrapper}>
+    <Text style={styles.title}>Delete Account</Text>
+    <Text style={styles.subtitle}>Delete your account permanently</Text>  
+  </View>
+
+  <ChevronRight size={20} color="#9CA3AF" />
+</TouchableOpacity>
+<Divider style={styles.divider} />
+</Card>
     </View>
 
-    
   );
 }
 const styles = StyleSheet.create({
@@ -94,7 +124,7 @@ const styles = StyleSheet.create({
 
   section: {
     backgroundColor: "#FFFFFF",
-    borderRadius: 16,
+    borderRadius: 10,
     paddingVertical: 6,
     marginBottom: 16,
 
@@ -149,4 +179,8 @@ const styles = StyleSheet.create({
   chevron: {
     marginLeft: 8,
   },
+  user:{
+    marginLeft: 30,
+    flex: 1,
+  }
 });

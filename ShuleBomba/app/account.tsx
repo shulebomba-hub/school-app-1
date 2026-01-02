@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { BookOpen, ChevronRight, Info, ListChecksIcon, SlidersHorizontalIcon, User2Icon } from "lucide-react-native"; 
+import { BookOpen, ChevronRight, Info, ListChecksIcon, SlidersHorizontalIcon, Trash2Icon, User2Icon } from "lucide-react-native"; 
 import { View, Text } from "react-native";
 import { rootStore } from "@/components/models";
 import { Divider } from "react-native-paper";
@@ -66,7 +66,7 @@ export default function Account() {
 <Divider style={styles.divider} />
 
 <TouchableOpacity style={styles.item}>
-  <View style={[styles.iconWrapper, { backgroundColor: "#E8F5E9" }]}>
+  <View style={[styles.iconWrapper, { backgroundColor: "#ECFEFF" }]}>
     <Info size={20} color="#0891B2" />
   </View>
 
@@ -79,9 +79,22 @@ export default function Account() {
 </TouchableOpacity>
 <Divider style={styles.divider} />
 
+<TouchableOpacity style={styles.item}>
+  <View style={[styles.iconWrapper, { backgroundColor: "#FFE4E6" }]}>
+    <Trash2Icon size={20} color="#EF4444" />
+  </View>
+
+  <View style={styles.textWrapper}>
+    <Text style={styles.title}>Delete Account</Text>
+    <Text style={styles.subtitle}>Delete your account permanently</Text>  
+  </View>
+
+  <ChevronRight size={20} color="#9CA3AF" />
+</TouchableOpacity>
+<Divider style={styles.divider} />
+
     </View>
 
-    
   );
 }
 const styles = StyleSheet.create({
