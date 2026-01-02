@@ -1,93 +1,152 @@
-import { Image } from "expo-image";
-import { Platform, StyleSheet,  } from "react-native";
-
-import { Collapsible } from "@/components/ui/collapsible";
-import { ExternalLink } from "@/components/external-link";
-import ParallaxScrollView from "@/components/parallax-scroll-view";
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
-import { Fonts } from "@/constants/theme";
-import { LucideSettings2 } from "lucide-react-native";
-import { useState, useEffect } from "react";
 import React from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { BookOpen, ChevronRight, Info, ListChecksIcon, SlidersHorizontalIcon, User2Icon } from "lucide-react-native"; 
+import { View, Text } from "react-native";
+import { rootStore } from "@/components/models";
+import { Divider } from "react-native-paper";
 
-export default function TabTwoScreen() {
-  const [username, setUsername] = useState("");
-  //useEffect(() => {
-  //(async () => {
-  //const authUser = await getItem("user");
-  //if (authUser) {
-  //JSON.parse(authUser);
-  ////setUsername(authUser);
-  //return;
-  // }
-  // })();
-  //}, []);
+
+export default function Account() {
+  const { authUser } = rootStore;
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
-      headerImage={
-        <LucideSettings2
-          style={styles.headerImage}
-          color="#808080"
-          size={100}
-        />
-      }
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText
-          type="title"
-          style={{
-            fontFamily: Fonts.rounded,
-          }}
-        >
-          Settings
-        </ThemedText>
-      </ThemedView>
+    <View style={styles.screen}>
+    <TouchableOpacity style={styles.item}>
+  <View style={[styles.iconWrapper, { backgroundColor: "#E0F2FE" }]}>
+    <User2Icon size={20} color="#0284C7" />   
+  </View>
 
-      <Collapsible title="Language">
-        <ThemedText>
-          Here you will choose option for English or Kiswahili.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Fonts">
-        <ThemedText>Here scroll for font will appear</ThemedText>
-      </Collapsible>
+  <View style={styles.textWrapper}>
+    <Text style={styles.title}>My Profile</Text>
+    <Text style={styles.subtitle}>Edit profile</Text>
+  </View>
 
-      <Collapsible title="Security">
-        <ThemedText>
-          You will set to use your password to delete / edit sensive data like
-          classes , students etc.
-        </ThemedText>
-        <Image
-          source={require("@/assets/images/react-logo.png")}
-          style={{ width: 100, height: 100, alignSelf: "center" }}
-        />
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{" "}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook
-          lets you inspect what the user&apos;s current color scheme is, and so
-          you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-    </ParallaxScrollView>
+  <ChevronRight size={20} color="#9CA3AF" />
+
+</TouchableOpacity>
+<Divider style={styles.divider} />
+<TouchableOpacity style={styles.item}>
+  <View style={[styles.iconWrapper, { backgroundColor: "#E8F5E9" }]}>
+    <BookOpen size={20} color="#2E7D32" />
+  </View>
+
+  <View style={styles.textWrapper}>
+    <Text style={styles.title}>Manage Classes</Text>
+    <Text style={styles.subtitle}>Add / Edit / Delete classes</Text>
+  </View>
+
+  <ChevronRight size={20} color="#9CA3AF" />
+</TouchableOpacity>
+<Divider style={styles.divider} />  
+
+<TouchableOpacity style={styles.item}>
+  <View style={[styles.iconWrapper, { backgroundColor: "#FFF7ED" }]}>
+    <ListChecksIcon size={20} color="#F97316" />      
+  </View>
+
+  <View style={styles.textWrapper}>
+    <Text style={styles.title}>Attendance settings</Text>
+    <Text style={styles.subtitle}>Roll call rules</Text>
+  </View>
+
+  <ChevronRight size={20} color="#9CA3AF" />
+</TouchableOpacity>
+<Divider style={styles.divider} />
+<TouchableOpacity style={styles.item}>
+  <View style={[styles.iconWrapper, { backgroundColor: "#F3E8FF" }]}>
+    <SlidersHorizontalIcon size={20} color="#7C3AED" />
+  </View>
+
+  <View style={styles.textWrapper}>
+    <Text style={styles.title}>App preference</Text>
+    <Text style={styles.subtitle}>Themes, Notifications</Text>
+  </View>
+
+  <ChevronRight size={20} color="#9CA3AF" />
+</TouchableOpacity>
+<Divider style={styles.divider} />
+
+<TouchableOpacity style={styles.item}>
+  <View style={[styles.iconWrapper, { backgroundColor: "#E8F5E9" }]}>
+    <Info size={20} color="#0891B2" />
+  </View>
+
+  <View style={styles.textWrapper}>
+    <Text style={styles.title}>About App</Text>
+    <Text style={styles.subtitle}>Version, Terms of Service</Text>  
+  </View>
+
+  <ChevronRight size={20} color="#9CA3AF" />
+</TouchableOpacity>
+<Divider style={styles.divider} />
+
+    </View>
+
+    
   );
 }
-
 const styles = StyleSheet.create({
-  headerImage: {
-    color: "#808080",
-    bottom: 0,
-    left: 0,
-    position: "absolute",
+  screen: {
+    flex: 1,
+    backgroundColor: "#F6F7F9",
+    paddingHorizontal: 16,
+    paddingTop: 12,
   },
-  titleContainer: {
+
+  section: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    paddingVertical: 6,
+    marginBottom: 16,
+
+    // Android
+    elevation: 2,
+
+    // iOS
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+  },
+
+  item: {
     flexDirection: "row",
-    gap: 8,
+    alignItems: "center",
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+  },
+
+  divider: {
+    height: 1,
+    backgroundColor: "#ECECEC",
+    marginLeft: 56,
+  },
+
+  iconWrapper: {
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 14,
+  },
+
+  textWrapper: {
+    flex: 1,
+  },
+
+  title: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#111827",
+  },
+
+  subtitle: {
+    fontSize: 13,
+    color: "#6B7280",
+    marginTop: 2,
+  },
+
+  chevron: {
+    marginLeft: 8,
   },
 });

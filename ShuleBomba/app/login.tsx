@@ -13,9 +13,7 @@ import { rootStore } from "@/components/models";
 
 export default function Login() {
   const router = useRouter();
-  const { setAuthUser } = rootStore;
-
-  const [loading, setLoading] = useState(true);
+  const { setAuthUser ,authUser} = rootStore;
   const [step, setStep] = useState(1);
   const [error, setError] = useState("");
 
@@ -23,19 +21,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [schoolName, setSchoolName] = useState("");
-  const [className, setClassName] = useState("");
-
-  useEffect(() => {
-    (async () => {
-      const hasLoggedIn = await getItem("hasLoggedIn");
-      if (hasLoggedIn) {
-        router.replace("/(tabs)");
-        return;
-      }
-      setLoading(false);
-    })();
-  }, []);
-
   const nextStep = () => {
     setError("");
     setStep((prev) => prev + 1);
@@ -44,7 +29,7 @@ export default function Login() {
   const prevStep = () => setStep((prev) => prev - 1);
 
   const handleLogin = async () => {
-    if (!username || !password || !phone || !schoolName || !className) {
+    if (!username || !password || !phone || !schoolName ) {
       setError("Please complete all steps");
       return;
     }
@@ -54,23 +39,18 @@ export default function Login() {
         username,
         password,
         phone,
-        school_name: schoolName,
-        class_name: className,
+        school_name: schoolName, 
       });
 
       router.replace("/(tabs)");
     } catch {
       setError("Login failed. Try again.");
+      console.log({authUser});
     }
   };
 
-  if (loading) {
-    return (
-      <View style={styles.center}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
+
+   
 
   return (
     <PaperProvider>
@@ -169,7 +149,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-function getItem(arg0: string) {
-  throw new Error("Function not implemented.");
-}
 
