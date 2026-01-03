@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, TextInput } from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet, TextInput ,ScrollView} from "react-native"
 import { useRouter } from "expo-router"
 import { Ionicons } from "@expo/vector-icons"
 import { observer } from "mobx-react-lite"
@@ -28,7 +28,11 @@ const ClassHomeScreen = observer(() => {
   }
 
   return (
-    <View style={{ flex: 1, padding: 20 }}>
+    <ScrollView
+    contentContainerStyle={{ flexGrow: 1 }}
+    showsVerticalScrollIndicator={false}
+    >
+    <View style={{ flex: 1, padding: 16 }}>
       <Text style={{ fontWeight: "bold", marginBottom: 10 }}>
         Students in {selectedDarasa.name}
       </Text>
@@ -76,6 +80,7 @@ const ClassHomeScreen = observer(() => {
         </View>
       </Modal>
     </View>
+    </ScrollView>
   )
 });
 const styles = StyleSheet.create({

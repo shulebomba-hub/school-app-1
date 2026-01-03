@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { BookOpen, ChevronRight, Info, ListChecksIcon, SlidersHorizontalIcon, Trash2Icon, User2Icon } from "lucide-react-native"; 
 import { View, Text } from "react-native";
 import { rootStore } from "@/components/models";
@@ -9,6 +9,10 @@ import { Divider } from "react-native-paper";
 export default function Account() {
   const { authUser } = rootStore;
   return (
+    <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={false}
+        > 
     <View style={styles.screen}>
     <TouchableOpacity style={styles.item}>
   <View style={[styles.iconWrapper, { backgroundColor: "#E0F2FE" }]}>
@@ -94,6 +98,7 @@ export default function Account() {
 <Divider style={styles.divider} />
 
     </View>
+    </ScrollView>
 
   );
 }

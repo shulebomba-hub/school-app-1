@@ -26,6 +26,7 @@ export default function RootLayout() {
     if (storedData) {
       const rootStoreData = JSON.parse(storedData)
       delete rootStoreData.selectedStudent;
+      delete rootStoreData.selectedDarasa;
   applySnapshot(rootStore, rootStoreData);
     }
   }, []);

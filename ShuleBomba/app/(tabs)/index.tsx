@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native"
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from "react-native"
 import { Card } from "react-native-paper"
 import { DeleteIcon, PenLine } from "lucide-react-native"
 import { Ionicons } from "@expo/vector-icons"
@@ -17,7 +17,11 @@ const HomeScreen = observer(() => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView 
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={false}
+        >
+    <View style={{ flex: 1 ,padding: 16}}>
       <Card>
         <Card.Content>
           <Text>{authUser?.school_name.toUpperCase()}</Text>
@@ -44,6 +48,7 @@ const HomeScreen = observer(() => {
         <Ionicons name="add" size={28} color="#fff" />
       </TouchableOpacity>
     </View>
+    </ScrollView>
   )
 });
 const styles = StyleSheet.create({

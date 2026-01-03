@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { View, TextInput, Button, Text } from "react-native"
+import { View, TextInput, Button, Text, ScrollView } from "react-native"
 import { observer } from "mobx-react-lite"
 import { nanoid } from "nanoid/non-secure"
 import { rootStore } from "@/components/models"
@@ -16,6 +16,10 @@ const AddClassScreen = observer(() => {
   }
 
   return (
+    <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={false}
+        >
     <View style={{ padding: 20 }}>
       <TextInput
         placeholder="Class name"
@@ -40,6 +44,7 @@ const AddClassScreen = observer(() => {
         ))}
       </View>
     </View>
+    </ScrollView>
   )
 })
 

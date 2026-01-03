@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Platform ,Alert} from "react-native";
+import {ScrollView, View, Text, StyleSheet, Platform ,Alert} from "react-native";
 import { observer } from "mobx-react-lite";
 import { rootStore } from "@/components/models";
 import { Button, DataTable, RadioButton } from "react-native-paper";
@@ -60,7 +60,11 @@ const AttendanceScreen = observer(() => {
     };
 
   return (
-    <View style={{ flex: 1, padding: 20 }}>
+    <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={false}
+        >
+    <View style={{ flex: 1, padding: 16 }}>
         <Button onPress={() => setOpen(true)} uppercase={false} mode="outlined">
           {!selectedDate?"Pick a date": `Selected date: ${selectedDate}`}
         </Button>
@@ -118,6 +122,7 @@ const AttendanceScreen = observer(() => {
       Save Attendance
         </Button>
     </View>
+    </ScrollView>
   );
 }); 
 
