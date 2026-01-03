@@ -47,6 +47,10 @@ export default function RootLayout() {
             headerStyle: {
               backgroundColor: isDark ? "#000" : "#fff",
             },
+            contentStyle: {
+              flex:1,
+              backgroundColor: isDark ? "#fff" : "#000",
+           },
             headerTintColor: isDark ? "#fff" : "#000",
             headerShadowVisible: false,
           }}
