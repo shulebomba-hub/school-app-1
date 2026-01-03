@@ -1,15 +1,23 @@
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from "react-native"
-import { Card } from "react-native-paper"
-import { DeleteIcon, PenLine } from "lucide-react-native"
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView, useColorScheme } from "react-native"
+import { Card, Divider } from "react-native-paper"
+import { DeleteIcon,  PenLine } from "lucide-react-native"
 import { Ionicons } from "@expo/vector-icons"
 import { useRouter } from "expo-router"
 import { observer } from "mobx-react-lite"
 import { rootStore } from "@/components/models"
-import React from "react"
+import React from "react";
+
 
 const HomeScreen = observer(() => {
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === "dark" 
   const { darasas, setSelectedDarasa, authUser } = rootStore
-  const router = useRouter()
+  const router = useRouter();
+  const theme = {
+  background: isDark ? "#000" : "#fff",
+  text: isDark ? "#fff" : "#000",
+  card: isDark ? "#111" : "#f5f5f5ff",
+};
 
   const onClassView = (darasa:any) => {
     setSelectedDarasa(darasa.id)
@@ -21,24 +29,26 @@ const HomeScreen = observer(() => {
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         >
-    <View style={{ flex: 1 ,padding: 16}}>
-      <Card>
-        <Card.Content>
-          <Text>{authUser?.school_name.toUpperCase()}</Text>
-        </Card.Content>
-      </Card>
+    <View style={{ flex: 1 , backgroundColor: theme.background }}>
+      <Divider/>
+      <View>
+        <Text style={{ fontSize: 24, fontWeight: "bold", color: theme.text }}>{authUser?.school_name?.toUpperCase()?? "IYUNGA TECHNICAL SCHOOL"}</Text>
+      </View> 
+  
+       
 
       {darasas.map(darasa => (
-        <Card key={darasa.id} onPress={() => onClassView(darasa)}>
+        <><Card key={darasa.id} onPress={() => onClassView(darasa)} style={{ marginTop: 16, backgroundColor: theme.card }}>
           <Card.Content>
-            <Text>{darasa.name}</Text>
-            <Text>{darasa.students.length} Students</Text>
+            <Text style={{ color: theme.text }}>{darasa.name}</Text>
+            <Text style={{ color: theme.text }}>{darasa.students.length} Students</Text>
           </Card.Content>
 
           <Card.Actions>
-            <PenLine size={18} />
+            <PenLine size={18} color={theme.text}/>
+           
           </Card.Actions>
-        </Card>
+        </Card></>
       ))}
 
       <TouchableOpacity
@@ -52,15 +62,6 @@ const HomeScreen = observer(() => {
   )
 });
 const styles = StyleSheet.create({
-   titleContainer: {
-     flexDirection: "row", 
-     alignItems: "center",
-      gap: 8,
-    }, 
-    stepContainer: {
-       gap: 8,
-        marginBottom: 8,
-    }, 
     add: {
        position: "absolute", 
        bottom: 20, 

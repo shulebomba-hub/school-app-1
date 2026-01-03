@@ -1,11 +1,11 @@
 import { View, Text, TouchableOpacity, StyleSheet, TextInput ,ScrollView} from "react-native"
-import { useRouter } from "expo-router"
-import { Ionicons } from "@expo/vector-icons"
-import { observer } from "mobx-react-lite"
-import { rootStore } from "@/components/models"
-import { Divider ,DataTable,Modal,Button} from "react-native-paper"
-import React,{ useState } from "react"
-
+import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { observer } from "mobx-react-lite";
+import { rootStore } from "@/components/models";
+import {DataTable,Modal,Button} from "react-native-paper";
+import React,{ useState } from "react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 const ClassHomeScreen = observer(() => {
   const router = useRouter()
   const { selectedDarasa,selectedStudent } = rootStore
@@ -26,6 +26,25 @@ const ClassHomeScreen = observer(() => {
   if (!selectedDarasa) {
     return <Text>No class selected</Text>
   }
+  if (selectedDarasa.students.length === 0) {
+    return (
+      <View style={{ flex: 1, alignItems: "center" }}>
+        <MaterialCommunityIcons
+          name="account-off-outline"
+          size={80}
+          color="#9CA3AF"
+        />
+        <Text>No students Found in this classs.</Text>
+        <Text>You don't have any students in this class.</Text>
+          <Text>Add Student to get started</Text>
+        <Button
+        mode="contained"
+          onPress={() => router.push("/add-student")}>
+           Add Student
+        </Button>
+      </View>
+    );
+  } ;
 
   return (
     <ScrollView
@@ -70,12 +89,14 @@ const ClassHomeScreen = observer(() => {
               }}
               
             />  
-            <Button onPress={() => setVisible(false)}>
+            <View style={styles.modalButton}> 
+            <Button mode="contained" onPress={() => setVisible(false)}>
               Save
             </Button>
             <Button mode="contained" buttonColor="red" onPress={() => onDeleteStudent(selectedStudent) }>
               Delete
             </Button>
+            </View>
           </View>
         </View>
       </Modal>
@@ -120,7 +141,13 @@ overlay: {
     padding: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    minHeight: 150, // short screen height
+    minHeight: 100, // short screen height
+  },
+  modalButton: {
+    marginTop: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+
   },
  });
 

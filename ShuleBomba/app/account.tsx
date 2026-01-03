@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity, useColorScheme } from "react-native";
 import { BookOpen, ChevronRight, Info, ListChecksIcon, SlidersHorizontalIcon, Trash2Icon, User2Icon } from "lucide-react-native"; 
 import { View, Text } from "react-native";
 import { rootStore } from "@/components/models";
@@ -7,21 +7,28 @@ import { Divider } from "react-native-paper";
 
 
 export default function Account() {
+  const colorScheme = useColorScheme();
   const { authUser } = rootStore;
+  const isDark = colorScheme === "light" ? false : true;
+  const theme = {
+  background: isDark ? "#000" : "#fff",
+  text: isDark ? "#fff" : "#000",
+  card: isDark ? "#111" : "#f5f5f5",
+};
   return (
     <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         > 
-    <View style={styles.screen}>
+    <View style={{ flex: 1, backgroundColor: theme.background,}}>
     <TouchableOpacity style={styles.item}>
   <View style={[styles.iconWrapper, { backgroundColor: "#E0F2FE" }]}>
     <User2Icon size={20} color="#0284C7" />   
   </View>
 
   <View style={styles.textWrapper}>
-    <Text style={styles.title}>My Profile</Text>
-    <Text style={styles.subtitle}>Edit profile</Text>
+    <Text style={[styles.title, { color: theme.text }]}>My Profile</Text>
+    <Text style={[styles.subtitle, { color: theme.text }]}>Edit profile</Text>
   </View>
 
   <ChevronRight size={20} color="#9CA3AF" />
@@ -34,8 +41,8 @@ export default function Account() {
   </View>
 
   <View style={styles.textWrapper}>
-    <Text style={styles.title}>Manage Classes</Text>
-    <Text style={styles.subtitle}>Add / Edit / Delete classes</Text>
+    <Text style={[styles.title, { color: theme.text }]}>Manage Classes</Text>
+    <Text style={[styles.subtitle, { color: theme.text }]}>Add / Edit / Delete classes</Text>
   </View>
 
   <ChevronRight size={20} color="#9CA3AF" />
@@ -48,8 +55,8 @@ export default function Account() {
   </View>
 
   <View style={styles.textWrapper}>
-    <Text style={styles.title}>Attendance settings</Text>
-    <Text style={styles.subtitle}>Roll call rules</Text>
+    <Text style={[styles.title, { color: theme.text }]}>Attendance settings</Text>
+    <Text style={[styles.subtitle, { color: theme.text }]}>Roll call rules</Text>
   </View>
 
   <ChevronRight size={20} color="#9CA3AF" />
@@ -61,8 +68,8 @@ export default function Account() {
   </View>
 
   <View style={styles.textWrapper}>
-    <Text style={styles.title}>App preference</Text>
-    <Text style={styles.subtitle}>Themes, Notifications</Text>
+    <Text style={[styles.title, { color: theme.text }]}>App preference</Text>
+    <Text style={[styles.subtitle, { color: theme.text }]}>Themes, Notifications</Text>
   </View>
 
   <ChevronRight size={20} color="#9CA3AF" />
@@ -75,8 +82,8 @@ export default function Account() {
   </View>
 
   <View style={styles.textWrapper}>
-    <Text style={styles.title}>About App</Text>
-    <Text style={styles.subtitle}>Version, Terms of Service</Text>  
+    <Text style={[styles.title, { color: theme.text }]}>About App</Text>
+    <Text style={[styles.subtitle, { color: theme.text }]}>Version, Terms of Service</Text>  
   </View>
 
   <ChevronRight size={20} color="#9CA3AF" />
@@ -89,8 +96,8 @@ export default function Account() {
   </View>
 
   <View style={styles.textWrapper}>
-    <Text style={styles.title}>Delete Account</Text>
-    <Text style={styles.subtitle}>Delete your account permanently</Text>  
+    <Text style={[styles.title, { color: theme.text }]}>Delete Account</Text>
+    <Text style={[styles.subtitle, { color: theme.text }]}>Delete your account permanently</Text>  
   </View>
 
   <ChevronRight size={20} color="#9CA3AF" />
@@ -150,6 +157,7 @@ const styles = StyleSheet.create({
 
   textWrapper: {
     flex: 1,
+
   },
 
   title: {
