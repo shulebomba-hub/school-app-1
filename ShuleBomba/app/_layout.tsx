@@ -24,8 +24,9 @@ export default function RootLayout() {
   const loadinitialData = useCallback(async () => {
     const storedData = await AsyncStorage.getItem("rootStore");
     if (storedData) {
-      const rootStoreData = JSON.parse(storedData);
-      applySnapshot(rootStore, rootStoreData);
+      const rootStoreData = JSON.parse(storedData)
+      delete rootStoreData.selectedStudent;
+  applySnapshot(rootStore, rootStoreData);
     }
   }, []);
   useEffect(() => {

@@ -2,7 +2,7 @@ import { set } from "mobx";
 import { getRoot, onSnapshot, types } from "mobx-state-tree"; // alternatively: import { t } from "mobx-state-tree"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const AuthUserModel = types.model({
+const AuthUserModel = types.model('AuthUserModel', {
   username: types.identifier,
   phone: types.string,
   password: types.string,
@@ -11,7 +11,7 @@ const AuthUserModel = types.model({
 });
 
 const StudentModel = types
-  .model({
+  .model('StudentModel', {
     id: types.identifier,
     full_name: types.string,
   }).views((self) => ({
@@ -41,7 +41,7 @@ const StudentModel = types
   }));
 
 const DarasaModel = types
-  .model({
+  .model('DarasaModel', {
     id: types.identifier,
     name: types.string,
     created_by: types.reference(AuthUserModel),
@@ -56,14 +56,17 @@ const DarasaModel = types
       self.students.push(student);
     },
     removeStudent(student: any) {
-      self.students = self.students.filter((s) => s.id !== student.id);
+      const index = self.students.findIndex((s) => s.id === student);
+      if (index > -1) {
+        self.students.splice(index, 1);
+      } 
     },
     setName(value: string) {
       self.name = value;
     },
   }));
 
-const Attendance = types.model({
+const Attendance = types.model('Attendance', {
   id: types.identifier,
   student: types.reference(StudentModel),
   date: types.string,
@@ -80,12 +83,13 @@ const Attendance = types.model({
 
 // Define a store just like a model
 const RootStoreModel = types
-  .model({
+  .model('RootStoreModel', {
     authUser: types.maybeNull(AuthUserModel),
     darasas: types.array(DarasaModel),
     students: types.array(DarasaModel),
     attendances: types.array(Attendance),
-    selectedDarasa: types.maybeNull(types.reference(DarasaModel)),
+    selectedStudent: types.maybeNull(types.safeReference(StudentModel)),
+    selectedDarasa: types.maybeNull(types.safeReference(DarasaModel)),
     selectedDate: types.maybeNull(types.string),
   })
   .actions((self) => ({
@@ -95,6 +99,9 @@ const RootStoreModel = types
     setAuthUser(user: any) {
       self.authUser = user;
     },
+    setSelectedStudent(student: any) {
+      self.selectedStudent = student;
+    },
     setSelectedDate(date: string) {
       self.selectedDate = date;
     },
@@ -102,8 +109,11 @@ const RootStoreModel = types
       self.darasas.push({id,name,created_by:'steve',students:[]});
       self.selectedDarasa = name.id;
     },
-    removeDarasa(darasaId: string) {
-      self.darasas = self.darasas.filter((d) => d.id !== darasaId);
+    removeDarasa(darasa: any) {
+      const index = self.darasas.findIndex((s) => s.id === darasa);
+      if (index > -1) {
+        self.darasas.splice(index, 1);
+      } 
     },
     addAttendance(studentId: string, date: string, status: string) {
       const attendance = self.attendances.find(

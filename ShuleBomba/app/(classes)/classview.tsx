@@ -1,14 +1,27 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet, TextInput } from "react-native"
 import { useRouter } from "expo-router"
 import { Ionicons } from "@expo/vector-icons"
 import { observer } from "mobx-react-lite"
 import { rootStore } from "@/components/models"
-import { Divider } from "react-native-paper"
-import React from "react"
+import { Divider ,DataTable,Modal,Button} from "react-native-paper"
+import React,{ useState } from "react"
 
 const ClassHomeScreen = observer(() => {
   const router = useRouter()
-  const { selectedDarasa } = rootStore
+  const { selectedDarasa,selectedStudent } = rootStore
+  const [visible, setVisible] = useState(false);
+  
+  const onSelectStudent =  (student: any) => {
+    rootStore.setSelectedStudent(student.id);
+    setVisible(true);
+  };
+  const onDeleteStudent=(student: any)=>{
+    if(!selectedStudent) return;
+    rootStore.selectedDarasa?.removeStudent(student.id);  
+    rootStore.setSelectedStudent(null);
+    setVisible(false);
+
+  };
 
   if (!selectedDarasa) {
     return <Text>No class selected</Text>
@@ -20,11 +33,17 @@ const ClassHomeScreen = observer(() => {
         Students in {selectedDarasa.name}
       </Text>
 
+      <DataTable.Header>
+        <DataTable.Title>Registration No.</DataTable.Title>
+        <DataTable.Title>Full Name</DataTable.Title>
+             
+      </DataTable.Header>
+
       {selectedDarasa.students.map(student => (
-        <View key={student.id} style={styles.studentRow}>
-          <Text>{student.full_name}</Text>
-          <Divider/>
-        </View>
+        <DataTable.Row key={`${student.id}`}>
+          <DataTable.Cell>{student.id}</DataTable.Cell>
+          <DataTable.Cell onPress={() => onSelectStudent(student) }>{student.full_name}</DataTable.Cell>
+        </DataTable.Row>
       ))}
 
       <TouchableOpacity
@@ -33,6 +52,29 @@ const ClassHomeScreen = observer(() => {
       >
         <Ionicons name="add" size={28} color="#fff" />
       </TouchableOpacity>
+      <Modal
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+      >
+        <View style={styles.overlay}>
+          <View style={styles.bottomSheet}>
+            <TextInput
+              style={styles.textInput}
+              value={selectedStudent?.full_name || ""}
+              onChangeText={(value)=>{
+                selectedStudent?.setFullName(value);
+              }}
+              
+            />  
+            <Button onPress={() => setVisible(false)}>
+              Save
+            </Button>
+            <Button mode="contained" buttonColor="red" onPress={() => onDeleteStudent(selectedStudent) }>
+              Delete
+            </Button>
+          </View>
+        </View>
+      </Modal>
     </View>
   )
 });
@@ -47,7 +89,8 @@ const styles = StyleSheet.create({
      borderRadius: 28,
      justifyContent: "center", 
      alignItems: "center", 
-     elevation: 5, },
+     elevation: 5, 
+    },
 studentRow: {
   flexDirection: "row",
   alignItems: "center",
@@ -55,8 +98,25 @@ studentRow: {
   paddingVertical: 12,
   paddingHorizontal: 10,
   marginVertical: 6,
-  borderRadius: 12,
-  elevation: 2,
-}, });
+},
+textInput: {
+  borderWidth: 1,
+  borderColor: "#ccc",
+  borderRadius: 8,
+  padding: 10,
+},
+overlay: {
+    flex: 1,
+    justifyContent: "flex-end",
+    backgroundColor: "rgba(0,0,0,0.3)", // semi-transparent
+  },
+  bottomSheet: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    minHeight: 150, // short screen height
+  },
+ });
 
 export default ClassHomeScreen

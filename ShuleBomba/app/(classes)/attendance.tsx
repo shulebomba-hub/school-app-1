@@ -120,36 +120,6 @@ const AttendanceScreen = observer(() => {
     </View>
   );
 }); 
-const styles = StyleSheet.create({
- studentRow: {
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "space-between",
-  backgroundColor: "#f9f9f9",
-  paddingVertical: 12,
-  paddingHorizontal: 10,
-  marginVertical: 6,
-  borderRadius: 12,
-  elevation: 2,
-},
 
-name: {
-  flex: 1,
-  fontSize: 16,
-},
-
-buttons: {
-  flexDirection: "row",
-  gap: 10,
-  width:150
-},
-
-  pickers:{
-    flexDirection: "row",
-     justifyContent: "space-between",
-     marginBottom: 20,
-
-  },
-});
 
 export default AttendanceScreen;
