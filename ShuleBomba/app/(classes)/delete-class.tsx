@@ -1,19 +1,26 @@
 import React, { useState ,useEffect} from "react";
 import { Alert, View } from "react-native";
 import { Platform } from "react-native";
+import {rootStore} from "@/components/models";
 import { Router, useRouter } from "expo-router";
+
 export default function DeleteNotification() {
   const router = useRouter();
+  const {selectedDarasa}=rootStore;
+
+  const onDeleteDarasa=(selectedDarasa: any)=>{
+      if(!selectedDarasa) return;
+      rootStore.setSelectedDarasa(null);
+      rootStore.removeDarasa(selectedDarasa.id);  
+    };
   const Delete = () => {
     if (Platform.OS === "web") {
       const confirmed = window.confirm("Are you sure you want to delete this?");
 
       if (confirmed) {
-        console.log("Deleted on web");
+        onDeleteDarasa(selectedDarasa);
         router.push("/");
-      } else {
-        router.push("/");
-      }
+      } 
     } else {
       Alert.alert(
         "Confirm Delete",
@@ -23,7 +30,10 @@ export default function DeleteNotification() {
           {
             text: "Delete",
             style: "destructive",
-            onPress: () => console.log("Deleted on mobile"),
+            onPress: () => {
+              onDeleteDarasa(selectedDarasa);
+              router.push("/");
+            },
           },
         ]
       );

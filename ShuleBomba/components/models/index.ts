@@ -93,7 +93,7 @@ const RootStoreModel = types
     selectedDate: types.maybeNull(types.string),
   })
   .actions((self) => ({
-    setSelectedDarasa(value: any) {
+    setSelectedDarasa(value: string | null) {
       self.selectedDarasa = value;
     },
     setAuthUser(user: any) {
@@ -109,8 +109,9 @@ const RootStoreModel = types
       self.darasas.push({id,name,created_by:'steve',students:[]});
       self.selectedDarasa = name.id;
     },
-    removeDarasa(darasa: any) {
+    removeDarasa(darasa: string) {
       const index = self.darasas.findIndex((s) => s.id === darasa);
+      console.log("Removing darasa with id:", darasa, "at index:", index);
       if (index > -1) {
         self.darasas.splice(index, 1);
       } 
