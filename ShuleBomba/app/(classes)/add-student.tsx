@@ -1,11 +1,18 @@
 import React, { useState } from "react"
-import { View, TextInput, Button, Text, ScrollView } from "react-native"
+import { View , useColorScheme, TextInput, Button, Text, ScrollView } from "react-native"
 import { observer } from "mobx-react-lite"
 import { rootStore } from "@/components/models"
 
 const AddStudentScreen = observer(() => {
   const [name, setName] = useState("")
-  const { selectedDarasa } = rootStore
+  const { selectedDarasa } = rootStore;
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === "dark"
+  const theme = {
+  background: isDark ? "#000" : "#fff",
+  text: isDark ? "#fff" : "#000",
+  card: isDark ? "#111" : "#f5f5f5ff",
+  };  
 
   const onAddStudent = () => {
     if (!name.trim()) return
@@ -14,7 +21,7 @@ const AddStudentScreen = observer(() => {
   }
 
   if (!selectedDarasa) {
-    return <Text>No class selected</Text>
+    return <Text style={{ color: theme.text }}>No class selected</Text>
   }
 
   return (
@@ -31,6 +38,7 @@ const AddStudentScreen = observer(() => {
           borderWidth: 1,
           borderColor: "#ccc",
           padding: 10,
+          color: theme.text,
           borderRadius: 5,
           marginBottom: 10,
         }}
@@ -38,10 +46,10 @@ const AddStudentScreen = observer(() => {
 
       <Button title="Add Student" onPress={onAddStudent} />
 
-      <View style={{ marginTop: 20 }}>
+      <View style={[{ marginTop: 20 }, { backgroundColor: theme.card , padding: 10}]}>
         {selectedDarasa.students.map(student => (
           <View key={student.id}>
-            <Text>{student.full_name}</Text>
+            <Text style={{ color: theme.text }}>{student.full_name}</Text>
           </View>
         ))}
       </View>

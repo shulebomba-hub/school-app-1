@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, TextInput ,ScrollView} from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet, TextInput ,ScrollView , useColorScheme} from "react-native"
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { observer } from "mobx-react-lite";
@@ -7,7 +7,9 @@ import {DataTable,Modal,Button} from "react-native-paper";
 import React,{ useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 const ClassHomeScreen = observer(() => {
-  const router = useRouter()
+  const router = useRouter();
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === "dark"
   const { selectedDarasa,selectedStudent } = rootStore
   const [visible, setVisible] = useState(false);
   
@@ -15,6 +17,13 @@ const ClassHomeScreen = observer(() => {
     rootStore.setSelectedStudent(student.id);
     setVisible(true);
   };
+  const theme = {
+  background: isDark ? "#000" : "#fff",
+  text: isDark ? "#fff" : "#000",
+  card: isDark ? "#111" : "#f5f5f5ff",
+  };
+
+
   const onDeleteStudent=(student: any)=>{
     if(!selectedStudent) return;
     rootStore.selectedDarasa?.removeStudent(student.id);  

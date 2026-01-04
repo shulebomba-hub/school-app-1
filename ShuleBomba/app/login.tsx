@@ -4,7 +4,8 @@ import {
   Text,
   Button,
   StyleSheet,
-  ActivityIndicator,
+  ActivityIndicator
+  , useColorScheme
 } from "react-native";
 import { useRouter } from "expo-router";
 
@@ -13,6 +14,13 @@ import { rootStore } from "@/components/models";
 
 export default function Login() {
   const router = useRouter();
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === "dark"
+  const theme = {
+  background: isDark ? "#000" : "#fff",
+  text: isDark ? "#fff" : "#000",
+  card: isDark ? "#111" : "#f5f5f5ff",
+  };    
   const { setAuthUser ,authUser} = rootStore;
   const [step, setStep] = useState(1);
   const [error, setError] = useState("");

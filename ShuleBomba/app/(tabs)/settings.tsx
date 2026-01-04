@@ -22,7 +22,7 @@ export default function Account() {
         >
     <View style={[styles.screen, { backgroundColor: theme.background }]}>
       <Card style={{ marginBottom: 20, padding: 16, borderRadius: 16, elevation: 3 }}>      
-      <TouchableOpacity style={styles.item}>
+      <TouchableOpacity style={[styles.item,]}>
       <View>
       <Avatar.Text
         size={70}
@@ -31,21 +31,21 @@ export default function Account() {
       />
      </View>
       <View style={styles.user}>
-      <Text style={[styles.title, { color: theme.text }]}>{authUser?.username ?? "Username"}</Text>
-      <Text style={[styles.subtitle, { color: theme.text }]}>{authUser?.school_name ?? "School Name"}</Text>
+      <Text style={[styles.title, { color: "black"}]}>{authUser?.username ?? "Username"}</Text>
+      <Text style={[styles.subtitle, { color: "black" }]}>{authUser?.school_name ?? "School Name"}</Text>
       </View>
       <ChevronRight size={20} color="#9CA3AF" />  
       </TouchableOpacity>
       </Card>
-      <Card style={styles.section}>
+      <Card style={[styles.section, { backgroundColor: theme.card }]}>
       <TouchableOpacity style={styles.item}>
       <View style={[styles.iconWrapper, { backgroundColor: "#E0F2FE" }]}>
       <User2Icon size={20} color="#0284C7" />   
       </View>
 
-      <View style={styles.textWrapper}>
-      <Text style={styles.title}>My Profile</Text>
-      <Text style={styles.subtitle}>Edit profile</Text>
+      <View style={[styles.textWrapper,]}>
+      <Text style={[styles.title,{color:theme.text}]}>My Profile</Text>
+      <Text style={[styles.subtitle ,{color:theme.text}]}>Edit profile</Text>
       </View>
 
       <ChevronRight size={20} color="#9CA3AF" />
@@ -58,8 +58,8 @@ export default function Account() {
       </View>
 
       <View style={styles.textWrapper}>
-      <Text style={styles.title}>Manage Classes</Text>
-      <Text style={styles.subtitle}>Add / Edit / Delete classes</Text>
+      <Text style={[styles.title,{color:theme.text}]}>Manage Classes</Text>
+      <Text style={[styles.subtitle ,{color:theme.text}]}>Add / Edit / Delete classes</Text>
       </View>
 
       <ChevronRight size={20} color="#9CA3AF" />
@@ -72,8 +72,8 @@ export default function Account() {
       </View>
 
       <View style={styles.textWrapper}>
-      <Text style={styles.title}>Attendance settings</Text>
-      <Text style={styles.subtitle}>Roll call rules</Text>
+      <Text style={[styles.title,{color:theme.text}]}>Attendance settings</Text>
+      <Text style={[styles.subtitle ,{color:theme.text}]}>Roll call rules</Text>
       </View>
 
       <ChevronRight size={20} color="#9CA3AF" />
@@ -85,8 +85,8 @@ export default function Account() {
       </View>
 
       <View style={styles.textWrapper}>
-      <Text style={styles.title}>App preference</Text>
-      <Text style={styles.subtitle}>Themes, Notifications</Text>
+      <Text style={[styles.title,{color:theme.text}]}>App preference</Text>
+      <Text style={[styles.subtitle ,{color:theme.text}]}>Themes, Notifications</Text>
       </View>
 
       <ChevronRight size={20} color="#9CA3AF" />
@@ -99,8 +99,8 @@ export default function Account() {
       </View>
 
       <View style={styles.textWrapper}>
-      <Text style={styles.title}>About App</Text>
-      <Text style={styles.subtitle}>Version, Terms of Service</Text>  
+      <Text style={[styles.title,{color:theme.text}]}>About App</Text>
+      <Text style={[styles.subtitle ,{color:theme.text}]}>Version, Terms of Service</Text>  
       </View>
 
       <ChevronRight size={20} color="#9CA3AF" />
@@ -113,8 +113,8 @@ export default function Account() {
       </View>
 
       <View style={styles.textWrapper}>
-      <Text style={styles.title}>Delete Account</Text>
-      <Text style={styles.subtitle}>Delete your account permanently</Text>  
+      <Text style={[styles.title,{color:theme.text}]}>Delete Account</Text>
+      <Text style={[styles.subtitle ,{color:theme.text}]}>Delete your account permanently</Text>  
       </View>
 
       <ChevronRight size={20} color="#9CA3AF" />
@@ -134,7 +134,6 @@ const styles = StyleSheet.create({
   },
 
   section: {
-    backgroundColor: "#FFFFFF",
     borderRadius: 10,
     paddingVertical: 6,
     marginBottom: 16,

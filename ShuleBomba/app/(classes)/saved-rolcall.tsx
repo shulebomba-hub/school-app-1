@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet,ScrollView } from "react-native";
+import { View, Text, StyleSheet,ScrollView , useColorScheme} from "react-native";
 import { observer } from "mobx-react-lite";
 import { rootStore } from "@/components/models";
 import { Button, DataTable, RadioButton } from "react-native-paper";
@@ -8,6 +8,13 @@ import dayjs from "dayjs";
 
 
 const AttendanceScreen = observer(() => {
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === "dark"
+  const theme = {
+    background: isDark ? "#000" : "#fff",
+    text: isDark ? "#fff" : "#000",
+    card: isDark ? "#111" : "#f5f5f5ff",
+  };  
   const {selectedDate, setSelectedDate, attendances} = rootStore;
   const [open, setOpen] = React.useState(false);
 
