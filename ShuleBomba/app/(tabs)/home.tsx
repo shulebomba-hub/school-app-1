@@ -16,7 +16,7 @@ const HomeScreen = observer(() => {
   const theme = {
   background: isDark ? "#000" : "#fff",
   text: isDark ? "#fff" : "#000",
-  card: isDark ? "#111" : "#f5f5f5ff",
+  card: isDark ? "#9b9da0ff" : "#f5f5f5ff",
 };
 
   const onClassView = (darasa:any) => {
@@ -42,6 +42,7 @@ const HomeScreen = observer(() => {
           <Card.Content>
             <Text style={{ color: theme.text }}>{darasa.name}</Text>
             <Text style={{ color: theme.text }}>{darasa.students.length} Students</Text>
+            
           </Card.Content>
 
           <Card.Actions>
@@ -49,6 +50,7 @@ const HomeScreen = observer(() => {
            
           </Card.Actions>
         </Card></>
+        
       ))}
 
       <TouchableOpacity

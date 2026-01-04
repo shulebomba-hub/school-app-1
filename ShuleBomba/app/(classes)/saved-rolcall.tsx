@@ -34,7 +34,7 @@ const AttendanceScreen = observer(() => {
  
   
   if (!selectedDarasa) {
-    return <Text>No class selected</Text>;
+    return <Text style={{ color: theme.text } }>No class selected</Text>;
   }
 
   return (
@@ -42,7 +42,7 @@ const AttendanceScreen = observer(() => {
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         >
-    <View style={{ flex: 1, padding: 20 }}>
+    <View style={{ flex: 1, padding: 20, backgroundColor: theme.background }}>
         <Button onPress={() => setOpen(true)} uppercase={false} mode="outlined">
           {!selectedDate?"Pick a date": `Selected Date: ${selectedDate}`}
         </Button>
@@ -54,8 +54,8 @@ const AttendanceScreen = observer(() => {
           date={new Date()}
           onConfirm={onConfirmSingle}
         />
-      <DataTable.Header>
-        <DataTable.Title>Full name</DataTable.Title>
+      <DataTable.Header style={{ backgroundColor: theme.card }}>
+        <DataTable.Title >Full name</DataTable.Title>
         <DataTable.Title numeric>Present</DataTable.Title>
         <DataTable.Title numeric>Absent</DataTable.Title>
         <DataTable.Title numeric>Sick</DataTable.Title>
@@ -65,7 +65,7 @@ const AttendanceScreen = observer(() => {
           <DataTable.Cell>{student.full_name}</DataTable.Cell>
           <DataTable.Cell numeric>
             <RadioButton
-              color="blue"
+              color="green"
               value="present"
               status={ student.status === 'present' ? 'checked' : 'unchecked' }
 
@@ -81,7 +81,7 @@ const AttendanceScreen = observer(() => {
           </DataTable.Cell>
           <DataTable.Cell numeric> 
             <RadioButton
-              color="yellow"
+              color="blue"
               value="sick"
               status={ student.status === 'sick' ? 'checked' : 'unchecked' }
             />
@@ -92,36 +92,6 @@ const AttendanceScreen = observer(() => {
   );
 });
 
-const styles = StyleSheet.create({
- studentRow: {
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "space-between",
-  backgroundColor: "#f9f9f9",
-  paddingVertical: 12,
-  paddingHorizontal: 10,
-  marginVertical: 6,
-  borderRadius: 12,
-  elevation: 2,
-},
 
-name: {
-  flex: 1,
-  fontSize: 16,
-},
-
-buttons: {
-  flexDirection: "row",
-  gap: 10,
-  width:150
-},
-
-  pickers:{
-    flexDirection: "row",
-     justifyContent: "space-between",
-     marginBottom: 20,
-
-  },
-});
 
 export default AttendanceScreen;

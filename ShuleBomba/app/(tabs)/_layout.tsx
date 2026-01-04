@@ -20,10 +20,11 @@ export default function TabLayout() {
         }}
       >
         <Tabs.Screen
-          name="index"
+          name="home"
           options={{
             title: "ShuleBomba",
             tabBarIcon: ({ color }) => <HomeIcon color={color} />,
+        
           }}
         />
         <Tabs.Screen

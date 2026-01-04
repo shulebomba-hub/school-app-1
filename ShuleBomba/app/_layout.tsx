@@ -24,10 +24,8 @@ export default function RootLayout() {
   const loadinitialData = useCallback(async () => {
     const storedData = await AsyncStorage.getItem("rootStore");
     if (storedData) {
-      const rootStoreData = JSON.parse(storedData)
-      delete rootStoreData.selectedStudent;
-      delete rootStoreData.selectedDarasa;
-  applySnapshot(rootStore, rootStoreData);
+      const rootStoreData = JSON.parse(storedData);
+      applySnapshot(rootStore, rootStoreData);
     }
   }, []);
   useEffect(() => {
@@ -37,6 +35,7 @@ export default function RootLayout() {
 
   const onUserAccount = () => {
     router.push("/account");
+    
   };
 
   return (
@@ -53,12 +52,16 @@ export default function RootLayout() {
            },
             headerTintColor: isDark ? "#fff" : "#000",
             headerShadowVisible: false,
+            headerBackVisible: false,
           }}
         >
           <Stack.Screen
             name="(tabs)"
             options={{
               title: "ShuleBomba",
+              headerBackVisible: false,
+              gestureEnabled: false,
+              headerLeft : ()=>null,
               headerRight: () => (
                 <CircleUserRound
                   size={22}
@@ -85,7 +88,10 @@ export default function RootLayout() {
 
           <Stack.Screen
             name="(classes)"
-            options={{ headerShown: false }}
+            options={{
+               headerShown: false
+              
+               }}
           />
         </Stack>
 

@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  ActivityIndicator
-  , useColorScheme
-} from "react-native";
+import {View,Text, Button,StyleSheet,useColorScheme} from "react-native";
 import { useRouter } from "expo-router";
 
 import { PaperProvider, TextInput } from "react-native-paper";
@@ -37,29 +30,34 @@ export default function Login() {
   const prevStep = () => setStep((prev) => prev - 1);
 
   const handleLogin = async () => {
-    if (!username || !password || !phone || !schoolName ) {
-      setError("Please complete all steps");
-      return;
-    }
-
+    setError("");
+    // Simulate an API call for authentication
     try {
-      setAuthUser({
+      if (!username || !password || !phone || !schoolName) {
+        setError("All fields are required.");
+        return;
+      }
+
+      // Simulated successful login response
+      const userData = {
         username,
         password,
         phone,
-        school_name: schoolName, 
-      });
+        school_name: schoolName,
+      };
 
-      router.replace("/(tabs)");
-    } catch {
-      setError("Login failed. Try again.");
-      console.log({authUser});
+      setAuthUser(userData);
+      router.replace("/");
+    } catch (err) {
+      setError("Login failed. Please try again. " + err.message);
     }
   };
 
-
-   
-
+  useEffect(() => {
+    if (authUser?.username) {
+      router.replace("/home");
+    }
+  }, [authUser?.username]);   
   return (
     <PaperProvider>
       <View style={styles.container}>

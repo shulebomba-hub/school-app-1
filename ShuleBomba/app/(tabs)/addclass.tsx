@@ -27,7 +27,7 @@ const AddClassScreen = observer(() => {
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         >
-    <View style={{ padding: 20, backgroundColor: theme.background ,}}>
+    <View style={{ padding: 20,flex: 1, backgroundColor: theme.background }}>
       <TextInput
         placeholder="Class name"
         value={name}
@@ -42,12 +42,12 @@ const AddClassScreen = observer(() => {
         }}
       />
 
-      <Button title="Add Class" onPress={addClass} style={{ backgroundColor: theme.card }} />
+      <Button title="Add Class" onPress={addClass}/>
 
       <View style={[{ marginTop: 20 }, { backgroundColor: theme.card , padding: 10, borderRadius: 5} ]}>
         {darasas.map((darasa) => (
           <View key={darasa.id}>
-            <Text>{darasa.name}</Text>
+            <Text style={{ color: theme.text }}>{darasa.name}</Text>
           </View>
         ))}
       </View>

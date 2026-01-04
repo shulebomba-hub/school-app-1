@@ -1,4 +1,5 @@
 import { set } from "mobx";
+import { applySnapshot } from "mobx-state-tree"
 import { getRoot, onSnapshot, types } from "mobx-state-tree"; // alternatively: import { t } from "mobx-state-tree"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -7,7 +8,7 @@ const AuthUserModel = types.model('AuthUserModel', {
   phone: types.string,
   password: types.string,
   school_name: types.string,
-  class_name: types.string,
+
 });
 
 const StudentModel = types
@@ -55,9 +56,14 @@ const DarasaModel = types
       });
       self.students.push(student);
     },
-    removeStudent(student: any) {
-      const index = self.students.findIndex((s) => s.id === student);
+    removeStudent(studentId: string) {
+      const {attendances,removeAttendance} = getRoot(self);
+      const index = self.students.findIndex((s) => s.id === studentId);
       if (index > -1) {
+        const student = self.students[index];
+        //TODO: find and delete all attendances related to this student
+        const studentAttendances = attendances.filter(att => att.student.id === student.id);
+        studentAttendances.forEach(att => removeAttendance(att.id));
         self.students.splice(index, 1);
       } 
     },
@@ -68,7 +74,7 @@ const DarasaModel = types
 
 const Attendance = types.model('Attendance', {
   id: types.identifier,
-  student: types.reference(StudentModel),
+  student: types.safeReference(StudentModel),
   date: types.string,
   status: types.string,
   isSaved: types.optional(types.boolean, false),
@@ -116,10 +122,18 @@ const RootStoreModel = types
         self.darasas.splice(index, 1);
       } 
     },
+    removeAttendance(attendanceId: string) {
+      const index = self.attendances.findIndex((s) => s.id === attendanceId);
+      if (index > -1) {
+        self.attendances.splice(index, 1);
+      }
+    },
     addAttendance(studentId: string, date: string, status: string) {
+      
       const attendance = self.attendances.find(
         (att) => att.student.id === studentId && att.date === date
       );
+      
       if(attendance){
         attendance.setStatus(status);
       }else{
@@ -131,6 +145,15 @@ const RootStoreModel = types
         });
       }
     },
+    resetStore() {
+    applySnapshot(self, {
+      authUser: null,
+      darasas: [],
+      students: [],
+      attendances: [],
+      selectedDarasa: null,
+    })
+  },
     saveAttendance() {
       const {selectedDate, selectedDarasa, attendances} = self;
       if(!selectedDarasa || !selectedDate) return;

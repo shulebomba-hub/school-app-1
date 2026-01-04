@@ -1,12 +1,47 @@
 import React from "react";
-import { ScrollView, StyleSheet, TouchableOpacity, useColorScheme } from "react-native";
+import { Alert, Platform, ScrollView, StyleSheet, TouchableOpacity, useColorScheme } from "react-native";
 import { BookOpen, ChevronRight, Info, ListChecksIcon, SlidersHorizontalIcon, Trash2Icon, User2Icon } from "lucide-react-native"; 
 import { View, Text } from "react-native";
 import { rootStore } from "@/components/models";
 import { Card, Divider } from "react-native-paper";
 import { Avatar } from "react-native-paper";
+import { router } from "expo-router";
+
 
 export default function Account() {
+  const {resetStore} = rootStore;
+
+  const OnDeleteAccount = () => {
+    if (Platform.OS === "web") {
+          const confirmed = window.confirm("Are you sure you want to delete your account? ,This action cannot be undone, and all your data will be lost.");
+    
+          if (confirmed) {
+            resetStore()
+            router.push("/");
+          } 
+        } else {
+          Alert.alert(
+            "Confirm Delete Account",
+            "Are you sure you want to delete your account? This action cannot be undone, and all your data will be lost.",
+            [
+              { text: "Cancel", style: "cancel" },
+              {
+                text: "Delete",
+                style: "destructive",
+                onPress: () => {
+                  resetStore();
+                  router.push("/");
+                },
+              },
+            ]
+          );
+        }
+   
+
+    // Implement account deletion logic here
+  };
+
+   
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "light" ? false : true;
   const theme = {
@@ -107,7 +142,7 @@ export default function Account() {
       </TouchableOpacity>
       <Divider style={styles.divider} />
 
-      <TouchableOpacity style={styles.item}>
+      <TouchableOpacity style={styles.item} onPress={OnDeleteAccount}>
       <View style={[styles.iconWrapper, { backgroundColor: "#FFE4E6" }]}>
       <Trash2Icon size={20} color="#EF4444" />
       </View>

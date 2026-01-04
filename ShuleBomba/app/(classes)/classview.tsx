@@ -26,8 +26,9 @@ const ClassHomeScreen = observer(() => {
 
   const onDeleteStudent=(student: any)=>{
     if(!selectedStudent) return;
-    rootStore.selectedDarasa?.removeStudent(student.id);  
     rootStore.setSelectedStudent(null);
+    rootStore.selectedDarasa?.removeStudent(student.id);  
+    
     setVisible(false);
 
   };
@@ -90,6 +91,7 @@ const ClassHomeScreen = observer(() => {
       >
         <View style={styles.overlay}>
           <View style={styles.bottomSheet}>
+            <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>name</Text>
             <TextInput
               style={styles.textInput}
               value={selectedStudent?.full_name || ""}
@@ -150,7 +152,7 @@ overlay: {
     padding: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    minHeight: 100, // short screen height
+    minHeight: 150, // short screen height
   },
   modalButton: {
     marginTop: 10,

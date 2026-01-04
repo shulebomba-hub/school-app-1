@@ -5,10 +5,12 @@ import { rootStore } from "@/components/models";
 import { Button, DataTable, RadioButton } from "react-native-paper";
 import { DatePickerModal } from 'react-native-paper-dates';
 import dayjs from "dayjs";
+import { useRouter } from "expo-router";
 
 
 const AttendanceScreen = observer(() => {
-  const isDark = useColorScheme() === "dark"
+  const isDark = useColorScheme() === "dark";
+  const router = useRouter();
   const theme = {
     background: isDark ? "#000" : "#fff",
     text: isDark ? "#fff" : "#000",
@@ -39,6 +41,21 @@ const AttendanceScreen = observer(() => {
   
   if (!selectedDarasa) {
     return <Text>No class selected</Text>;
+  };
+  if(selectedDarasa.students.length===0){
+    return (
+      <View style={{ flex: 1, alignItems: "center" }}>
+        <Text>No students Found in this classs.</Text>
+        <Text>You don't have any students in this class.</Text>
+          <Text>Add Student to get started</Text>
+          <Button
+        mode="contained"
+          onPress={() => router.push("/add-student")}>
+           Add Student
+        </Button>
+      </View>
+    );
+
   };
   
   const SaveAlert = () => {
@@ -90,7 +107,7 @@ const AttendanceScreen = observer(() => {
       </DataTable.Header>
       {selectedDarasa.students.map((student) => (
        <DataTable.Row key={`${student.id}`}>
-          <DataTable.Cell>{student.full_name}</DataTable.Cell>
+         <DataTable.Cell><Text>{student.full_name}</Text></DataTable.Cell>
           <DataTable.Cell numeric>  
             <RadioButton
               value="present"
@@ -113,7 +130,7 @@ const AttendanceScreen = observer(() => {
             <RadioButton
             disabled={student.isSaved}
               value="sick"
-              color="yellow"
+              color="blue"
               status={ student.status === 'sick' ? 'checked' : 'unchecked' }
               onPress={() => student.setAttendanceStatus('sick', selectedDate!)}
             />
