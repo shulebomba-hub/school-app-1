@@ -8,8 +8,7 @@ import dayjs from "dayjs";
 
 
 const AttendanceScreen = observer(() => {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === "dark"
+  const isDark = useColorScheme() === "dark"
   const theme = {
     background: isDark ? "#000" : "#fff",
     text: isDark ? "#fff" : "#000",
@@ -83,7 +82,7 @@ const AttendanceScreen = observer(() => {
           date={new Date()}
           onConfirm={onConfirmSingle}
         />
-      <DataTable.Header>
+      <DataTable.Header style={{ backgroundColor: theme.card }}>
         <DataTable.Title>Full name</DataTable.Title>
         <DataTable.Title numeric>Present</DataTable.Title>
         <DataTable.Title numeric>Absent</DataTable.Title>
@@ -92,7 +91,7 @@ const AttendanceScreen = observer(() => {
       {selectedDarasa.students.map((student) => (
        <DataTable.Row key={`${student.id}`}>
           <DataTable.Cell>{student.full_name}</DataTable.Cell>
-          <DataTable.Cell numeric>
+          <DataTable.Cell numeric>  
             <RadioButton
               value="present"
               color="green"
