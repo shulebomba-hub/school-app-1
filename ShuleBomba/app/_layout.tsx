@@ -13,24 +13,43 @@ import { Provider } from "mobx-react";
 import React, { useCallback, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { applySnapshot } from "mobx-state-tree";
+import * as SplashScreen from "expo-splash-screen";
 
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();  
 export const unstable_settings = {
   anchor: "(tabs)",
 };
 
 export default function RootLayout() {
+  const [isReady, setIsReady] = React.useState(false);
+
   const colorScheme = useColorScheme(); // 'light' | 'dark'
   const router = useRouter();
   const loadinitialData = useCallback(async () => {
+    try {
     const storedData = await AsyncStorage.getItem("rootStore");
     if (storedData) {
       const rootStoreData = JSON.parse(storedData);
       applySnapshot(rootStore, rootStoreData);
     }
-  }, []);
+  } catch (error) {
+    console.error("Failed to load initial data:", error); 
+  } finally {
+    setIsReady(true); 
+  }
+}, []);
   useEffect(() => {
     loadinitialData();
   }, []);
+  useEffect(() => {
+    if (isReady) {
+      SplashScreen.hideAsync();
+    }
+  }, [isReady]);
+  if (!isReady) {
+    return null; 
+  } 
   const isDark = colorScheme === "dark";
 
   const onUserAccount = () => {
