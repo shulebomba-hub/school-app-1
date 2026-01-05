@@ -97,8 +97,12 @@ const RootStoreModel = types
     selectedStudent: types.maybeNull(types.safeReference(StudentModel)),
     selectedDarasa: types.maybeNull(types.safeReference(DarasaModel)),
     selectedDate: types.maybeNull(types.string),
+    avatar: types.maybeNull(types.string),
   })
   .actions((self) => ({
+    setAvatar(uri: string | null) {
+      self.avatar = uri;
+    },
     setSelectedDarasa(value: string | null) {
       self.selectedDarasa = value;
     },

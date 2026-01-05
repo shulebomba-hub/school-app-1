@@ -46,9 +46,9 @@ const AddStudentScreen = observer(() => {
 
       <Button title="Add Student" onPress={onAddStudent} />
 
-      <View style={[{ marginTop: 20 }, { backgroundColor: theme.card , padding: 10}]}>
+      <View>
         {selectedDarasa.students.map(student => (
-          <View key={student.id}>
+          <View key={student.id}  style={[{ marginTop: 10 }, { backgroundColor: theme.card , padding: 10}]} >
             <Text style={{ color: theme.text }}>{student.full_name}</Text>
           </View>
         ))}

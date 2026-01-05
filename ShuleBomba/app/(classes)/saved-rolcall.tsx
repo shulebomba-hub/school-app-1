@@ -62,7 +62,7 @@ const AttendanceScreen = observer(() => {
       </DataTable.Header>
       {selectedDarasa.students.map((student) => (
        <DataTable.Row key={`${student.id}`}>
-          <DataTable.Cell>{student.full_name}</DataTable.Cell>
+          <DataTable.Cell><Text>{student.full_name}</Text></DataTable.Cell>
           <DataTable.Cell numeric>
             <RadioButton
               color="green"

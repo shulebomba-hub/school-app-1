@@ -5,11 +5,12 @@ import { View, Text } from "react-native";
 import { rootStore } from "@/components/models";
 import { Card, Divider } from "react-native-paper";
 import { Avatar } from "react-native-paper";
-import { router } from "expo-router";
+import { useRouter} from "expo-router";
 
 
 export default function Account() {
   const {resetStore} = rootStore;
+  const router=useRouter();
 
   const OnDeleteAccount = () => {
     if (Platform.OS === "web") {
@@ -57,7 +58,7 @@ export default function Account() {
         >
     <View style={[styles.screen, { backgroundColor: theme.background }]}>
       <Card style={{ marginBottom: 20, padding: 16, borderRadius: 16, elevation: 3 }}>      
-      <TouchableOpacity style={[styles.item,]}>
+      <TouchableOpacity style={[styles.item,]} >
       <View>
       <Avatar.Text
         size={70}
@@ -73,7 +74,7 @@ export default function Account() {
       </TouchableOpacity>
       </Card>
       <Card style={[styles.section, { backgroundColor: theme.card }]}>
-      <TouchableOpacity style={styles.item}>
+      <TouchableOpacity style={styles.item} onPress={()=>{router.push("/account")}}>
       <View style={[styles.iconWrapper, { backgroundColor: "#E0F2FE" }]}>
       <User2Icon size={20} color="#0284C7" />   
       </View>
@@ -154,7 +155,7 @@ export default function Account() {
 
       <ChevronRight size={20} color="#9CA3AF" />
       </TouchableOpacity>
-      <Divider style={styles.divider} />
+      
       </Card>
     </View>
     </ScrollView>

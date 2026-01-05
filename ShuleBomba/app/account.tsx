@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, TouchableOpacity, useColorScheme , Button, Alert, Pressable} from "react-native";
-import { BookOpen, ChevronRight, Info, ListChecksIcon, SlidersHorizontalIcon, Trash2Icon, User2Icon } from "lucide-react-native"; 
 import { View,Image} from "react-native";
 import { rootStore } from "@/components/models";
 import { Divider,Avatar, Card, TextInput, Text } from "react-native-paper";
 import * as ImagePicker from 'expo-image-picker';
+import { observer } from "mobx-react-lite";
 
-export default function Account() {
+const  AccountScreen = observer(()=> {
   const colorScheme = useColorScheme();
-  const { authUser,setAuthUser } = rootStore;
-  const [image, setImage] = useState<string | null>(null);
+  const { authUser,setAuthUser,avatar,setAvatar } = rootStore;
+  
 
   const isDark = colorScheme === "light" ? false : true;
   const theme = {
@@ -31,12 +31,12 @@ const pickImage = async () => {
       let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images', 'videos'],
       allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
+      aspect: [1, 1],
+      quality: 0.5,
     });
     console.log(result);
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
+    if (!result.canceled && authUser) {
+      setAvatar(result.assets[0].uri);
     }
   };
   return (
@@ -48,8 +48,8 @@ const pickImage = async () => {
       <Pressable onPress={pickImage} style={styles.avatarWrapper}>
         <Image
           source={
-            image
-              ? { uri: image } 
+            avatar
+              ? { uri: avatar } 
               : require("../assets/images/appIcon.png") // ✅ default favicon
           }
           style={styles.avatar}
@@ -90,7 +90,8 @@ const pickImage = async () => {
     </ScrollView>
 
   );
-}
+});
+export default AccountScreen;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor:"white",
+    backgroundColor:"#c6c8cdff",
   },
   avatarWrapper: {
     width: 120,
