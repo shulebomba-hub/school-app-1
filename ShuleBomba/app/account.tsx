@@ -28,14 +28,13 @@ const pickImage = async () => {
       );
       return;
     }
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images', 'videos'],
       allowsEditing: true,
-      aspect: [1, 1],
+      aspect: [4, 3],
       quality: 1,
     });
-
+    console.log(result);
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
@@ -50,8 +49,8 @@ const pickImage = async () => {
         <Image
           source={
             image
-              ? { uri: image } // ✅ picked image
-              : require("../assets/avatar.png") // ✅ default favicon
+              ? { uri: image } 
+              : require("../assets/images/appIcon.png") // ✅ default favicon
           }
           style={styles.avatar}
         />
@@ -99,77 +98,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 12,
   },
-
-  section: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 16,
-    paddingVertical: 6,
-    marginBottom: 16,
-
-    // Android
-    elevation: 2,
-
-    // iOS
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-  },
-  button:{
-    marginTop:50,
-    marginLeft:10,
-    marginRight:10,
-  },
-
-  item: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
-
-  divider: {
-    height: 1,
-    backgroundColor: "#ECECEC",
-    marginLeft: 56,
-  },
-
-  iconWrapper: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 14,
-  },
-
-  textWrapper: {
-    flex: 1,
-
-  },
-
-  title: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#111827",
-  },
-
-  subtitle: {
-    fontSize: 13,
-    color: "#6B7280",
-    marginTop: 2,
-  },
-
-  chevron: {
-    marginLeft: 8,
-  },
    user:{
     marginLeft: 60,
     flex: 1,
-  };
+  },
   container: {
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor:"white",
   },
   avatarWrapper: {
     width: 120,
@@ -182,4 +118,9 @@ const styles = StyleSheet.create({
     height: "100%",
     resizeMode: "cover",
   },
+  button:{
+    marginTop:30,
+    marginLeft:30,
+    marginRight:30,
+  }
 });
