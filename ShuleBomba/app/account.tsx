@@ -1,109 +1,92 @@
-import React from "react";
-import { ScrollView, StyleSheet, TouchableOpacity, useColorScheme } from "react-native";
+import React, { useState } from "react";
+import { ScrollView, StyleSheet, TouchableOpacity, useColorScheme , Button, Alert, Pressable} from "react-native";
 import { BookOpen, ChevronRight, Info, ListChecksIcon, SlidersHorizontalIcon, Trash2Icon, User2Icon } from "lucide-react-native"; 
-import { View, Text } from "react-native";
+import { View,Image} from "react-native";
 import { rootStore } from "@/components/models";
-import { Divider } from "react-native-paper";
-
+import { Divider,Avatar, Card, TextInput, Text } from "react-native-paper";
+import * as ImagePicker from 'expo-image-picker';
 
 export default function Account() {
   const colorScheme = useColorScheme();
-  const { authUser } = rootStore;
+  const { authUser,setAuthUser } = rootStore;
+  const [image, setImage] = useState<string | null>(null);
+
   const isDark = colorScheme === "light" ? false : true;
   const theme = {
   background: isDark ? "#000" : "#fff",
   text: isDark ? "#fff" : "#000",
   card: isDark ? "#111" : "#f5f5f5",
 };
+const pickImage = async () => {
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (!permissionResult.granted) {
+      Alert.alert(
+        "Permission required",
+        "Permission to access the media library is required."
+      );
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
   return (
     <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         > 
-    <View style={{ flex: 1, backgroundColor: theme.background,}}>
-    <TouchableOpacity style={styles.item}>
-  <View style={[styles.iconWrapper, { backgroundColor: "#E0F2FE" }]}>
-    <User2Icon size={20} color="#0284C7" />   
-  </View>
-
-  <View style={styles.textWrapper}>
-    <Text style={[styles.title, { color: theme.text }]}>My Profile</Text>
-    <Text style={[styles.subtitle, { color: theme.text }]}>Edit profile</Text>
-  </View>
-
-  <ChevronRight size={20} color="#9CA3AF" />
-
-</TouchableOpacity>
-<Divider style={styles.divider} />
-<TouchableOpacity style={styles.item}>
-  <View style={[styles.iconWrapper, { backgroundColor: "#E8F5E9" }]}>
-    <BookOpen size={20} color="#2E7D32" />
-  </View>
-
-  <View style={styles.textWrapper}>
-    <Text style={[styles.title, { color: theme.text }]}>Manage Classes</Text>
-    <Text style={[styles.subtitle, { color: theme.text }]}>Add / Edit / Delete classes</Text>
-  </View>
-
-  <ChevronRight size={20} color="#9CA3AF" />
-</TouchableOpacity>
-<Divider style={styles.divider} />  
-
-<TouchableOpacity style={styles.item}>
-  <View style={[styles.iconWrapper, { backgroundColor: "#FFF7ED" }]}>
-    <ListChecksIcon size={20} color="#F97316" />      
-  </View>
-
-  <View style={styles.textWrapper}>
-    <Text style={[styles.title, { color: theme.text }]}>Attendance settings</Text>
-    <Text style={[styles.subtitle, { color: theme.text }]}>Roll call rules</Text>
-  </View>
-
-  <ChevronRight size={20} color="#9CA3AF" />
-</TouchableOpacity>
-<Divider style={styles.divider} />
-<TouchableOpacity style={styles.item}>
-  <View style={[styles.iconWrapper, { backgroundColor: "#F3E8FF" }]}>
-    <SlidersHorizontalIcon size={20} color="#7C3AED" />
-  </View>
-
-  <View style={styles.textWrapper}>
-    <Text style={[styles.title, { color: theme.text }]}>App preference</Text>
-    <Text style={[styles.subtitle, { color: theme.text }]}>Themes, Notifications</Text>
-  </View>
-
-  <ChevronRight size={20} color="#9CA3AF" />
-</TouchableOpacity>
-<Divider style={styles.divider} />
-
-<TouchableOpacity style={styles.item}>
-  <View style={[styles.iconWrapper, { backgroundColor: "#ECFEFF" }]}>
-    <Info size={20} color="#0891B2" />
-  </View>
-
-  <View style={styles.textWrapper}>
-    <Text style={[styles.title, { color: theme.text }]}>About App</Text>
-    <Text style={[styles.subtitle, { color: theme.text }]}>Version, Terms of Service</Text>  
-  </View>
-
-  <ChevronRight size={20} color="#9CA3AF" />
-</TouchableOpacity>
-<Divider style={styles.divider} />
-
-<TouchableOpacity style={styles.item}>
-  <View style={[styles.iconWrapper, { backgroundColor: "#FFE4E6" }]}>
-    <Trash2Icon size={20} color="#EF4444" />
-  </View>
-
-  <View style={styles.textWrapper}>
-    <Text style={[styles.title, { color: theme.text }]}>Delete Account</Text>
-    <Text style={[styles.subtitle, { color: theme.text }]}>Delete your account permanently</Text>  
-  </View>
-
-  <ChevronRight size={20} color="#9CA3AF" />
-</TouchableOpacity>
-<Divider style={styles.divider} />
-
+         <View style={styles.container}>
+      <Pressable onPress={pickImage} style={styles.avatarWrapper}>
+        <Image
+          source={
+            image
+              ? { uri: image } // ✅ picked image
+              : require("../assets/avatar.png") // ✅ default favicon
+          }
+          style={styles.avatar}
+        />
+      </Pressable>
+    </View>
+    <View style={styles.screen}>
+      <Divider/>
+    <Text variant="bodyLarge">Personal Information</Text>
+    <View style={{flexDirection:"row", justifyContent:"space-between"}}>
+    <TextInput
+    mode="outlined"
+    label="username"
+    value={authUser?.username}
+    onChangeText={(value)=>{
+      setAuthUser(value);
+      }}
+    />
+    <TextInput
+    mode="outlined"
+    label="phone number"
+    value={authUser?.phone}
+    
+    />
+    </View>
+    <TextInput
+    mode="outlined"
+    label="School name"
+    value={authUser?.school_name}
+    
+    />
+    <View style={styles.button}>
+      <Button title="SAVE CHANGES"/>
+    </View>
+     
+    
     </View>
     </ScrollView>
 
@@ -131,6 +114,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 6,
+  },
+  button:{
+    marginTop:50,
+    marginLeft:10,
+    marginRight:10,
   },
 
   item: {
@@ -174,5 +162,24 @@ const styles = StyleSheet.create({
 
   chevron: {
     marginLeft: 8,
+  },
+   user:{
+    marginLeft: 60,
+    flex: 1,
+  };
+  container: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  avatarWrapper: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    overflow: "hidden",
+  },
+  avatar: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
 });

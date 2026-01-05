@@ -102,7 +102,7 @@ export default function RootLayout() {
 
           <Stack.Screen
             name="account"
-            options={{ title: "Account Info" }}
+            options={{ title: "Account", headerBackTitle: "Back" }}
           />
 
           <Stack.Screen
