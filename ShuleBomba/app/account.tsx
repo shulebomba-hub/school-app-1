@@ -64,10 +64,7 @@ const pickImage = async () => {
     mode="outlined"
     label="username"
     value={authUser?.username}
-    onChangeText={(value)=>{
-      setAuthUser(value);
-      }}
-    />
+    onChangeText={value=>setAuthUser(value)}/>
     <TextInput
     mode="outlined"
     label="phone number"

@@ -9,7 +9,7 @@ import { useRouter} from "expo-router";
 
 
 export default function Account() {
-  const {resetStore} = rootStore;
+  const {resetStore, setAvatar,avatar} = rootStore;
   const router=useRouter();
 
   const OnDeleteAccount = () => {
@@ -18,7 +18,7 @@ export default function Account() {
     
           if (confirmed) {
             resetStore()
-            router.push("/");
+            router.replace("/");
           } 
         } else {
           Alert.alert(
@@ -31,7 +31,7 @@ export default function Account() {
                 style: "destructive",
                 onPress: () => {
                   resetStore();
-                  router.push("/");
+                  router.replace("/");
                 },
               },
             ]
@@ -41,6 +41,9 @@ export default function Account() {
 
     // Implement account deletion logic here
   };
+  const onAbout=()=>{
+    router.push("/about-app")
+  }
 
    
   const colorScheme = useColorScheme();
@@ -70,7 +73,7 @@ export default function Account() {
       <Text style={[styles.title, { color: "black"}]}>{authUser?.username ?? "Username"}</Text>
       <Text style={[styles.subtitle, { color: "black" }]}>{authUser?.school_name ?? "School Name"}</Text>
       </View>
-      <ChevronRight size={20} color="#9CA3AF" />  
+       
       </TouchableOpacity>
       </Card>
       <Card style={[styles.section, { backgroundColor: theme.card }]}>
@@ -88,7 +91,7 @@ export default function Account() {
 
       </TouchableOpacity>
       <Divider style={styles.divider} />
-      <TouchableOpacity style={styles.item}>
+      <TouchableOpacity style={styles.item} onPress={()=>router.push("/manage-madarasa")}>
       <View style={[styles.iconWrapper, { backgroundColor: "#E8F5E9" }]}>
       <BookOpen size={20} color="#2E7D32" />
       </View>
@@ -129,7 +132,7 @@ export default function Account() {
       </TouchableOpacity>
       <Divider style={styles.divider} />
 
-      <TouchableOpacity style={styles.item}>
+      <TouchableOpacity style={styles.item} onPress={onAbout}>
       <View style={[styles.iconWrapper, { backgroundColor: "#ECFEFF" }]}>
       <Info size={20} color="#0891B2" />
       </View>

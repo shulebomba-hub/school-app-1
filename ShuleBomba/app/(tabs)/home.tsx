@@ -23,6 +23,9 @@ const HomeScreen = observer(() => {
     setSelectedDarasa(darasa.id)
     router.push("/(classes)/classview")
   }
+  if(!authUser){
+    router.replace("/")
+  }
 
   return (
     <ScrollView 

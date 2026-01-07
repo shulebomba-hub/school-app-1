@@ -16,13 +16,16 @@ import { applySnapshot } from "mobx-state-tree";
 import * as SplashScreen from "expo-splash-screen";
 
 // Keep the splash screen visible while we fetch resources
-SplashScreen.preventAutoHideAsync();  
+
 export const unstable_settings = {
   anchor: "(tabs)",
 };
 
 export default function RootLayout() {
   const [isReady, setIsReady] = React.useState(false);
+   useEffect(() => {
+    SplashScreen.preventAutoHideAsync();
+  }, []);
 
   const colorScheme = useColorScheme(); // 'light' | 'dark'
   const router = useRouter();
@@ -44,7 +47,7 @@ export default function RootLayout() {
   }, []);
   useEffect(() => {
     if (isReady) {
-      SplashScreen.hideAsync();
+     SplashScreen.hideAsync();
     }
   }, [isReady]);
   if (!isReady) {
@@ -104,7 +107,19 @@ export default function RootLayout() {
             name="account"
             options={{ title: "Account", headerBackTitle: "Back" }}
           />
-
+          <Stack.Screen
+            name="about-app"
+            options={{ title: "About App", headerBackTitle: "Back" }}
+          />
+          <Stack.Screen
+            name="index"
+            options={{ title: "Login", headerBackTitle: "Back",headerShown: false }}
+          />
+          <Stack.Screen
+            name="manage-madarasa"
+            options={{ title: "Manage Classes", headerBackTitle: "Back"}}
+          />
+       
           <Stack.Screen
             name="(classes)"
             options={{

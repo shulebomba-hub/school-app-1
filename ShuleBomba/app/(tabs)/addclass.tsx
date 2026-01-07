@@ -44,9 +44,9 @@ const AddClassScreen = observer(() => {
 
       <Button title="Add Class" onPress={addClass}/>
 
-      <View style={[{ marginTop: 20 }, { backgroundColor: theme.card , padding: 10, borderRadius: 5} ]}>
+      <View >
         {darasas.map((darasa) => (
-          <View key={darasa.id}>
+          <View key={darasa.id} style={[{ marginTop: 5 }, { backgroundColor: theme.card , padding: 10, borderRadius: 5} ]}>
             <Text style={{ color: theme.text }}>{darasa.name}</Text>
           </View>
         ))}
