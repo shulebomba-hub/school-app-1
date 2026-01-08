@@ -6,9 +6,10 @@ import { rootStore } from "@/components/models";
 import { Card, Divider } from "react-native-paper";
 import { useRouter} from "expo-router";
 import { useTheme } from "@/context/ThemeContext";
+import { observer } from "mobx-react-lite";
 
 
-export default function Account() {
+const Account=observer(() =>  {
   const {resetStore, setAvatar,avatar} = rootStore;
   const router=useRouter();
   const { theme } = useTheme();
@@ -124,7 +125,7 @@ export default function Account() {
 
       <View style={styles.textWrapper}>
       <Text style={[styles.title,{color:theme.text}]}>App preference</Text>
-      <Text style={[styles.subtitle ,{color:theme.text}]}>Themes, Notifications</Text>
+      <Text style={[styles.subtitle ,{color:theme.text}]}>Themes, Permissions</Text>
       </View>
 
       <ChevronRight size={20} color="#9CA3AF" />
@@ -137,7 +138,7 @@ export default function Account() {
       </View>
 
       <View style={styles.textWrapper}>
-      <Text style={[styles.title,{color:theme.text}]}>About App</Text>
+      <Text style={[styles.title,{color:theme.text}]}>About</Text>
       <Text style={[styles.subtitle ,{color:theme.text}]}>Version, Terms of Service</Text>  
       </View>
 
@@ -163,7 +164,7 @@ export default function Account() {
     </ScrollView>
 
   );
-}
+});
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -239,3 +240,4 @@ const styles = StyleSheet.create({
     backgroundColor: "#c4d4f5ff",
   }
 });
+export default Account;

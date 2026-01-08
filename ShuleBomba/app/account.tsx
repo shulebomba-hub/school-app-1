@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, TouchableOpacity, Button, Alert, Pressable, View as RNView} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { View,Image, Text as RNText} from "react-native";
 import { rootStore } from "@/components/models";
 import { Divider,Avatar, Card, TextInput, Text } from "react-native-paper";
@@ -11,8 +12,13 @@ import { useTheme } from "@/context/ThemeContext";
 
 const  AccountScreen = observer(()=> {
   const router = useRouter();
-  const { authUser,setAuthUser,avatar,setAvatar } = rootStore;
+  const { authUser, avatar, setAvatar,setAuthUser } = rootStore;
   const { theme } = useTheme();
+  const [username, setUsername] = useState(authUser?.username || "");
+  const [phone, setPhone] = useState(authUser?.phone || "");
+  const [schoolName, setSchoolName] = useState(authUser?.school_name || "");
+  const [loading, setLoading] = useState(false);
+
 const pickImage = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -35,7 +41,24 @@ const pickImage = async () => {
       setAvatar(result.assets[0].uri);
     }
   };
+  const userData = {
+      username,
+      phone,
+      school_name: schoolName
+    };
+  const handleSaveChanges = () => {
+    if (!authUser) return;
+    setLoading(true);
+    
+    
+    setTimeout(() => {
+      setAuthUser(userData);
+      setLoading(false);
+      Alert.alert("Success", "Profile updated successfully!");
+    }, 1500);
+  };
   return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
     <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
@@ -63,32 +86,39 @@ const pickImage = async () => {
        <View style={styles.screen}>
          <Divider/>
          <Text variant="bodyLarge">Personal Information</Text>
-         <View style={{flexDirection:"row", justifyContent:"space-between"}}>
+         <View style={{flexDirection:"row", justifyContent:"space-between", gap: 10}}>
            <TextInput
              mode="outlined"
-             label="username"
-             value={authUser?.username}
-             onChangeText={value=>setAuthUser(value)}
+             label="Username"
+             value={username}
+             onChangeText={setUsername}
+             style={{ flex: 1 }}
            />
            <TextInput
              mode="outlined"
-             label="phone number"
-             value={authUser?.phone}
+             label="Phone Number"
+             value={phone}
+             onChangeText={setPhone}
+             style={{ flex: 1 }}
            />
          </View>
-    <TextInput
-    mode="outlined"
-    label="School name"
-    value={authUser?.school_name}
-    
-    />
-    <View style={styles.button}>
-      <Button title="SAVE CHANGES"/>
-    </View>
-     
-    
-    </View>
+         <TextInput
+           mode="outlined"
+           label="School Name"
+           value={schoolName}
+           onChangeText={setSchoolName}
+           style={{ marginTop: 12 }}
+         />
+         <View style={styles.button}>
+           <Button 
+             title={loading ? "SAVING..." : "SAVE CHANGES"}
+             onPress={handleSaveChanges}
+             disabled={loading}
+           />
+         </View>
+       </View>
     </ScrollView>
+    </SafeAreaView>
 
   );
 });

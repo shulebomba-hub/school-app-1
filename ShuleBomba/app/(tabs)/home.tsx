@@ -9,6 +9,7 @@ import { useRouter } from "expo-router"
 import { observer } from "mobx-react-lite"
 import { rootStore } from "@/components/models"
 import React from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 
 const HomeScreen = observer(() => {
@@ -65,28 +66,29 @@ const HomeScreen = observer(() => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
+    <SafeAreaProvider style={{ flex: 1, backgroundColor: theme.background }}>
+      {/* Fixed Header Section */}
+      <View style={[styles.headerSection, { backgroundColor: theme.card, borderBottomColor: isDark ? '#333' : '#e5e7eb' }]}>
+        <View style={styles.headerContent}>
+          <BookOpen size={32} color="#3B82F6" />
+          <View style={styles.headerText}>
+            <Text style={[styles.schoolName, { color: theme.text }]}>
+              {authUser?.school_name?.toUpperCase() ?? "YOUR SCHOOL"}
+            </Text>
+            <Text style={[styles.subtitle, { color: isDark ? '#9ca3af' : '#6b7280' }]}>
+              Attendance Management System
+            </Text>
+          </View>
+        </View>
+      </View>
+
+      {/* Scrollable Content */}
       <ScrollView 
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         style={{ backgroundColor: theme.background }}
       >
         <View style={{ flex: 1, backgroundColor: theme.background }}>
-          {/* Header Section */}
-          <View style={[styles.headerSection, { backgroundColor: theme.card, borderBottomColor: isDark ? '#333' : '#e5e7eb' }]}>
-            <View style={styles.headerContent}>
-              <BookOpen size={32} color="#3B82F6" />
-              <View style={styles.headerText}>
-                <Text style={[styles.schoolName, { color: theme.text }]}>
-                  {authUser?.school_name?.toUpperCase() ?? "YOUR SCHOOL"}
-                </Text>
-                <Text style={[styles.subtitle, { color: isDark ? '#9ca3af' : '#6b7280' }]}>
-                  Attendance Management System
-                </Text>
-              </View>
-            </View>
-          </View>
-
           {/* Stats Section */}
           {darasas.length > 0 && (
             <View style={styles.statsContainer}>
@@ -173,7 +175,7 @@ const HomeScreen = observer(() => {
           )}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </SafeAreaProvider>
   )
 });
 

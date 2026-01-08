@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const AuthUserModel = types.model('AuthUserModel', {
   username: types.identifier,
   phone: types.string,
-  password: types.string,
+  password: types.optional(types.string, ""),
   school_name: types.string,
 
 });

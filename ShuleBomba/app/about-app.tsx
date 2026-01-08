@@ -221,7 +221,7 @@ export default function AboutApp() {
             Made with ❤️ for Teachers
           </Text>
           <Text style={[styles.footerSubtext, { color: theme.text }]}>
-            © 2024 Shule Bomba. All rights reserved.
+            © 2026 ShuleBomba. All rights reserved.
           </Text>
         </View>
       </View>

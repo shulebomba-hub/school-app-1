@@ -38,7 +38,7 @@ const AppPreferenceScreen = () => {
       name: "Notifications",
       icon: "🔔",
       description: "Send you reminders about attendance, class schedules, and important updates",
-      used: true,
+      used: false,
     },
     {
       name: "Contacts",
@@ -50,7 +50,7 @@ const AppPreferenceScreen = () => {
       name: "Calendar",
       icon: "📅",
       description: "Sync class schedules and attendance records with your calendar",
-      used: false,
+      used: true,
     },
     {
       name: "Files",

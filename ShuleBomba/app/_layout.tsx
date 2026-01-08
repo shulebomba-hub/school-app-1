@@ -5,7 +5,7 @@ import {
 } from "@react-navigation/native";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { CircleUserRound } from "lucide-react-native";
@@ -57,13 +57,8 @@ export default function RootLayout() {
   } 
   const isDark = colorScheme === "dark";
 
-  const onUserAccount = () => {
-    router.push("/account");
-    
-  };
-
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={["top", "left", "right", "bottom"]}>
+    <SafeAreaProvider>
       <Provider rootstore={rootStore}>
         <ThemeProvider>
           <NavigationThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
@@ -82,14 +77,6 @@ export default function RootLayout() {
                   headerBackVisible: false,
                   gestureEnabled: false,
                   headerLeft : ()=>null,
-                  headerRight: () => (
-                    <CircleUserRound
-                      size={22}
-                      color={isDark ? "#fff" : "#000"}
-                      style={{ marginRight: 12 }}
-                      onPress={onUserAccount}
-                    />
-                  ),
                 }}
               />
 
@@ -136,6 +123,6 @@ export default function RootLayout() {
           </NavigationThemeProvider>
         </ThemeProvider>
       </Provider>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
