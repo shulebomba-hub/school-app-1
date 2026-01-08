@@ -5,7 +5,7 @@ import {
 } from "@react-navigation/native";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { CircleUserRound } from "lucide-react-native";
@@ -62,6 +62,7 @@ export default function RootLayout() {
       <Provider rootstore={rootStore}>
         <ThemeProvider>
           <NavigationThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: isDark ? '#000' : '#fff' }} edges={["top", "left", "right"]}>
             <Stack
               screenOptions={{
                 headerShown: false,
@@ -117,6 +118,8 @@ export default function RootLayout() {
                    }}
               />
             </Stack>
+            </Stack>
+            </SafeAreaView>
 
             {/* Status bar theme */}
             <StatusBar style={isDark ? "light" : "dark"} />
