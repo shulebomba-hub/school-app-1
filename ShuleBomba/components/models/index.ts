@@ -98,10 +98,14 @@ const RootStoreModel = types
     selectedDarasa: types.maybeNull(types.safeReference(DarasaModel)),
     selectedDate: types.maybeNull(types.string),
     avatar: types.maybeNull(types.string),
+    theme: types.optional(types.enumeration('theme', ['light', 'dark', 'system']), 'system'),
   })
   .actions((self) => ({
     setAvatar(uri: string | null) {
       self.avatar = uri;
+    },
+    setTheme(themeMode: 'light' | 'dark' | 'system') {
+      self.theme = themeMode;
     },
     setSelectedDarasa(value: string | null) {
       self.selectedDarasa = value;
@@ -178,6 +182,7 @@ export const rootStore = RootStoreModel.create({
   students: [],
   attendances: [],
   selectedDarasa: null,
+  theme: 'system',
 });
 
 onSnapshot(rootStore, (snapshot) => {

@@ -1,18 +1,13 @@
 import React, { useState } from "react"
-import { View , useColorScheme, TextInput, Button, Text, ScrollView } from "react-native"
+import { View , TextInput, Button, Text, ScrollView } from "react-native"
 import { observer } from "mobx-react-lite"
 import { rootStore } from "@/components/models"
+import { useTheme } from "@/context/ThemeContext"
 
 const AddStudentScreen = observer(() => {
   const [name, setName] = useState("")
   const { selectedDarasa } = rootStore;
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === "dark"
-  const theme = {
-  background: isDark ? "#000" : "#fff",
-  text: isDark ? "#fff" : "#000",
-  card: isDark ? "#111" : "#f5f5f5ff",
-  };  
+  const { theme } = useTheme();  
 
   const onAddStudent = () => {
     if (!name.trim()) return
@@ -29,7 +24,7 @@ const AddStudentScreen = observer(() => {
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         >
-    <View style={{ padding: 20 }}>
+    <View style={{ padding: 20, backgroundColor: theme.background, flex: 1 }}>
       <TextInput
         placeholder="Student Name"
         value={name}

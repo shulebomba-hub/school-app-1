@@ -1,22 +1,18 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, TouchableOpacity, useColorScheme , Button, Alert, Pressable} from "react-native";
-import { View,Image} from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity, Button, Alert, Pressable, View as RNView} from "react-native";
+import { View,Image, Text as RNText} from "react-native";
 import { rootStore } from "@/components/models";
 import { Divider,Avatar, Card, TextInput, Text } from "react-native-paper";
 import * as ImagePicker from 'expo-image-picker';
 import { observer } from "mobx-react-lite";
+import { useRouter } from "expo-router";
+import { ChevronLeft } from "lucide-react-native";
+import { useTheme } from "@/context/ThemeContext";
 
 const  AccountScreen = observer(()=> {
-  const colorScheme = useColorScheme();
+  const router = useRouter();
   const { authUser,setAuthUser,avatar,setAvatar } = rootStore;
-  
-
-  const isDark = colorScheme === "light" ? false : true;
-  const theme = {
-  background: isDark ? "#000" : "#fff",
-  text: isDark ? "#fff" : "#000",
-  card: isDark ? "#111" : "#f5f5f5",
-};
+  const { theme } = useTheme();
 const pickImage = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -44,34 +40,42 @@ const pickImage = async () => {
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         > 
-         <View style={styles.container}>
-      <Pressable onPress={pickImage} style={styles.avatarWrapper}>
-        <Image
-          source={
-            avatar
-              ? { uri: avatar } 
-              : require("../assets/images/appIcon.png") // ✅ default favicon
-          }
-          style={styles.avatar}
-        />
-      </Pressable>
-    </View>
-    <View style={styles.screen}>
-      <Divider/>
-    <Text variant="bodyLarge">Personal Information</Text>
-    <View style={{flexDirection:"row", justifyContent:"space-between"}}>
-    <TextInput
-    mode="outlined"
-    label="username"
-    value={authUser?.username}
-    onChangeText={value=>setAuthUser(value)}/>
-    <TextInput
-    mode="outlined"
-    label="phone number"
-    value={authUser?.phone}
-    
-    />
-    </View>
+         <RNView style={[styles.header, { backgroundColor: theme.background }]}>
+           <TouchableOpacity onPress={() => router.back()}>
+             <ChevronLeft size={24} color={theme.text} />
+           </TouchableOpacity>
+           <RNText style={[styles.headerTitle, { color: theme.text }]}>Edit Profile</RNText>
+         <RNView style={{ width: 24 }} />
+       </RNView>
+       <View style={styles.container}>
+         <Pressable onPress={pickImage} style={styles.avatarWrapper}>
+           <Image
+             source={
+               avatar
+                 ? { uri: avatar } 
+                 : require("../assets/images/appIcon.png")
+             }
+             style={styles.avatar}
+           />
+         </Pressable>
+         <Text>Tap to edit</Text>
+       </View>
+       <View style={styles.screen}>
+         <Divider/>
+         <Text variant="bodyLarge">Personal Information</Text>
+         <View style={{flexDirection:"row", justifyContent:"space-between"}}>
+           <TextInput
+             mode="outlined"
+             label="username"
+             value={authUser?.username}
+             onChangeText={value=>setAuthUser(value)}
+           />
+           <TextInput
+             mode="outlined"
+             label="phone number"
+             value={authUser?.phone}
+           />
+         </View>
     <TextInput
     mode="outlined"
     label="School name"
@@ -90,6 +94,17 @@ const pickImage = async () => {
 });
 export default AccountScreen;
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+  },
   screen: {
     flex: 1,
     backgroundColor: "#F6F7F9",

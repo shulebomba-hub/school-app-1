@@ -1,16 +1,17 @@
 import React from "react";
-import { Alert, Platform, ScrollView, StyleSheet, TouchableOpacity, useColorScheme } from "react-native";
+import { Alert, Platform, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { BookOpen, ChevronRight, Info, ListChecksIcon, SlidersHorizontalIcon, Trash2Icon, User2Icon } from "lucide-react-native"; 
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import { rootStore } from "@/components/models";
 import { Card, Divider } from "react-native-paper";
-import { Avatar } from "react-native-paper";
 import { useRouter} from "expo-router";
+import { useTheme } from "@/context/ThemeContext";
 
 
 export default function Account() {
   const {resetStore, setAvatar,avatar} = rootStore;
   const router=useRouter();
+  const { theme } = useTheme();
 
   const OnDeleteAccount = () => {
      // Implement account deletion logic here
@@ -47,13 +48,7 @@ export default function Account() {
   }
 
    
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === "light" ? false : true;
-  const theme = {
-  background: isDark ? "#000" : "#fff",
-  text: isDark ? "#fff" : "#000",
-  card: isDark ? "#111" : "#f5f5f5",
-};  
+
   const { authUser } = rootStore;
   return (
     <ScrollView
@@ -64,10 +59,13 @@ export default function Account() {
       <Card style={{ marginBottom: 20, padding: 16, borderRadius: 16, elevation: 3 }}>      
       <TouchableOpacity style={[styles.item,]} >
       <View>
-      <Avatar.Text
-        size={70}
-        label={authUser?.username?.charAt(0)?.toUpperCase() ?? "SB"}
-        style={{ backgroundColor: "#c4d4f5ff" }}
+      <Image
+        source={
+          avatar
+            ? { uri: avatar }
+            : require("../../assets/images/appIcon.png")
+        }
+        style={styles.avatar}
       />
      </View>
       <View style={styles.user}>
@@ -119,7 +117,7 @@ export default function Account() {
       <ChevronRight size={20} color="#9CA3AF" />
       </TouchableOpacity>
       <Divider style={styles.divider} />
-      <TouchableOpacity style={styles.item}>
+      <TouchableOpacity style={styles.item} onPress={() => router.push("/app-preference")}>
       <View style={[styles.iconWrapper, { backgroundColor: "#F3E8FF" }]}>
       <SlidersHorizontalIcon size={20} color="#7C3AED" />
       </View>
@@ -232,5 +230,12 @@ const styles = StyleSheet.create({
   user:{
     marginLeft: 30,
     flex: 1,
+  },
+  avatar: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    resizeMode: "cover",
+    backgroundColor: "#c4d4f5ff",
   }
 });

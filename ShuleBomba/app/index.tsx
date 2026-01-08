@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
-import {View,Text, Button,StyleSheet,useColorScheme} from "react-native";
+import {View,Text, Button,StyleSheet} from "react-native";
 import { useRouter } from "expo-router";
+import { useTheme } from "@/context/ThemeContext";
 
 import { PaperProvider, TextInput } from "react-native-paper";
 import { rootStore } from "@/components/models";
 
 export default function Login() {
   const router = useRouter();
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === "dark"
-  const theme = {
-  background: isDark ? "#000" : "#fff",
-  text: isDark ? "#fff" : "#000",
-  card: isDark ? "#111" : "#f5f5f5ff",
-  };    
+  const { theme, isDark } = useTheme();    
   const { setAuthUser ,authUser} = rootStore;
   const [step, setStep] = useState(1);
   const [error, setError] = useState("");

@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from "react";
-import {ScrollView , useColorScheme, View, Text, StyleSheet, Platform ,Alert} from "react-native";
+import {ScrollView , View, Text, StyleSheet, Platform ,Alert} from "react-native";
 import { observer } from "mobx-react-lite";
 import { rootStore } from "@/components/models";
 import { Button, DataTable, RadioButton } from "react-native-paper";
 import { DatePickerModal } from 'react-native-paper-dates';
 import dayjs from "dayjs";
 import { useRouter } from "expo-router";
+import { useTheme } from "@/context/ThemeContext";
 
 
 const AttendanceScreen = observer(() => {
-  const isDark = useColorScheme() === "dark";
-  const router = useRouter();
-  const theme = {
-    background: isDark ? "#000" : "#fff",
-    text: isDark ? "#fff" : "#000",
-    card: isDark ? "#111" : "#f5f5f5ff",
-  };  
+  const { theme } = useTheme();
+  const router = useRouter();  
   const {selectedDate, setSelectedDate, saveAttendance, attendances} = rootStore;
   const [open, setOpen] = React.useState(false);
 
@@ -40,14 +36,14 @@ const AttendanceScreen = observer(() => {
  
   
   if (!selectedDarasa) {
-    return <Text>No class selected</Text>;
+    return <Text style={{ color: theme.text }}>No class selected</Text>;
   };
   if(selectedDarasa.students.length===0){
     return (
-      <View style={{ flex: 1, alignItems: "center" }}>
-        <Text>No students Found in this classs.</Text>
-        <Text>You don't have any students in this class.</Text>
-          <Text>Add Student to get started</Text>
+      <View style={{ flex: 1, alignItems: "center", backgroundColor: theme.background, justifyContent: "center" }}>
+        <Text style={{ color: theme.text }}>No students Found in this class.</Text>
+        <Text style={{ color: theme.text }}>You don't have any students in this class.</Text>
+          <Text style={{ color: theme.text }}>Add Student to get started</Text>
           <Button
         mode="contained"
           onPress={() => router.push("/add-student")}>
@@ -87,7 +83,7 @@ const AttendanceScreen = observer(() => {
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         >
-    <View style={{ flex: 1, padding: 16 }}>
+    <View style={{ flex: 1, padding: 16, backgroundColor: theme.background }}>
         <Button onPress={() => setOpen(true)} uppercase={false} mode="outlined">
           {!selectedDate?"Pick a date": `Selected date: ${selectedDate}`}
         </Button>
@@ -107,7 +103,7 @@ const AttendanceScreen = observer(() => {
       </DataTable.Header>
       {selectedDarasa.students.map((student) => (
        <DataTable.Row key={`${student.id}`}>
-         <DataTable.Cell><Text>{student.full_name}</Text></DataTable.Cell>
+         <DataTable.Cell><Text style={{ color: theme.text }}>{student.full_name}</Text></DataTable.Cell>
           <DataTable.Cell numeric>  
             <RadioButton
               value="present"

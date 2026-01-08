@@ -3,46 +3,62 @@ import React from "react";
 
 import { HapticTab } from "@/components/haptic-tab";
 import { Colors } from "@/constants/theme";
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import { HomeIcon, Settings2, Settings2Icon } from "lucide-react-native";
+import { useTheme } from "@/context/ThemeContext";
+import { HomeIcon, Settings2Icon } from "lucide-react-native";
 
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const { isDark, theme } = useTheme();
 
   return (
-    
-      <Tabs
-        screenOptions={{
-          tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-          headerShown: false,
-          tabBarButton: HapticTab,
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: '#3B82F6',
+        tabBarInactiveTintColor: isDark ? '#6B7280' : '#9CA3AF',
+        headerShown: false,
+        tabBarButton: HapticTab,
+        tabBarStyle: {
+          backgroundColor: theme.card,
+          borderTopColor: isDark ? '#333' : '#e5e7eb',
+          borderTopWidth: 1,
+          height: 60,
+          paddingBottom: 8,
+          paddingTop: 8,
+          elevation: 8,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: isDark ? 0.3 : 0.1,
+          shadowRadius: 6,
+        },
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: '600',
+          marginTop: 4,
+        },
+      }}
+    >
+      <Tabs.Screen
+        name="home"
+        options={{
+          title: "Classes",
+          tabBarIcon: ({ color }) => <HomeIcon size={24} color={color} />,
         }}
-      >
-        <Tabs.Screen
-          name="home"
-          options={{
-            title: "ShuleBomba",
-            tabBarIcon: ({ color }) => <HomeIcon color={color} />,
-        
-          }}
-        />
-        <Tabs.Screen
-          name="settings"
-          options={{
-            title: "Settings",
-            tabBarIcon: ({ color }) => <Settings2Icon color={color} />,
-          }}
-        />
-        <Tabs.Screen
-          name="addclass"
-          options={{
-            title: "Add / Edit Class Name",
-            href: null,
-            tabBarIcon: ({ color }) => <Settings2Icon color={color} />,
-          }}
-        />
-      </Tabs>
-  
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: "Settings",
+          tabBarIcon: ({ color }) => <Settings2Icon size={24} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="addclass"
+        options={{
+          title: "Add / Edit Class Name",
+          href: null,
+          tabBarIcon: ({ color }) => <Settings2Icon size={24} color={color} />,
+        }}
+      />
+    </Tabs>
   );
 }

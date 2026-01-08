@@ -1,7 +1,7 @@
 import {
   DarkTheme,
   DefaultTheme,
-  ThemeProvider,
+  ThemeProvider as NavigationThemeProvider,
 } from "@react-navigation/native";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -14,6 +14,7 @@ import React, { useCallback, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { applySnapshot } from "mobx-state-tree";
 import * as SplashScreen from "expo-splash-screen";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 // Keep the splash screen visible while we fetch resources
 
@@ -62,75 +63,75 @@ export default function RootLayout() {
 
   return (
     <Provider rootstore={rootStore}>
-      <ThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
-        <Stack
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: isDark ? "#000" : "#fff",
-            },
-            contentStyle: {
-              flex:1,
-              backgroundColor: isDark ? "#fff" : "#000",
-           },
-            headerTintColor: isDark ? "#fff" : "#000",
-            headerShadowVisible: false,
-            headerBackVisible: false,
-          }}
-        >
-          <Stack.Screen
-            name="(tabs)"
-            options={{
-              title: "ShuleBomba",
-              headerBackVisible: false,
-              gestureEnabled: false,
-              headerLeft : ()=>null,
-              headerRight: () => (
-                <CircleUserRound
-                  size={22}
-                  color={isDark ? "#fff" : "#000"}
-                  style={{ marginRight: 12 }}
-                  onPress={onUserAccount}
-                />
-              ),
+      <ThemeProvider>
+        <NavigationThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              contentStyle: {
+                flex: 1,
+              },
             }}
-          />
+          >
+            <Stack.Screen
+              name="(tabs)"
+              options={{
+                title: "ShuleBomba",
+                headerBackVisible: false,
+                gestureEnabled: false,
+                headerLeft : ()=>null,
+                headerRight: () => (
+                  <CircleUserRound
+                    size={22}
+                    color={isDark ? "#fff" : "#000"}
+                    style={{ marginRight: 12 }}
+                    onPress={onUserAccount}
+                  />
+                ),
+              }}
+            />
 
-          <Stack.Screen
-            name="modal"
-            options={{
-              presentation: "modal",
-              title: "Modal",
-            }}
-          />
+            <Stack.Screen
+              name="modal"
+              options={{
+                presentation: "modal",
+                title: "Modal",
+              }}
+            />
 
-          <Stack.Screen
-            name="account"
-            options={{ title: "Account", headerBackTitle: "Back" }}
-          />
-          <Stack.Screen
-            name="about-app"
-            options={{ title: "About App", headerBackTitle: "Back" }}
-          />
-          <Stack.Screen
-            name="index"
-            options={{ title: "Login", headerBackTitle: "Back",headerShown: false }}
-          />
-          <Stack.Screen
-            name="manage-madarasa"
-            options={{ title: "Manage Classes", headerBackTitle: "Back"}}
-          />
-       
-          <Stack.Screen
-            name="(classes)"
-            options={{
-               headerShown: false
-              
-               }}
-          />
-        </Stack>
+            <Stack.Screen
+              name="account"
+              options={{ title: "Account", headerBackTitle: "Back" }}
+            />
+            <Stack.Screen
+              name="about-app"
+              options={{ title: "About App", headerBackTitle: "Back" }}
+            />
+            <Stack.Screen
+              name="index"
+              options={{ title: "Login", headerBackTitle: "Back",headerShown: false }}
+            />
+            <Stack.Screen
+              name="manage-madarasa"
+              options={{ title: "Manage Classes", headerBackTitle: "Back"}}
+            />
+            <Stack.Screen
+              name="app-preference"
+              options={{ title: "App Preferences", headerBackTitle: "Back" }}
+            />
+         
+            <Stack.Screen
+              name="(classes)"
+              options={{
+                 headerShown: false
+                
+                 }}
+            />
+          </Stack>
 
-        {/* Status bar theme */}
-        <StatusBar style={isDark ? "light" : "dark"} />
+          {/* Status bar theme */}
+          <StatusBar style={isDark ? "light" : "dark"} />
+        </NavigationThemeProvider>
       </ThemeProvider>
     </Provider>
   );

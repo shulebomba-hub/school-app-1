@@ -1,6 +1,7 @@
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView, useColorScheme, Platform, Alert } from "react-native"
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Platform, Alert } from "react-native"
+import { useTheme } from "@/context/ThemeContext";
 import { Button, Card, Divider, DataTable} from "react-native-paper"
-import { Edit, PlusIcon, Trash2 } from "lucide-react-native"
+import { Edit, PlusIcon, Trash2, ChevronLeft } from "lucide-react-native"
 import { Ionicons, MaterialIcons } from "@expo/vector-icons"
 import { useRouter } from "expo-router"
 import { observer } from "mobx-react-lite"
@@ -9,15 +10,9 @@ import React from "react";
 
 
 const ManageMadarasa = observer(() => {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === "dark" 
+  const { theme, isDark } = useTheme();
   const { darasas, setSelectedDarasa, selectedDarasa,authUser } = rootStore
   const router = useRouter();
-  const theme = {
-  background: isDark ? "#000" : "#fff",
-  text: isDark ? "#fff" : "#000",
-  card: isDark ? "#9b9da0ff" : "#f5f5f5ff",
-};
   if(!authUser){
     router.replace("/")
   };
@@ -29,18 +24,19 @@ const ManageMadarasa = observer(() => {
     setSelectedDarasa(darasa.id)
     router.push("/(classes)/classview")
   };
-  const onDeleteDarasa=(selectedDarasa: any)=>{
-      rootStore.setSelectedDarasa(null);
-      rootStore.removeDarasa(selectedDarasa.id);  
-    };
-  const Delete = () => {
+  const onDeleteDarasa = (darasa: any) => {
+    if (!darasa) return;
+    rootStore.setSelectedDarasa(null);
+    rootStore.removeDarasa(darasa.id);
+  };
+
+  const confirmDeleteDarasa = (darasa: any) => {
+    if (!darasa) return;
     if (Platform.OS === "web") {
       const confirmed = window.confirm("Are you sure you want to delete this class?");
-
       if (confirmed) {
-        onDeleteDarasa(selectedDarasa);
-        router.push("/");
-      } 
+        onDeleteDarasa(darasa);
+      }
     } else {
       Alert.alert(
         "Confirm Delete",
@@ -50,10 +46,7 @@ const ManageMadarasa = observer(() => {
           {
             text: "Delete",
             style: "destructive",
-            onPress: () => {
-              onDeleteDarasa(selectedDarasa);
-              router.push("/");
-            },
+            onPress: () => onDeleteDarasa(darasa),
           },
         ]
       );
@@ -67,6 +60,13 @@ const ManageMadarasa = observer(() => {
         showsVerticalScrollIndicator={false}
         >
     <View style={[{ flex: 1 , backgroundColor: theme.background }]}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => router.back()}>
+          <ChevronLeft size={24} color={theme.text} />
+        </TouchableOpacity>
+        <Text style={[styles.headerTitle, { color: theme.text }]}>Manage Classes</Text>
+        <View style={{ width: 24 }} />
+      </View>
       <Button mode="outlined" onPress={()=>router.push("/(tabs)/addclass")}><PlusIcon/>Add Class</Button>
       
       {darasas.map(darasa => (
@@ -81,7 +81,7 @@ const ManageMadarasa = observer(() => {
               <Text style={styles.buttonText}>Add Students</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.delete} onPress={Delete}>
+            <TouchableOpacity style={styles.delete} onPress={()=>confirmDeleteDarasa(darasa)}>
               <MaterialIcons name="delete" size={22} color="#000" />
             </TouchableOpacity>
         </View>
@@ -96,6 +96,17 @@ const ManageMadarasa = observer(() => {
   )
 });
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+  },
   row: {
     flexDirection: "row",
     alignItems: "center",

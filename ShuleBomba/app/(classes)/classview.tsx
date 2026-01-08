@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, TextInput ,ScrollView , useColorScheme} from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet, TextInput ,ScrollView , useColorScheme, Image } from "react-native"
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { observer } from "mobx-react-lite";
@@ -38,23 +38,21 @@ const ClassHomeScreen = observer(() => {
   }
   if (selectedDarasa.students.length === 0) {
     return (
-      <View style={{ flex: 1, alignItems: "center" }}>
-        <MaterialCommunityIcons
-          name="account-off-outline"
-          size={80}
-          color="#9CA3AF"
+      <View style={[styles.emptyRoot, { backgroundColor: theme.background }]}> 
+        <Image
+          source={require("../../assets/images/appIcon.png")}
+          style={styles.emptyImage}
         />
-        <Text>No students Found in this classs.</Text>
-        <Text>You don't have any students in this class.</Text>
-          <Text>Add Student to get started</Text>
-        <Button
-        mode="contained"
-          onPress={() => router.push("/add-student")}>
-           Add Student
-        </Button>
+        <Text style={[styles.emptyTitle, { color: theme.text }]}>No students yet</Text>
+        <Text style={[styles.emptySubtitle, { color: theme.text }]}>You haven't added any students to {selectedDarasa.name}. Add students to start tracking attendance and performance.</Text>
+        <View style={styles.emptyActions}>
+          <Button mode="contained" onPress={() => router.push("/add-student")}>
+            Add Student
+          </Button>
+        </View>
       </View>
     );
-  } ;
+  }
 
   return (
     <ScrollView
@@ -116,33 +114,33 @@ const ClassHomeScreen = observer(() => {
   )
 });
 const styles = StyleSheet.create({
-   add: { 
-     position: "absolute", 
-     bottom: 20, 
-     right: 20,
-     backgroundColor: "green", 
-     width: 56, 
-     height: 56, 
-     borderRadius: 28,
-     justifyContent: "center", 
-     alignItems: "center", 
-     elevation: 5, 
-    },
-studentRow: {
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "space-between",
-  paddingVertical: 12,
-  paddingHorizontal: 10,
-  marginVertical: 6,
-},
-textInput: {
-  borderWidth: 1,
-  borderColor: "#ccc",
-  borderRadius: 8,
-  padding: 10,
-},
-overlay: {
+  add: { 
+    position: "absolute", 
+    bottom: 20, 
+    right: 20,
+    backgroundColor: "green", 
+    width: 56, 
+    height: 56, 
+    borderRadius: 28,
+    justifyContent: "center", 
+    alignItems: "center", 
+    elevation: 5, 
+  },
+  studentRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    marginVertical: 6,
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    padding: 10,
+  },
+  overlay: {
     flex: 1,
     justifyContent: "flex-end",
     backgroundColor: "rgba(0,0,0,0.3)", // semi-transparent
@@ -158,8 +156,38 @@ overlay: {
     marginTop: 10,
     flexDirection: "row",
     justifyContent: "space-between",
-
   },
- });
+  // Empty-state styles
+  emptyRoot: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 24,
+  },
+  emptyImage: {
+    width: 140,
+    height: 140,
+    marginBottom: 18,
+    resizeMode: 'contain',
+    borderRadius: 12,
+  },
+  emptyTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  emptySubtitle: {
+    fontSize: 14,
+    color: '#6b7280',
+    textAlign: 'center',
+    marginBottom: 16,
+    maxWidth: 360,
+  },
+  emptyActions: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+});
 
 export default ClassHomeScreen

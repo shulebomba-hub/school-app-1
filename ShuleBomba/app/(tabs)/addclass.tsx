@@ -1,12 +1,12 @@
 import React, { useState } from "react"
-import { View, TextInput, Button, Text, ScrollView , useColorScheme} from "react-native"
+import { View, TextInput, Button, Text, ScrollView } from "react-native"
+import { useTheme } from "@/context/ThemeContext";
 import { observer } from "mobx-react-lite"
 import { nanoid } from "nanoid/non-secure"
 import { rootStore } from "@/components/models";
 
 const AddClassScreen = observer(() => {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === "dark" 
+  const { theme } = useTheme();
   const [name, setName] = useState("")
   const { darasas } = rootStore
 
@@ -16,11 +16,6 @@ const AddClassScreen = observer(() => {
     rootStore.addDarasa(nanoid(), name.trim())
     setName("")
   };
-  const theme = {
-  background: isDark ? "#000" : "#fff",
-  text: isDark ? "#fff" : "#000",
-  card: isDark ? "#111" : "#f5f5f5",
-};
 
   return (
     <ScrollView

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet,ScrollView , useColorScheme} from "react-native";
+import { View, Text, StyleSheet,ScrollView , Image } from "react-native";
+import { useTheme } from "@/context/ThemeContext";
 import { observer } from "mobx-react-lite";
 import { rootStore } from "@/components/models";
 import { Button, DataTable, RadioButton } from "react-native-paper";
@@ -8,13 +9,7 @@ import dayjs from "dayjs";
 
 
 const AttendanceScreen = observer(() => {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === "dark"
-  const theme = {
-    background: isDark ? "#000" : "#fff",
-    text: isDark ? "#fff" : "#000",
-    card: isDark ? "#111" : "#f5f5f5ff",
-  };  
+  const { theme, isDark } = useTheme();  
   const {selectedDate, setSelectedDate, attendances} = rootStore;
   const [open, setOpen] = React.useState(false);
 
@@ -62,7 +57,7 @@ const AttendanceScreen = observer(() => {
       </DataTable.Header>
       {selectedDarasa.students.map((student) => (
        <DataTable.Row key={`${student.id}`}>
-          <DataTable.Cell><Text>{student.full_name}</Text></DataTable.Cell>
+          <DataTable.Cell><Text style={{ color: theme.text }}>{student.full_name}</Text></DataTable.Cell>
           <DataTable.Cell numeric>
             <RadioButton
               color="green"
@@ -92,6 +87,6 @@ const AttendanceScreen = observer(() => {
   );
 });
 
-
+const styles = StyleSheet.create({});
 
 export default AttendanceScreen;
