@@ -1,5 +1,6 @@
 import { Tabs } from "expo-router";
 import React from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { HapticTab } from "@/components/haptic-tab";
 import { Colors } from "@/constants/theme";
@@ -9,6 +10,7 @@ import { HomeIcon, Settings2Icon } from "lucide-react-native";
 
 export default function TabLayout() {
   const { isDark, theme } = useTheme();
+  const insets = useSafeAreaInsets();
 
   return (
     <Tabs
@@ -21,8 +23,8 @@ export default function TabLayout() {
           backgroundColor: theme.card,
           borderTopColor: isDark ? '#333' : '#e5e7eb',
           borderTopWidth: 1,
-          height: 60,
-          paddingBottom: 8,
+          height: 56 + insets.bottom,
+          paddingBottom: insets.bottom + 8,
           paddingTop: 8,
           elevation: 8,
           shadowColor: '#000',

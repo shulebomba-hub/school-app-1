@@ -1,4 +1,5 @@
 import { View, Text, TouchableOpacity, StyleSheet, TextInput ,ScrollView , useColorScheme, Image } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { observer } from "mobx-react-lite";
@@ -10,6 +11,7 @@ const ClassHomeScreen = observer(() => {
   const router = useRouter();
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark"
+  const insets = useSafeAreaInsets();
   const { selectedDarasa,selectedStudent } = rootStore
   const [visible, setVisible] = useState(false);
   
@@ -78,7 +80,7 @@ const ClassHomeScreen = observer(() => {
       ))}
 
       <TouchableOpacity
-        style={styles.add}
+        style={[styles.add, { bottom: 20 + insets.bottom }]}
         onPress={() => router.push("/add-student")}
       >
         <Ionicons name="add" size={28} color="#fff" />
@@ -88,7 +90,7 @@ const ClassHomeScreen = observer(() => {
         onDismiss={() => setVisible(false)}
       >
         <View style={styles.overlay}>
-          <View style={styles.bottomSheet}>
+          <View style={[styles.bottomSheet, { paddingBottom: 20 + insets.bottom }] }>
             <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>name</Text>
             <TextInput
               style={styles.textInput}
