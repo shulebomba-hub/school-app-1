@@ -13,6 +13,7 @@ export default function Account() {
   const router=useRouter();
 
   const OnDeleteAccount = () => {
+     // Implement account deletion logic here
     if (Platform.OS === "web") {
           const confirmed = window.confirm("Are you sure you want to delete your account? ,This action cannot be undone, and all your data will be lost.");
     
@@ -39,7 +40,7 @@ export default function Account() {
         }
    
 
-    // Implement account deletion logic here
+   
   };
   const onAbout=()=>{
     router.push("/about-app")

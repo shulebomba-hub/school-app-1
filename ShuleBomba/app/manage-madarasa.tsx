@@ -30,7 +30,6 @@ const ManageMadarasa = observer(() => {
     router.push("/(classes)/classview")
   };
   const onDeleteDarasa=(selectedDarasa: any)=>{
-      if(!selectedDarasa) return;
       rootStore.setSelectedDarasa(null);
       rootStore.removeDarasa(selectedDarasa.id);  
     };
