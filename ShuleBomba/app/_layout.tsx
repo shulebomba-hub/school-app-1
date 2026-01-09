@@ -118,7 +118,7 @@ export default function RootLayout() {
                    }}
               />
             </Stack>
-            </Stack>
+            
             </SafeAreaView>
 
             {/* Status bar theme */}

@@ -83,31 +83,35 @@ const pickImage = async () => {
          </Pressable>
          <Text>Tap to edit</Text>
        </View>
-       <View style={styles.screen}>
+       <View style={[styles.screen, { backgroundColor: theme.background }]}>
          <Divider/>
-         <Text variant="bodyLarge">Personal Information</Text>
-         <View style={{flexDirection:"row", justifyContent:"space-between", gap: 10}}>
+         <Text variant="bodyLarge" style={{ color: theme.text }}>Personal Information</Text>
+         <View style={{flexDirection:"row", justifyContent:"space-between", gap: 10,}}>
            <TextInput
              mode="outlined"
              label="Username"
+             textColor="blue"
              value={username}
              onChangeText={setUsername}
-             style={{ flex: 1 }}
+             style={{ flex: 1, backgroundColor: theme.card }}
            />
            <TextInput
              mode="outlined"
              label="Phone Number"
              value={phone}
+             textColor="blue"
              onChangeText={setPhone}
-             style={{ flex: 1 }}
+             style={{ flex: 1 ,backgroundColor: theme.card }}
+             
            />
          </View>
          <TextInput
            mode="outlined"
            label="School Name"
+           textColor="blue"
            value={schoolName}
            onChangeText={setSchoolName}
-           style={{ marginTop: 12 }}
+           style={{ marginTop: 12, backgroundColor: theme.card }}
          />
          <View style={styles.button}>
            <Button 
@@ -137,7 +141,6 @@ const styles = StyleSheet.create({
   },
   screen: {
     flex: 1,
-    backgroundColor: "#F6F7F9",
     paddingHorizontal: 16,
     paddingTop: 12,
   },
@@ -154,6 +157,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
+    borderEndColor: "#ccc",
     overflow: "hidden",
   },
   avatar: {

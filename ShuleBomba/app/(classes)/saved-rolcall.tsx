@@ -50,10 +50,10 @@ const AttendanceScreen = observer(() => {
           onConfirm={onConfirmSingle}
         />
       <DataTable.Header style={{ backgroundColor: theme.card }}>
-        <DataTable.Title >Full name</DataTable.Title>
-        <DataTable.Title numeric>Present</DataTable.Title>
-        <DataTable.Title numeric>Absent</DataTable.Title>
-        <DataTable.Title numeric>Sick</DataTable.Title>
+        <DataTable.Title ><Text style={{ color: theme.text }}>Full name</Text></DataTable.Title>
+        <DataTable.Title numeric><Text style={{ color: theme.text }}>Present</Text></DataTable.Title>
+        <DataTable.Title numeric><Text style={{ color: theme.text }}>Absent</Text></DataTable.Title>
+        <DataTable.Title numeric><Text style={{ color: theme.text }}>Sick</Text></DataTable.Title>
       </DataTable.Header>
       {selectedDarasa.students.map((student) => (
        <DataTable.Row key={`${student.id}`}>
@@ -87,6 +87,5 @@ const AttendanceScreen = observer(() => {
   );
 });
 
-const styles = StyleSheet.create({});
 
 export default AttendanceScreen;

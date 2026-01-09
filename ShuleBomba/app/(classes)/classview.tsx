@@ -61,21 +61,21 @@ const ClassHomeScreen = observer(() => {
     contentContainerStyle={{ flexGrow: 1 }}
     showsVerticalScrollIndicator={false}
     >
-    <View style={{ flex: 1, padding: 16 }}>
-      <Text style={{ fontWeight: "bold", marginBottom: 10 }}>
+    <View style={{ flex: 1, padding: 16, backgroundColor: theme.background }}>
+      <Text style={{ fontWeight: "bold", marginBottom: 10 ,color: theme.text, fontSize: 18}}>
         Students in {selectedDarasa.name}
       </Text>
 
       <DataTable.Header>
-        <DataTable.Title>Registration No.</DataTable.Title>
-        <DataTable.Title>Full Name</DataTable.Title>
-             
+        <DataTable.Title><Text style={{ color: theme.text }}>Registration No.</Text></DataTable.Title>
+        <DataTable.Title><Text style={{ color: theme.text }}>Full Name</Text></DataTable.Title>
+
       </DataTable.Header>
 
       {selectedDarasa.students.map(student => (
         <DataTable.Row key={`${student.id}`}>
-          <DataTable.Cell>{student.id}</DataTable.Cell>
-          <DataTable.Cell onPress={() => onSelectStudent(student) }>{student.full_name}</DataTable.Cell>
+          <DataTable.Cell><Text style={{ color: theme.text }}>{student.id}</Text></DataTable.Cell>
+          <DataTable.Cell onPress={() => onSelectStudent(student) }><Text style={{ color: theme.text }}>{student.full_name}</Text></DataTable.Cell>
         </DataTable.Row>
       ))}
 

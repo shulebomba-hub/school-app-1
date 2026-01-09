@@ -1,9 +1,10 @@
 import React, { useState } from "react"
-import { View, TextInput, Button, Text, ScrollView } from "react-native"
+import { View, Button, Text, ScrollView } from "react-native"
 import { useTheme } from "@/context/ThemeContext";
 import { observer } from "mobx-react-lite"
 import { nanoid } from "nanoid/non-secure"
 import { rootStore } from "@/components/models";
+import { TextInput } from "react-native-paper";
 
 const AddClassScreen = observer(() => {
   const { theme } = useTheme();
@@ -24,15 +25,14 @@ const AddClassScreen = observer(() => {
         >
     <View style={{ padding: 20,flex: 1, backgroundColor: theme.background }}>
       <TextInput
-        placeholder="Class name"
+        label="Class name"
         value={name}
+        mode="outlined"
         onChangeText={setName}
         style={{
-          borderWidth: 1,
+          
           borderColor: "#ccc",
-          padding: 10,
           color: theme.text,
-          borderRadius: 5,
           marginBottom: 10,
         }}
       />
