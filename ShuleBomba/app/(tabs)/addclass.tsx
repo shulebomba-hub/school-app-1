@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { View, Button, Text, ScrollView } from "react-native"
+import { View, Button, Text, ScrollView, Pressable } from "react-native"
 import { useTheme } from "@/context/ThemeContext";
 import { observer } from "mobx-react-lite"
 import { nanoid } from "nanoid/non-secure"
@@ -9,6 +9,7 @@ import { TextInput } from "react-native-paper";
 const AddClassScreen = observer(() => {
   const { theme } = useTheme();
   const [name, setName] = useState("")
+  const [selectedDarasaId, setSelectedDarasaId] = useState<string | null>(null)
   const { darasas } = rootStore
 
   const addClass = () => {
@@ -16,6 +17,27 @@ const AddClassScreen = observer(() => {
 
     rootStore.addDarasa(nanoid(), name.trim())
     setName("")
+  };
+
+  const handleDarasaPress = (darasaId: string, darasaName: string) => {
+    setSelectedDarasaId(darasaId)
+    setName(darasaName)
+  };
+
+  const handleUpdate = () => {
+    if (!selectedDarasaId || !name.trim()) return
+
+    rootStore.updateDarasa(selectedDarasaId, name.trim())
+    setName("")
+    setSelectedDarasaId(null)
+  };
+
+  const handleAddOrUpdate = () => {
+    if (selectedDarasaId) {
+      handleUpdate()
+    } else {
+      addClass()
+    }
   };
 
   return (
@@ -37,13 +59,26 @@ const AddClassScreen = observer(() => {
         }}
       />
 
-      <Button title="Add Class" onPress={addClass}/>
+      <Button title={selectedDarasaId ? "Update Class" : "Add Class"} onPress={handleAddOrUpdate}/>
 
       <View >
         {darasas.map((darasa) => (
-          <View key={darasa.id} style={[{ marginTop: 5 }, { backgroundColor: theme.card , padding: 10, borderRadius: 5} ]}>
-            <Text style={{ color: theme.text }}>{darasa.name}</Text>
-          </View>
+          <Pressable 
+            key={darasa.id} 
+            style={[
+              { marginTop: 5 }, 
+              { 
+                backgroundColor: selectedDarasaId === darasa.id ? theme.primary : theme.card, 
+                padding: 10, 
+                borderRadius: 5
+              } 
+            ]} 
+            onPress={() => handleDarasaPress(darasa.id, darasa.name)}
+          >  
+          
+            <Text style={{ color: selectedDarasaId === darasa.id ? "#fff" : theme.text }}>{darasa.name}</Text>
+          
+          </Pressable>
         ))}
       </View>
     </View>

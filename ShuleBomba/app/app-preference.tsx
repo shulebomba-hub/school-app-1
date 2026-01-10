@@ -147,7 +147,7 @@ const AppPreferenceScreen = () => {
         <Card style={[styles.section, { backgroundColor: theme_obj.card }]}>
           <View style={styles.sectionTitle}>
             <Text style={[styles.title, { color: theme_obj.text }]}>App Permissions</Text>
-            <Text style={[styles.subtitle, { color: theme_obj.text }]}>Permissions used by Shule Bomba</Text>
+            <Text style={[styles.subtitle, { color: theme_obj.text }]}>Permissions used by ShuleBomba</Text>
           </View>
           <Divider />
 
@@ -180,7 +180,7 @@ const AppPreferenceScreen = () => {
         {/* Info Footer */}
         <View style={styles.footer}>
           <Text style={[styles.footerText, { color: theme_obj.text }]}>
-            Shule Bomba respects your privacy. We only use these permissions to provide you with the best classroom management experience.
+            ShuleBomba respects your privacy. We only use these permissions to provide you with the best classroom management experience.
           </Text>
         </View>
       </View>

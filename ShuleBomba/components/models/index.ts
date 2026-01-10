@@ -130,6 +130,21 @@ const RootStoreModel = types
         self.darasas.splice(index, 1);
       } 
     },
+    updateDarasa(id: string, name: string) {
+      const darasa = self.darasas.find((s) => s.id === id);
+      if (darasa) {
+        darasa.setName(name);
+      }
+    },
+    updateStudent(studentId: string, fullName: string) {
+      for (const darasa of self.darasas) {
+        const student = darasa.students.find((s) => s.id === studentId);
+        if (student) {
+          student.setFullName(fullName);
+          return;
+        }
+      }
+    },
     removeAttendance(attendanceId: string) {
       const index = self.attendances.findIndex((s) => s.id === attendanceId);
       if (index > -1) {
