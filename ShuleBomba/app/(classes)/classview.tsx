@@ -3,14 +3,14 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { observer } from "mobx-react-lite";
+import { useTheme } from "@/context/ThemeContext";
 import { rootStore } from "@/components/models";
 import {DataTable,Modal,Button} from "react-native-paper";
 import React,{ useState } from "react";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 const ClassHomeScreen = observer(() => {
   const router = useRouter();
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === "dark"
+  const { theme, isDark } = useTheme();
   const insets = useSafeAreaInsets();
   const { selectedDarasa,selectedStudent } = rootStore
   const [visible, setVisible] = useState(false);
@@ -19,12 +19,6 @@ const ClassHomeScreen = observer(() => {
     rootStore.setSelectedStudent(student.id);
     setVisible(true);
   };
-  const theme = {
-  background: isDark ? "#000" : "#fff",
-  text: isDark ? "#fff" : "#000",
-  card: isDark ? "#111" : "#f5f5f5ff",
-  };
-
 
   const onDeleteStudent=(student: any)=>{
     if(!selectedStudent) return;
