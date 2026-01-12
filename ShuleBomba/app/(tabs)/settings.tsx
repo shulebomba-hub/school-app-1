@@ -57,7 +57,7 @@ const Account=observer(() =>  {
         showsVerticalScrollIndicator={false}
         >
     <View style={[styles.screen, { backgroundColor: theme.background }]}>
-      <Card style={{ marginBottom: 20, padding: 16, borderRadius: 16, elevation: 3 }}>      
+      <Card style={{ marginBottom: 20, padding: 16, borderRadius: 16, elevation: 8,backgroundColor:theme.card }}>      
       <TouchableOpacity style={[styles.item,]} >
       <View>
       <Image
@@ -70,10 +70,10 @@ const Account=observer(() =>  {
       />
      </View>
       <View style={styles.user}>
-      <Text style={[styles.title, { color: "black"}]}>{authUser?.username ?? "Username"}</Text>
-      <Text style={[styles.subtitle, { color: "black" }]}>{authUser?.school_name ?? "School Name"}</Text>
+      <Text style={[styles.title, { color: theme.text}]}>{authUser?.username ?? "Username"}</Text>
+      <Text style={[styles.subtitle, { color: theme.text }]}>{authUser?.school_name ?? "School Name"}</Text>
       </View>
-       
+  
       </TouchableOpacity>
       </Card>
       <Card style={[styles.section, { backgroundColor: theme.card }]}>
@@ -192,6 +192,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 14,
     paddingHorizontal: 16,
+    
   },
 
   divider: {
@@ -231,6 +232,7 @@ const styles = StyleSheet.create({
   user:{
     marginLeft: 30,
     flex: 1,
+    
   },
   avatar: {
     width: 70,
