@@ -132,6 +132,7 @@ export default function AboutApp() {
           <Text style={[styles.sectionTitle, { color: theme.text, paddingHorizontal: 16 }]}>
             Key Features
           </Text>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <View style={styles.featureGrid}>
             {features.map((feature, index) => {
               const IconComponent = feature.icon;
@@ -155,12 +156,13 @@ export default function AboutApp() {
               );
             })}
           </View>
+          </ScrollView>
         </View>
 
         {/* Why Choose Us */}
         <Card style={[styles.section, { backgroundColor: theme.card }]}>
           <View style={styles.sectionContent}>
-            <Text style={[styles.sectionTitle, { color: theme.text }]}>Why Choose Shule Bomba?</Text>
+            <Text style={[styles.sectionTitle, { color: theme.text }]}>Why Choose ShuleBomba?</Text>
             <View style={styles.reasonsList}>
               {reasons.map((reason, index) => (
                 <View key={index} style={styles.reasonItem}>
@@ -306,7 +308,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   featureCard: {
-    width: "48%",
+    width: "auto",
     borderRadius: 12,
     padding: 14,
     marginHorizontal: 8,
@@ -316,6 +318,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 3,
+    
   },
   featureIconBox: {
     width: 48,
