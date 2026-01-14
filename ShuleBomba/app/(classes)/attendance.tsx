@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {ScrollView , View, Text, StyleSheet, Platform ,Alert} from "react-native";
+import {ScrollView , View, Text, StyleSheet, Platform ,Alert, TouchableOpacity} from "react-native";
 import { observer } from "mobx-react-lite";
 import { rootStore } from "@/components/models";
 import { Button, DataTable, RadioButton } from "react-native-paper";
@@ -7,6 +7,7 @@ import { DatePickerModal } from 'react-native-paper-dates';
 import dayjs from "dayjs";
 import { useRouter } from "expo-router";
 import { useTheme } from "@/context/ThemeContext";
+import { ChevronLeft } from "lucide-react-native";
 
 
 const AttendanceScreen = observer(() => {
@@ -84,6 +85,12 @@ const AttendanceScreen = observer(() => {
         showsVerticalScrollIndicator={false}
         >
     <View style={{ flex: 1, padding: 16, backgroundColor: theme.background }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+          <TouchableOpacity onPress={() => router.back()}>
+            <ChevronLeft size={24} color={theme.text} />
+          </TouchableOpacity>
+          <Text style={{ fontSize: 18, fontWeight: '700', marginLeft: 12, color: theme.text }}>Take Attendance</Text>
+        </View>
         <Button onPress={() => setOpen(true)} uppercase={false} mode="outlined">
           {!selectedDate?"Pick a date": `Selected date: ${selectedDate}`}
         </Button>

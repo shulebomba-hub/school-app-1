@@ -1,14 +1,17 @@
 import React, { useState } from "react"
-import { View , TextInput, Button, Text, ScrollView, Pressable } from "react-native"
+import { View , TextInput, Button, Text, ScrollView, Pressable, TouchableOpacity } from "react-native"
 import { observer } from "mobx-react-lite"
 import { rootStore } from "@/components/models"
 import { useTheme } from "@/context/ThemeContext"
+import { useRouter } from "expo-router";
+import { ChevronLeft } from "lucide-react-native";
 
 const AddStudentScreen = observer(() => {
   const [name, setName] = useState("")
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null)
   const { selectedDarasa } = rootStore;
-  const { theme } = useTheme();  
+  const { theme } = useTheme(); 
+  const router = useRouter();
 
   const onAddStudent = () => {
     if (!name.trim()) return
@@ -47,6 +50,12 @@ const AddStudentScreen = observer(() => {
         showsVerticalScrollIndicator={false}
         >
     <View style={{ padding: 20, backgroundColor: theme.background, flex: 1 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+        <TouchableOpacity onPress={() => router.back()}>
+          <ChevronLeft size={24} color={theme.text} />
+        </TouchableOpacity>
+        <Text style={{ fontSize: 18, fontWeight: '700', marginLeft: 12, color: theme.text }}>Add Student</Text>
+      </View>
       <TextInput
         placeholder="Student Name"
         value={name}

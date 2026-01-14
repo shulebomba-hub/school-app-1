@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useColorScheme } from 'react-native';
+import { ColorValue, useColorScheme } from 'react-native';
 import { rootStore } from '@/components/models';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -10,6 +10,7 @@ interface ThemeContextType {
   setThemeMode: (mode: ThemeMode) => Promise<void>;
   isDark: boolean;
   theme: {
+    primary: ColorValue | undefined;
     background: string;
     text: string;
     card: string;

@@ -11,7 +11,7 @@ const DrawerLayout = observer(() => {
   return (
     <Drawer
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
       }}
     >
       <Drawer.Screen

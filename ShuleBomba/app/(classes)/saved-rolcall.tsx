@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet,ScrollView , Image } from "react-native";
+import { View, Text, StyleSheet,ScrollView , Image, TouchableOpacity } from "react-native";
 import { useTheme } from "@/context/ThemeContext";
 import { observer } from "mobx-react-lite";
 import { rootStore } from "@/components/models";
 import { Button, DataTable, RadioButton } from "react-native-paper";
 import { DatePickerModal } from 'react-native-paper-dates';
 import dayjs from "dayjs";
+import { useRouter } from "expo-router";
+import { ChevronLeft } from "lucide-react-native";
 
 
 const AttendanceScreen = observer(() => {
   const { theme, isDark } = useTheme();  
   const {selectedDate, setSelectedDate, attendances} = rootStore;
   const [open, setOpen] = React.useState(false);
+  const router = useRouter();
 
   const onDismissSingle = React.useCallback(() => {
     setOpen(false);
@@ -38,6 +41,12 @@ const AttendanceScreen = observer(() => {
         showsVerticalScrollIndicator={false}
         >
     <View style={{ flex: 1, padding: 20, backgroundColor: theme.background }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+          <TouchableOpacity onPress={() => router.back()}>
+            <ChevronLeft size={24} color={theme.text} />
+          </TouchableOpacity>
+          <Text style={{ fontSize: 18, fontWeight: '700', marginLeft: 12, color: theme.text }}>Saved Attendance</Text>
+        </View>
         <Button onPress={() => setOpen(true)} uppercase={false} mode="outlined">
           {!selectedDate?"Pick a date": `Selected Date: ${selectedDate}`}
         </Button>
