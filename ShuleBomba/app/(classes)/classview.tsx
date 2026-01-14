@@ -121,7 +121,7 @@ const ClassHomeScreen = observer(() => {
 
       <View style={styles.listHeaderRow}>
         <Text style={[styles.listHeaderText, { color: theme.text }]}>Registration No.</Text>
-        <Text style={[styles.listHeaderText, { color: theme.text }]}>Full Name</Text>
+        <Text style={[styles.listHeaderText, { color: theme.text, marginLeft: 100 }]}>Full Name</Text>
       </View>
 
       {selectedDarasa.students.map(student => (
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
 
   listHeaderRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+
     paddingVertical: 8,
     paddingHorizontal: 12,
     marginBottom: 6,
@@ -225,7 +225,6 @@ const styles = StyleSheet.create({
 
   studentCard: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     padding: 14,
     borderRadius: 12,
@@ -243,13 +242,16 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   studentId: {
+    width: 100,              // fixed width for alignment
     fontSize: 14,
     fontWeight: '600',
   },
   studentName: {
+    marginLeft: 100,              //  takes remaining space
     fontSize: 14,
     color: '#6b7280',
-    justifyContent: 'flex-start',
+    textAlign: 'left',     //  aligns to the right
+    writingDirection: 'ltr',
   },
 
   studentRow: {
