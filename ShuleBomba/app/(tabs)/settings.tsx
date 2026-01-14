@@ -51,6 +51,7 @@ const Account=observer(() =>  {
    
 
   const { authUser } = rootStore;
+  const initials = authUser?.username ? authUser.username.slice(0, 2).toUpperCase() : "NA";
   return (
     <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
@@ -60,15 +61,16 @@ const Account=observer(() =>  {
       <Card style={{ marginBottom: 20, padding: 16, borderRadius: 16, elevation: 8,backgroundColor:theme.card }}>      
       <TouchableOpacity style={[styles.item,]} >
       <View>
-      <Image
-        source={
-          avatar
-            ? { uri: avatar }
-            : require("../../assets/images/appIcon.png")
-        }
-        style={styles.avatar}
-      />
-     </View>
+        {avatar ? (
+        <Image 
+        source={{ uri: avatar }} 
+        style={styles.avatar} /> ):(
+          <View style={styles.avatarLetter}>
+          <Text style={styles.avatarText}>{initials}</Text>
+        </View>
+        )}
+      </View>
+     
       <View style={styles.user}>
       <Text style={[styles.title, { color: theme.text}]}>{authUser?.username ?? "Username"}</Text>
       <Text style={[styles.subtitle, { color: theme.text }]}>{authUser?.school_name ?? "School Name"}</Text>
@@ -240,6 +242,19 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     resizeMode: "cover",
     backgroundColor: "#c4d4f5ff",
-  }
+  },
+  avatarText: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  avatarLetter: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "#4F8EF7", // any color you like
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 export default Account;

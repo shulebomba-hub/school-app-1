@@ -62,7 +62,7 @@ const ClassHomeScreen = observer(() => {
       
       <View style={styles.classCardLeft}>
           <View style={[styles.classIcon, { backgroundColor: 'transparent' }]}>
-            <ChevronLeft size={24} color="#fff" onPress={()=>router.replace("/home")}/>
+            <ChevronLeft size={24} color={theme.text} onPress={()=>router.replace("/home")}/>
           </View>
           <View style={styles.classInfo}>
             <Text style={[styles.className, { color: theme.text }]}>

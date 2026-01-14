@@ -57,6 +57,7 @@ const pickImage = async () => {
       Alert.alert("Success", "Profile updated successfully!");
     }, 1500);
   };
+  const initials = authUser?.username ? authUser.username.slice(0, 2).toUpperCase() : "NA";
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
     <ScrollView
@@ -72,14 +73,14 @@ const pickImage = async () => {
        </RNView>
        <View style={styles.container}>
          <Pressable onPress={pickImage} style={styles.avatarWrapper}>
-           <Image
-             source={
-               avatar
-                 ? { uri: avatar } 
-                 : require("../assets/images/appIcon.png")
-             }
-             style={styles.avatar}
-           />
+           {avatar ? (
+              <Image 
+              source={{ uri: avatar }} 
+              style={styles.avatar} /> ):(
+                <View style={styles.avatarLetter}>
+                <Text style={styles.avatarText}>{initials}</Text>
+              </View>
+              )}
          </Pressable>
          <Text>Tap to edit</Text>
        </View>
@@ -169,5 +170,18 @@ const styles = StyleSheet.create({
     marginTop:30,
     marginLeft:30,
     marginRight:30,
-  }
+  },
+    avatarText: {
+    color: "#fff",
+    fontSize: 30,
+    fontWeight: "bold",
+  },
+  avatarLetter: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 30,
+    backgroundColor: "#4F8EF7", // any color you like
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });

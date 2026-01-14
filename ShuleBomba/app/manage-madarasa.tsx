@@ -67,13 +67,14 @@ const ManageMadarasa = observer(() => {
         <Text style={[styles.headerTitle, { color: theme.text }]}>Manage Classes</Text>
         <View style={{ width: 24 }} />
       </View>
+      <View style={{ paddingHorizontal: 16, paddingBottom: 16 }}>
       <Button mode="outlined" onPress={()=>router.push("/(tabs)/addclass")}><PlusIcon/>Add Class</Button>
-      
+      </View>
       {darasas.map(darasa => (
         <View key={darasa.id} style={styles.row}>
         <View style={styles.left}>
-          <Text style={styles.className}>{darasa.name}</Text>
-          <Text style={styles.students}>{darasa.students.length} Students  <Edit size={10} onPress={()=>onEdit(darasa)}/></Text>
+          <Text style={[styles.className, { color: theme.text }]}>{darasa.name}</Text>
+          <Text style={[styles.students,{color: theme.text}]}>{darasa.students.length} Students  <Edit size={10} onPress={()=>onEdit(darasa)}/></Text>
         </View>
         
         <View style={styles.right}>
@@ -82,7 +83,7 @@ const ManageMadarasa = observer(() => {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.delete} onPress={()=>confirmDeleteDarasa(darasa)}>
-              <MaterialIcons name="delete" size={22} color="#000" />
+              <MaterialIcons name="delete" size={22} color={theme.text} />
             </TouchableOpacity>
         </View>
       
@@ -127,7 +128,6 @@ const styles = StyleSheet.create({
 
   students: {
     fontSize: 13,
-    color: "#666",
   },
 
   right: {
