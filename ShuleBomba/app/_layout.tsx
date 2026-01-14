@@ -32,29 +32,37 @@ export default function RootLayout() {
   const colorScheme = useColorScheme(); // 'light' | 'dark'
   const router = useRouter();
   const loadinitialData = useCallback(async () => {
-    try {
+  try {
     const storedData = await AsyncStorage.getItem("rootStore");
     if (storedData) {
       const rootStoreData = JSON.parse(storedData);
       applySnapshot(rootStore, rootStoreData);
     }
   } catch (error) {
-    console.error("Failed to load initial data:", error); 
+    console.error("Failed to load initial data:", error);
   } finally {
-    setIsReady(true); 
+    setIsReady(true);
   }
 }, []);
-  useEffect(() => {
-    loadinitialData();
-  }, []);
-  useEffect(() => {
-    if (isReady) {
-     SplashScreen.hideAsync();
-    }
-  }, [isReady]);
-  if (!isReady) {
-    return null; 
-  } 
+
+useEffect(() => {
+  loadinitialData();
+}, [loadinitialData]);
+
+useEffect(() => {
+  if (!isReady) return;
+
+  const hideSplash = async () => {
+    await SplashScreen.hideAsync();
+  };
+
+  hideSplash();
+}, [isReady]);
+
+if (!isReady) {
+  return null;
+}
+
   const isDark = colorScheme === "dark";
 
   return (

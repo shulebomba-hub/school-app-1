@@ -56,7 +56,7 @@ const ClassHomeScreen = observer(() => {
 
   return (
 
-    <View style={{ flex: 1, padding: 16, backgroundColor: theme.background }}>
+    <View style={{ flex: 1, backgroundColor: theme.background }}>
 
       <View style={[styles.header, isDark ? styles.headerDark : styles.headerLight]}>
       
@@ -76,7 +76,7 @@ const ClassHomeScreen = observer(() => {
           </View>
         </View>
       </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 16 }}>
+        <View style={styles.actionsRow}>
         <Link href="/(classes)/attendance?skipConfirm=true">
           <View style={[styles.iconview, isDark ? styles.iconviewDark : styles.iconviewLight]}>
             <Users size={30} color={isDark ? '#FFFFFF' : '#0A3BFF'} />
@@ -168,22 +168,23 @@ const ClassHomeScreen = observer(() => {
 });
 const styles = StyleSheet.create({
   header:{
-    
-    marginLeft:15,
-    marginRight:15,
-    marginBottom:20,
+    marginHorizontal: 12,
+    marginBottom: 12,
+
 
   },
-  iconview:{
-    alignItems:"center",
-    borderWidth: 1,
-    borderRadius: 8,
-    padding: 12,
-    marginBottom:10,
-  },
+ 
   iconviewDark: {
     backgroundColor: '#2B2B2B',
     borderColor: '#444C56',
+  },
+  iconview: {
+    alignItems: "center",
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    flexBasis: '48%',        // two items per row
   },
   iconviewLight: {
     backgroundColor: '#FFFFFF',
@@ -270,6 +271,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     backgroundColor: "rgba(0,0,0,0.3)", // semi-transparent
   },
+  actionsRow: {
+  flexDirection: 'row',
+  flexWrap: 'wrap',        // allow wrapping
+  justifyContent: 'space-between',
+  marginTop: 12,
+  gap: 12,
+},
   bottomSheet: {
     backgroundColor: "#fff",
     padding: 20,
