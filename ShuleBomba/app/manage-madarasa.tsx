@@ -67,8 +67,9 @@ const ManageMadarasa = observer(() => {
         <Text style={[styles.headerTitle, { color: theme.text }]}>Manage Classes</Text>
         <View style={{ width: 24 }} />
       </View>
-      <View style={{ paddingHorizontal: 16, paddingBottom: 16 }}>
-      <Button mode="outlined" onPress={()=>router.push("/(tabs)/addclass")}><PlusIcon/>Add Class</Button>
+      
+      <View style={{paddingHorizontal:16, paddingBottom:16}}>
+      <Button mode="outlined" icon={(_props)=><PlusIcon {..._props}/>} onPress={()=>router.push("/(tabs)/addclass")}>Add Class</Button>
       </View>
       {darasas.map(darasa => (
         <View key={darasa.id} style={styles.row}>

@@ -106,7 +106,7 @@ const HomeScreen = observer(() => {
           {darasas.length === 0 ? (
             <View style={styles.emptyContainer}>
               <Image
-                source={require("../../assets/images/appIcon.png")}
+                source={require("../../assets/images/no-any-class.png")}
                 style={styles.emptyImage}
               />
               <Text style={[styles.emptyTitle, { color: theme.text }]}>Welcome to {authUser?.school_name ?? "Your School"} 👋</Text>

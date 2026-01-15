@@ -1,11 +1,11 @@
 import { View, Text, TouchableOpacity, StyleSheet, TextInput ,ScrollView , useColorScheme, Image } from "react-native"
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { Link, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { observer } from "mobx-react-lite";
 import { useTheme } from "@/context/ThemeContext";
 import { rootStore } from "@/components/models";
-import {Modal,Button} from "react-native-paper";
+import {Modal,Button, DataTable} from "react-native-paper";
 import React,{ useState } from "react";
 import { BookOpen, ChevronLeft, SaveAll, Trash2, UserPlus2, Users } from "lucide-react-native";
 
@@ -35,9 +35,10 @@ const ClassHomeScreen = observer(() => {
   }
   if (selectedDarasa.students.length === 0) {
     return (
+      
       <View style={[styles.emptyRoot, { backgroundColor: theme.background }]}> 
         <Image
-          source={require("../../assets/images/appIcon.png")}
+          source={require("../../assets/images/empty-class.png")}
           style={styles.emptyImage}
         />
         <Text style={[styles.emptyTitle, { color: theme.text }]}>No students yet</Text>
@@ -47,7 +48,7 @@ const ClassHomeScreen = observer(() => {
             Add Student
           </Button>
           <Button mode="contained" onPress={() => router.replace("/home")}>
-           Return Home
+           Go Home
           </Button>
         </View>
       </View>
@@ -55,84 +56,75 @@ const ClassHomeScreen = observer(() => {
   }
 
   return (
-
-    <View style={{ flex: 1, backgroundColor: theme.background }}>
-
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
       <View style={[styles.header, isDark ? styles.headerDark : styles.headerLight]}>
-      
-      <View style={styles.classCardLeft}>
-          <View style={[styles.classIcon, { backgroundColor: 'transparent' }]}>
-            <ChevronLeft size={24} color={theme.text} onPress={()=>router.replace("/home")}/>
-          </View>
-          <View style={styles.classInfo}>
-            <Text style={[styles.className, { color: theme.text }]}>
-              {selectedDarasa.name}
-            </Text>
-            <View style={styles.classDetailRow}>
-              <Users size={14} color={isDark ? '#9ca3af' : '#6b7280'} />
-              <Text style={[styles.classDetail, { color: isDark ? '#9ca3af' : '#6b7280' }]}>
-                {selectedDarasa.students.length} {selectedDarasa.students.length === 1 ? 'student' : 'students'}
+        <View style={styles.classCardLeft}>
+            <View style={[styles.classIcon, { backgroundColor: 'transparent' }]}>
+              <ChevronLeft size={24} color={theme.text} onPress={()=>router.replace("/home")}/>
+            </View>
+            <View style={styles.classInfo}>
+              <Text style={[styles.className, { color: theme.text }]}>
+                {selectedDarasa.name}
               </Text>
+              <View style={styles.classDetailRow}>
+                <Users size={14} color={isDark ? '#9ca3af' : '#6b7280'} />
+                <Text style={[styles.classDetail, { color: isDark ? '#9ca3af' : '#6b7280' }]}>
+                  {selectedDarasa.students.length} {selectedDarasa.students.length <= 1 ? 'student' : 'students'}
+                </Text>
+            </View>
           </View>
         </View>
-      </View>
         <View style={styles.actionsRow}>
-        <Link href="/(classes)/attendance?skipConfirm=true">
-          <View style={[styles.iconview, isDark ? styles.iconviewDark : styles.iconviewLight]}>
-            <Users size={30} color={isDark ? '#FFFFFF' : '#0A3BFF'} />
-            <Text style={{ color: isDark ? '#E5E7EB' : '#374151' }}>Attendance</Text>
-        </View>
-        </Link>
+          <Link href="/(classes)/attendance?skipConfirm=true">
+            <View style={[styles.iconview, isDark ? styles.iconviewDark : styles.iconviewLight]}>
+              <Users size={30} color={isDark ? '#FFFFFF' : '#0A3BFF'} />
+              <Text style={{ color: isDark ? '#E5E7EB' : '#374151' }}>Attendance</Text>
+          </View>
+          </Link>
 
-        <Link href="/(classes)/add-student?skipConfirm=true">
-          <View style={[styles.iconview, isDark ? styles.iconviewDark : styles.iconviewLight]}>
-            <UserPlus2 size={30} color={isDark ? '#FFFFFF' : '#0A3BFF'} />
-            <Text style={{ color: isDark ? '#E5E7EB' : '#374151' }}>Add Student</Text>
-        </View>
-        </Link>
+          <Link href="/(classes)/add-student?skipConfirm=true">
+            <View style={[styles.iconview, isDark ? styles.iconviewDark : styles.iconviewLight]}>
+              <UserPlus2 size={30} color={isDark ? '#FFFFFF' : '#0A3BFF'} />
+              <Text style={{ color: isDark ? '#E5E7EB' : '#374151' }}>Add Student</Text>
+          </View>
+          </Link>
 
-        <Link href="/(classes)/saved-rolcall?skipConfirm=true">
-          <View style={[styles.iconview, isDark ? styles.iconviewDark : styles.iconviewLight]}>
-            <SaveAll size={30} color={isDark ? '#34D399' : '#10B981'} />
-            <Text style={{ color: isDark ? '#E5E7EB' : '#374151' }}>Saved Attendance</Text>
-        </View>
-        </Link>
+          <Link href="/(classes)/saved-rolcall?skipConfirm=true">
+            <View style={[styles.iconview, isDark ? styles.iconviewDark : styles.iconviewLight]}>
+              <SaveAll size={30} color={isDark ? '#34D399' : '#10B981'} />
+              <Text style={{ color: isDark ? '#E5E7EB' : '#374151' }}>Saved Attendance</Text>
+          </View>
+          </Link>
 
-        <Link href="/(classes)/delete-class?skipConfirm=true">
-          <View style={[styles.iconview, isDark ? styles.iconviewDark : styles.iconviewLight]}>
-            <Trash2 size={30} color={isDark ? '#F87171' : '#EF4444'} />
-            <Text style={{ color: isDark ? '#E5E7EB' : '#374151', alignItems: 'center' }}>Delete class</Text>
+          <Link href="/(classes)/delete-class?skipConfirm=true">
+            <View style={[styles.iconview, isDark ? styles.iconviewDark : styles.iconviewLight]}>
+              <Trash2 size={30} color={isDark ? '#F87171' : '#EF4444'} />
+              <Text style={{ color: isDark ? '#E5E7EB' : '#374151', alignItems: 'center' }}>Delete class</Text>
+          </View>
+          </Link>
+          
         </View>
-        </Link>
-        
       </View>
-      </View>
-
-
-    
     <ScrollView
     contentContainerStyle={{ flexGrow: 1 }}
     showsVerticalScrollIndicator={false}
     >
-    <View style={{ flex: 1, padding: 16, backgroundColor: theme.background }}>
+      <View style={{ flex: 1, padding: 16, backgroundColor: theme.background }}>
       <Text style={{ fontWeight: "bold", marginBottom: 10 ,color: theme.text, fontSize: 18}}>
         Students in {selectedDarasa.name}
       </Text>
 
-      <View style={styles.listHeaderRow}>
-        <Text style={[styles.listHeaderText, { color: theme.text }]}>Registration No.</Text>
-        <Text style={[styles.listHeaderText, { color: theme.text, marginLeft: 100 }]}>Full Name</Text>
-      </View>
+      <DataTable.Header>
+        <DataTable.Title><Text style={{ color: theme.text }}>Registration No.</Text></DataTable.Title>
+        <DataTable.Title><Text style={{ color: theme.text }}>Full Name</Text></DataTable.Title>
+
+      </DataTable.Header>
 
       {selectedDarasa.students.map(student => (
-        <TouchableOpacity
-          key={`${student.id}`}
-          style={[styles.studentCard, isDark ? styles.studentCardDark : styles.studentCardLight]}
-          onPress={() => onSelectStudent(student)}
-        >
-          <Text style={[styles.studentId, { color: theme.text }]}>{student.id}</Text>
-          <Text style={[styles.studentName, { color: theme.text}]}>{student.full_name}</Text>
-        </TouchableOpacity>
+        <DataTable.Row key={`${student.id}`}>
+          <DataTable.Cell><Text style={{ color: theme.text }}>{student.id}</Text></DataTable.Cell>
+          <DataTable.Cell onPress={() => onSelectStudent(student) }><Text style={{ color: theme.text }}>{student.full_name}</Text></DataTable.Cell>
+        </DataTable.Row>
       ))}
 
       <Modal
@@ -163,7 +155,7 @@ const ClassHomeScreen = observer(() => {
       </Modal>
     </View>
     </ScrollView>
-    </View>
+    </SafeAreaView> 
   )
 });
 const styles = StyleSheet.create({
@@ -211,57 +203,6 @@ const styles = StyleSheet.create({
     padding: 6,
   },
 
-  listHeaderRow: {
-    flexDirection: 'row',
-
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    marginBottom: 6,
-  },
-  listHeaderText: {
-    fontSize: 13,
-    fontWeight: '600',
-  },
-
-  studentCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 14,
-    borderRadius: 12,
-    marginBottom: 10,
-  },
-  studentCardDark: {
-    backgroundColor: '#222227',
-  },
-  studentCardLight: {
-    backgroundColor: '#FFFFFF',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  studentId: {
-    width: 100,              // fixed width for alignment
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  studentName: {
-    marginLeft: 100,              //  takes remaining space
-    fontSize: 14,
-    color: '#6b7280',
-    textAlign: 'left',     //  aligns to the right
-    writingDirection: 'ltr',
-  },
-
-  studentRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    marginVertical: 6,
-  },
   textInput: {
     borderWidth: 1,
     borderColor: "#ccc",
@@ -277,7 +218,6 @@ const styles = StyleSheet.create({
   flexDirection: 'row',
   flexWrap: 'wrap',        // allow wrapping
   justifyContent: 'space-between',
-  marginTop: 12,
   gap: 12,
 },
   bottomSheet: {
@@ -295,7 +235,6 @@ const styles = StyleSheet.create({
   classCardLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    flex: 1,
     gap: 12,
   },
   classIcon: {
