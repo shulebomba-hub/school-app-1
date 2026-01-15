@@ -57,9 +57,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     themeMode === 'dark' || (themeMode === 'system' && systemColorScheme === 'dark');
 
   const theme = {
-    background: isDark ? '#000' : '#fff',
+    background: isDark ? '#1a1313' : '#fff',
     text: isDark ? '#fff' : '#000',
-    card: isDark ? '#111' : '#f5f5f5',
+    primary: isDark ? '#828990' : '#828990',
+    card: isDark ? '#1b1919' : '#f5f5f5',
   };
 
   // Don't render until theme is loaded

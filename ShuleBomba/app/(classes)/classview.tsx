@@ -109,7 +109,7 @@ const ClassHomeScreen = observer(() => {
     contentContainerStyle={{ flexGrow: 1 }}
     showsVerticalScrollIndicator={false}
     >
-      <View style={{ flex: 1, padding: 16, backgroundColor: theme.background }}>
+      <View style={{flex:1, backgroundColor: theme.background }}>
       <Text style={{ fontWeight: "bold", marginBottom: 10 ,color: theme.text, fontSize: 18}}>
         Students in {selectedDarasa.name}
       </Text>
