@@ -47,7 +47,7 @@ const pickImage = async () => {
       school_name: schoolName
     };
   const handleSaveChanges = () => {
-    if (!authUser) return;
+    if (!username || !phone || !schoolName) return;
     setLoading(true);
     
     

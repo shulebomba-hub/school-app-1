@@ -107,19 +107,6 @@ const Account=observer(() =>  {
       </TouchableOpacity>
       <Divider style={styles.divider} />  
 
-      <TouchableOpacity style={styles.item}>
-      <View style={[styles.iconWrapper, { backgroundColor: "#FFF7ED" }]}>
-      <ListChecksIcon size={20} color="#F97316" />      
-      </View>
-
-      <View style={styles.textWrapper}>
-      <Text style={[styles.title,{color:theme.text}]}>Attendance settings</Text>
-      <Text style={[styles.subtitle ,{color:theme.text}]}>Roll call rules</Text>
-      </View>
-
-      <ChevronRight size={20} color="#9CA3AF" />
-      </TouchableOpacity>
-      <Divider style={styles.divider} />
       <TouchableOpacity style={styles.item} onPress={() => router.push("/app-preference")}>
       <View style={[styles.iconWrapper, { backgroundColor: "#F3E8FF" }]}>
       <SlidersHorizontalIcon size={20} color="#7C3AED" />
