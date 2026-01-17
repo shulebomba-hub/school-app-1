@@ -11,7 +11,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.stevengiki201.ShuleBomba"
+      "bundleIdentifier": "com.ShuleBomba.app"
     },
     "android": {
       "adaptiveIcon": {
@@ -20,7 +20,8 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.stevengiki201.ShuleBomba"
+      "versionCode": 1,
+      "package": "com.ShuleBomba.app"
     },
     "web": {
       "output": "static",

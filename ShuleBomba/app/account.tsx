@@ -82,7 +82,7 @@ const pickImage = async () => {
               </View>
               )}
          </Pressable>
-         <Text>Tap to edit</Text>
+         <Text>Tap to upload profile picture</Text>
        </View>
        <View style={[styles.screen, { backgroundColor: theme.background }]}>
          <Divider/>
